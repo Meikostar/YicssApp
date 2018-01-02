@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="27dp"-->
+    <!--android:orientation="horizontal">-->
+    <!--<TextView-->
+    <!--android:id="@+id/no_respond"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:textSize="8sp"-->
+    <!--android:textColor="@color/black"-->
+    <!--android:gravity="center"-->
+    <!--android:text="未应答"/>-->
+    <!--<TextView-->
+    <!--android:id="@+id/have_respond"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:textSize="8sp"-->
+    <!--android:textColor="@color/black"-->
+    <!--android:gravity="center"-->
+    <!--android:text="已应答"/>-->
+    <!--</LinearLayout>-->
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="@color/black"/>-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="40dp"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/id_tab_point1"-->
+            <!--android:layout_width="8dp"-->
+            <!--android:layout_height="8dp"-->
+            <!--android:src="@drawable/cycle_shade" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/id_tab_point"-->
+            <!--android:layout_width="8dp"-->
+            <!--android:layout_height="8dp"-->
+            <!--android:layout_marginLeft="6dp"-->
+            <!--android:layout_toRightOf="@+id/id_tab_point1"-->
+            <!--android:src="@drawable/cycle_shade" />-->
+        <!--<ImageView-->
+            <!--android:id="@+id/id_tab_line"-->
+            <!--android:layout_width="8dp"-->
+            <!--android:layout_height="8dp"-->
+            <!--android:src="@drawable/white_cycle" />-->
+    <!--</RelativeLayout>-->
+</RelativeLayout>

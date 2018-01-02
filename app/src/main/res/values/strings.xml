@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">壹成善水Pad</string>
+    <string name="main_name">壹成善水</string>
+
+    <string name="cash_tishi">很抱歉!程序出现异常退出!</string>
+    <string name="network_error">网络开小差了,请检查网络</string>
+    <string name="no_more">暂无更多数据</string>
+    <string name="sdcard_is_null">找不到该设备SD卡!</string>
+
+    <string name="new_photo">拍照</string>
+    <string name="select_photo">从手机相册选择</string>
+    <string name="cancel">取消</string>
+    <string name="sure">确定</string>
+
+    <string name="person_count">人数</string>
+
+    <string name="request_timeout">请求超时</string>
+    <string name="internal_server_error">请求服务器异常</string>
+    <string name="back">返回</string>
+    <string name="shen">省份</string>
+    <string name="shi">城市</string>
+    <string name="qu">区域</string>
+    <string name="dian">门店</string>
+    <string name="count">账号</string>
+    <string name="message">消息</string>
+
+
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+
+</resources>
