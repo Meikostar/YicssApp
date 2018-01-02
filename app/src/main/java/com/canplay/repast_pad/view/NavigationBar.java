@@ -35,6 +35,7 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
     public static final int IMG = 1;
     public static final int TXT = 2;
     public static final int TOP = 3;
+    public static final int TXTS = 4;
 
     public interface NavigationBarListener {
         void navigationLeft();
@@ -120,7 +121,8 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
                 img_right.setVisibility(GONE);
                 txt_right.setVisibility(VISIBLE);
                 txt_right.setText(barStyle.right_txt);
-                txt_right.setTextColor(getResources().getColor(barStyle.right_txt_color));
+                txt_right.setTextColor(getResources().getColor(R.color.blue));
+                txt_right.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case TOP:
                 img_right.setVisibility(GONE);
@@ -128,6 +130,12 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
                 right_img.setVisibility(VISIBLE);
                 txt_right.setText(barStyle.right_txt);
                 txt_right.setTextColor(getResources().getColor(barStyle.right_txt_color));
+                break;
+            case TXTS:
+                img_right.setVisibility(GONE);
+                txt_right.setVisibility(VISIBLE);
+                txt_right.setText(barStyle.right_txt);
+                txt_right.setTextColor(getResources().getColor(R.color.blue));
                 break;
         }
         setNaviTitle(barStyle.strTitle);

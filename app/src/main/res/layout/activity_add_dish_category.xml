@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/content_bg"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  >
+<com.canplay.repast_pad.view.NavigationBar
+    android:id="@+id/navigationbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:navigationTitle="添加配菜分类"
+   app:navigationRight_txt="新建"
+    app:navigationRight_type="txts"/>
+    <com.canplay.repast_pad.view.FlexboxLayout
+        android:paddingBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/content_bg"
+        android:id="@+id/fbl_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:flexDirection="row"
+        app:flexWrap="wrap"
+        android:minHeight="60dp"
+        app:justifyContent="flex_start" />
+
+
+</LinearLayout>

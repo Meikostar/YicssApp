@@ -55,7 +55,6 @@
         android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".mvp.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -81,7 +80,9 @@
         <activity android:name=".mvp.activity.MenuManageActivity" />
         <activity android:name=".mvp.activity.DishesManageActivity" />
         <activity android:name=".mvp.activity.PrintSetActivity" />
-        <activity android:name=".mvp.activity.OrderDetailActivity"></activity>
+        <activity android:name=".mvp.activity.OrderDetailActivity" />
+        <activity android:name=".mvp.activity.AddDishCategoryActivity" />
+        <activity android:name=".mvp.activity.AddDishesActivity"></activity>
     </application>
 
 </manifest>
