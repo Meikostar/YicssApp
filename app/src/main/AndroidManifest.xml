@@ -55,24 +55,17 @@
         android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvp.activity.BinderActivity" />
-        <activity android:name=".mvp.activity.MainActivity">
 
-            <!--
+        <activity
+            android:name=".mvp.activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
         </activity>
-        <activity android:name=".mvp.activity.ToContactActivity" />
-        <activity android:name=".mvp.activity.RespondActivity" />
-        <activity android:name=".mvp.activity.BinderTabeActivity" />
-        <activity android:name=".mvp.activity.BaseAdressActivity" />
-
         <!-- authorities中改为自己的包名+.fileProvider -->
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -84,15 +77,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".mvp.activity.TasteMainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".net.LoginActivity" />
         <activity android:name=".mvp.activity.MenuManageActivity" />
         <activity android:name=".mvp.activity.DishesManageActivity" />
