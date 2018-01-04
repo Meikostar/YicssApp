@@ -1,73 +1,148 @@
 package com.canplay.repast_pad.mvp.activity;
 
 
-import android.os.PowerManager;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.PopupWindow;
-import android.widget.Toast;
+import android.content.Intent;
+import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
+
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
-import com.canplay.repast_pad.base.BaseApplication;
+import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.base.RxBus;
+import com.canplay.repast_pad.base.SubscriptionBean;
+import com.canplay.repast_pad.fragment.SetFragment;
+import com.canplay.repast_pad.mvp.adapter.FragmentViewPagerAdapter;
+import com.canplay.repast_pad.mvp.component.OnChangeListener;
+import com.canplay.repast_pad.view.BottonNevgBar;
+import com.canplay.repast_pad.view.NoScrollViewPager;
 
-import com.canplay.repast_pad.mvp.model.Message;
-import com.canplay.repast_pad.mvp.present.MessagePresenter;
-import com.canplay.repast_pad.util.SpUtil;
-
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.functions.Action1;
 
-
 public class MainActivity extends BaseActivity {
 
-    @Inject
-    MessagePresenter messagePresenter;
 
+    NoScrollViewPager viewpagerMain;
+    BottonNevgBar bnbHome;
     private Subscription mSubscription;
-    private long showtime;//覆盖的时间
-    private SpUtil sp;
-    private long tableId;//桌子id （30s后自动转移情况传0，手动转移传桌子id）
-    private long pushId;//推送记录id
-    private boolean isShow = false;
-    private Message passMessage;
-    private String androidId;
-    private String tableNo;
-    private PopupWindow popSignOut;
-    private EditText editText;
-    private PowerManager.WakeLock wakeLock;
+    private FragmentViewPagerAdapter mainViewPagerAdapter;
+    private List<Fragment> mFragments;
+    private int current = 0;
+    private long firstTime = 0l;
+    private SetFragment setFragment;
+
 
     @Override
-    public void initInjector() {
+    public void initViews() {
+        setContentView(R.layout.activity_main);
+        bnbHome = (BottonNevgBar) findViewById(R.id.bnb_home);
+        viewpagerMain = (NoScrollViewPager) findViewById(R.id.viewpager_main);
+        viewpagerMain.setScanScroll(false);
 
     }
 
     @Override
-    public void initCustomerUI() {
-        initUI(R.layout.activity_main);
-        ButterKnife.bind(this);
+    public void bindEvents() {
+
+        setViewPagerListener();
+        setNevgBarChangeListener();
+
+        mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
+            @Override
+            public void call(SubscriptionBean.RxBusSendBean bean) {
+                if (bean == null) return;
+
+
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+        RxBus.getInstance().addSubscription(mSubscription);
+
+
+    }
+    @Override
+    public void initData() {
+        addFragment();
+        mainViewPagerAdapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), mFragments);
+        viewpagerMain.setAdapter(mainViewPagerAdapter);
+        viewpagerMain.setOffscreenPageLimit(3);//设置缓存view 的个数
+        viewpagerMain.setCurrentItem(current);
+
+    }
+
+    private void setViewPagerListener() {
+        viewpagerMain.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bnbHome.setSelect(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    private void setNevgBarChangeListener() {
+        bnbHome.setOnChangeListener(new OnChangeListener() {
+            @Override
+            public void onChagne(int currentIndex) {
+                current = currentIndex;
+                bnbHome.setSelect(currentIndex);
+                viewpagerMain.setCurrentItem(currentIndex);
+            }
+        });
+    }
+
+    private void addFragment() {
+        mFragments = new ArrayList<>();
+        setFragment=new SetFragment();
 
     }
 
     @Override
-    public void initOther() {
-
-    }
-
-    @Override
-    public void onBackClick(View v) {
-        if (tableNo != null) {
-            Log.e("backclick  ", "点击了显示桌号");
-            toast = Toast.makeText(this, "当前绑定的桌号为：" + tableNo, Toast.LENGTH_SHORT);
-            toast.show();
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mSubscription != null) {
+            RxBus.getInstance().unSub(mSubscription);
         }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            long secondTime = System.currentTimeMillis();
+
+            if (secondTime - firstTime > 800) {//如果两次按键时间间隔大于800毫秒，则不退出
+
+
+                firstTime = secondTime;//更新firstTime
+                return true;
+            } else {
+
+                finish();
+                return false;
+
+            }
+        }
+        return true;
     }
 
 

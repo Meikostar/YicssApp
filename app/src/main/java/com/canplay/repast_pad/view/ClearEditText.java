@@ -75,7 +75,7 @@ public class ClearEditText extends EditText implements
         mClearDrawable = getCompoundDrawables()[2];   
         if (mClearDrawable == null) {   
 //          throw new NullPointerException("You can add drawableRight attribute in XML");  
-            mClearDrawable = getResources().getDrawable(R.mipmap.lp_img_delete);
+            mClearDrawable = getResources().getDrawable(R.drawable.delete);
         }   
           
         mClearDrawable.setBounds(0-10, 0, mClearDrawable.getIntrinsicWidth()-10, mClearDrawable.getIntrinsicHeight());

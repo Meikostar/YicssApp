@@ -1,4 +1,4 @@
-package com.canplay.repast_pad.net;
+package com.canplay.repast_pad.mvp.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.view.ClearEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,9 +17,9 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.tv_logo)
     ImageView tvLogo;
     @BindView(R.id.et_user)
-    EditText etUser;
+    ClearEditText etUser;
     @BindView(R.id.et_pws)
-    EditText etPws;
+    ClearEditText etPws;
     @BindView(R.id.tv_login)
     TextView tvLogin;
 

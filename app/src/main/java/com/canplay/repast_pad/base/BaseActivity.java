@@ -8,10 +8,13 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -23,9 +26,12 @@ import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.manager.AppManager;
 import com.canplay.repast_pad.receiver.NetBroadcastReceiver;
 import com.canplay.repast_pad.permission.PermissionGen;
+import com.canplay.repast_pad.view.NavigationBar;
 import com.canplay.repast_pad.view.TitleBarLayout;
 
 import butterknife.ButterKnife;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * @Title:基础Activity类
@@ -33,19 +39,26 @@ import butterknife.ButterKnife;
  * @Author: LLC
  * @Since:2015-3-19
  */
-public abstract class BaseActivity extends AppCompatActivity implements TitleBarLayout.OnRightBtnClickListener, TitleBarLayout.OnBackBtnClickListener,NetBroadcastReceiver.NetEvent{
+public abstract class BaseActivity extends AppCompatActivity implements Handler.Callback,  NavigationBar.NavigationBarListener{
 
     private FrameLayout decorView;
-
+    public Handler mHandler;
     public static String BUNDLE_STRING = "BUNDLE_STRING";
-
+    public int type=0;//=1表示不对其做无操作返回
     private View bodyView;
-
+    private Subscription mSubscription;
     private TitleBarLayout titleBarView;
     private ProgressDialog pd;
     private Toolbar toolbar;
-    private NetBroadcastReceiver receiver;
-
+    private NavigationBar navigationBar;
+    public void initNavi(int id){
+        navigationBar = (NavigationBar) findViewById(id);
+        navigationBar.setNavigationBarListener(this);
+    }
+    @Override
+    public boolean handleMessage(Message msg) {
+        return false;
+    }
     /**
      * 获取全局控制器
      *
@@ -54,6 +67,10 @@ public abstract class BaseActivity extends AppCompatActivity implements TitleBar
     public AppComponent getAppComponent(){
         return ((BaseApplication) getApplication()).getAppComponent();
     }
+    public Handler handler = new Handler();
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -64,19 +81,26 @@ public abstract class BaseActivity extends AppCompatActivity implements TitleBar
         //添加activity
         AppManager.getInstance(this).addActivity(this);
         decorView = (FrameLayout) findViewById(Window.ID_ANDROID_CONTENT);
-        if (receiver == null) {
-            receiver = new NetBroadcastReceiver();
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            registerReceiver(receiver, filter);
-        }
-        receiver.setNetEvent(this);
-        initInjector();
-        initCustomerUI();
-        ButterKnife.bind(this);
-        initOther();
+        mHandler = new Handler(this);
+        initViews();
+        bindEvents();
+        initData();
+
+    }
+    @Override
+    public void navigationRight() {
+
+    }
+    @Override
+    public void navigationimg() {
+
     }
 
+
+    @Override
+    public void navigationLeft() {
+        finish();
+    }
     private void translucentStatusBar(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){//5.0及以上
             View decorView = getWindow().getDecorView();
@@ -126,83 +150,6 @@ public abstract class BaseActivity extends AppCompatActivity implements TitleBar
         }
     }
 
-    /**
-     * @param bodyLayoutId
-     */
-    public void initUI(int bodyLayoutId){
-        initTitleBar();
-        initBodyView(bodyLayoutId);
-    }
-
-    /**
-     * @param titleId
-     * @param bodyLayoutId
-     * @param rightResId
-     */
-    public void initUI(int titleId, int bodyLayoutId, int... rightResId){
-        initTitleBar(titleId, rightResId);
-        initBodyView(bodyLayoutId);
-    }
-
-    /**
-     * @param title
-     * @param bodyLayoutId
-     * @param rightResId
-     */
-    public void initUI(String title, int bodyLayoutId, int... rightResId){
-        initTitleBar(title, rightResId);
-        initBodyView(bodyLayoutId);
-    }
-
-    /**
-     * 返回菜单栏
-     *
-     * @return
-     */
-    public TitleBarLayout getTitleBarView(){
-        return titleBarView;
-    }
-
-    /**
-     * 初始化标题栏
-     */
-    public void initTitleBar(int titleText, int... rightResId){
-        String titleTextStr = getResources().getString(titleText);
-        initTitleBar(titleTextStr, rightResId);
-    }
-
-    /**
-     * 初始化标题栏
-     */
-    public void initTitleBar(String titleText, int... rightResId){
-        toolbar = (Toolbar) getLayoutInflater().inflate(R.layout.base_toolbar_layout, null);
-        toolbar.setContentInsetsAbsolute(0, 0);
-        decorView.addView(toolbar, Toolbar.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.title_bar_height));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        titleBarView = new TitleBarLayout(this);
-        titleBarView.setOnRightBtnClickListener(this);
-        getSupportActionBar().setCustomView(titleBarView);
-        titleBarView.setTitleText(titleText);
-        titleBarView.resetTitleRightMenu(rightResId);
-        titleBarView.setOnBackBtnClickListener(this);
-    }
-
-    /**
-     * 初始化标题栏
-     */
-    public void initTitleBar(int... rightResId){
-        toolbar = (Toolbar) getLayoutInflater().inflate(R.layout.base_toolbar_layout, null);
-        toolbar.setContentInsetsAbsolute(0, 0);
-        decorView.addView(toolbar, Toolbar.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.title_bar_height));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        titleBarView = new TitleBarLayout(this);
-        getSupportActionBar().setCustomView(titleBarView);
-        titleBarView.setOnRightBtnClickListener(this);
-        titleBarView.resetTitleRightMenu(rightResId);
-        titleBarView.setOnBackBtnClickListener(this);
-    }
 
     /**
      * 添加身体布局到根布局中
@@ -234,23 +181,24 @@ public abstract class BaseActivity extends AppCompatActivity implements TitleBar
     }
 
     /*
-    绑定依赖
+     * 初始Ul
      */
-    public abstract void initInjector();
+    public abstract void initViews();
 
     /*
-     * 初始Ul(标题与bodyView)
+     * 监听事件
      */
-    public abstract void initCustomerUI();
+    public abstract void bindEvents();
 
     /**
      * 初始化其他资源
      */
-    public abstract void initOther();
+    public abstract void initData();
 
     @Override
     protected void onResume(){
-        // TODO 自动生成的方法存根
+
+
         super.onResume();
     }
     //进度条
@@ -270,10 +218,6 @@ public abstract class BaseActivity extends AppCompatActivity implements TitleBar
         if (pd != null) {
             pd.dismiss();
         }
-    }
-    @Override
-    protected void onPause(){
-        super.onPause();
     }
 
     /**
@@ -390,9 +334,7 @@ public abstract class BaseActivity extends AppCompatActivity implements TitleBar
         AppManager.getInstance(this).finishActivity(activity);
     }
 
-    @Override
-    public void rightClick(int id){
-    }
+
     /**
      * 关闭键盘
      */
@@ -412,21 +354,7 @@ public abstract class BaseActivity extends AppCompatActivity implements TitleBar
             e.printStackTrace();
         }
     }
-    @Override
-    public void onBackClick(View v){
-        AppManager.getInstance(this).finishActivity(this);
-    }
 
-    @Override
-    public void onNetChange(int netMobile) {
-        switch (netMobile) {
-            case 1://wifi
-                break;
-            case -1://没有网络
-                showToast("当前无网络连接，请检查网络！");
-                break;
-        }
-    }
 
     private String oldMsg;
     protected Toast toast = null;
@@ -468,8 +396,8 @@ public abstract class BaseActivity extends AppCompatActivity implements TitleBar
             toast.cancel();
             toast = null;
         }
-        if (receiver != null) {
-            unregisterReceiver(receiver);
+        if (mSubscription != null) {
+            RxBus.getInstance().unSub(mSubscription);
         }
         super.onDestroy();
     }

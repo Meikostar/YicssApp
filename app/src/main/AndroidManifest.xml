@@ -76,7 +76,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".net.LoginActivity" />
+        <activity android:name=".mvp.activity.LoginActivity" />
         <activity android:name=".mvp.activity.MenuManageActivity" />
         <activity android:name=".mvp.activity.DishesManageActivity" />
         <activity android:name=".mvp.activity.PrintSetActivity" />

@@ -5,7 +5,7 @@
     <color name="red">#F90808</color>
     <color name="yellow">#F1AC07</color>
     <color name="white">#FFFFFF</color>
-    <color name="blue">#309bff</color>
+    <color name="blue">#1098f2</color>
     <color name="green">#78bb4f</color>
     <color name="orange">#FFA228</color>
     
@@ -28,6 +28,7 @@
     <color name="text_default">@android:color/black</color>
     <color name="slow_black">#333333</color>
     <color name="color6">#666</color>
+    <color name="bottom">#949494</color>
     <color name="color9">#999999</color>
     <color name="hint_red">#ff4439</color>
     <color name="color_primary_e3">#e3e3e3</color>

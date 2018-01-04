@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/content_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/ll_dishe"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/od_bg"
+        >
+             <FrameLayout
+                 android:id="@+id/fl_choose"
+                 android:layout_alignParentRight="true"
+                 android:layout_width="40dp"
+                 android:layout_height="40dp">
+                 <ImageView
+                     android:layout_alignParentRight="true"
+                     android:layout_marginTop="10dp"
+                     android:layout_marginRight="13dp"
+                     android:src="@drawable/saixuan"
+                     android:layout_width="20dp"
+                     android:layout_height="30dp"
+                     android:layout_marginLeft="15dp"/>
+             </FrameLayout>
+
+
+
+        <TextView
+            android:layout_marginTop="13dp"
+            android:layout_centerHorizontal="true"
+            android:text="订单管理"
+            android:layout_marginLeft="13dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <com.malinskiy.superrecyclerview.SuperRecyclerView
+        android:layout_marginTop="65dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/super_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
+        app:layout_moreProgress="@layout/view_more_progress"
+        app:recyclerClipToPadding="true"
+        app:scrollbarStyle="outsideOverlay" />
+
+</RelativeLayout>
