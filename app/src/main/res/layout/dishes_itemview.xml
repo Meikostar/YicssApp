@@ -1,47 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        />
-    <LinearLayout
-        android:layout_marginTop="7dp"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card"
+        tools:targetApi="lollipop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1"
-            android:textSize="14.5sp"
-            android:textColor="@color/slow_black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="秘制烤鸭"/>
-        <TextView
-            android:id="@+id/tv_price"
-           android:layout_marginRight="12dp"
-            android:textSize="16sp"
-            android:textColor="@color/yellow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="¥ 120"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/tv_type"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginRight="12dp"
-        android:textSize="16sp"
-        android:textColor="@color/yellow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="¥ 120"/>
+        android:stateListAnimator="@drawable/lift_on_touch"
+
+        android:layout_marginBottom="@dimen/dp_8"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/dp_4"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+           <LinearLayout
+               android:gravity="center_horizontal"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+               <ImageView
+                   android:src="@drawable/zuofa"
+                   android:id="@+id/iv_img"
+                   android:layout_width="match_parent"
+                   android:layout_height="165dp"
+                   />
+               <LinearLayout
+                   android:layout_marginTop="14dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+                   <TextView
+                       android:id="@+id/tv_name"
+                       android:layout_marginLeft="8dp"
+                       android:layout_weight="1"
+                       android:textSize="16sp"
+                       android:textColor="@color/slow_black"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="秘制烤鸭"/>
+                   <TextView
+                       android:id="@+id/tv_price"
+                       android:layout_marginRight="12dp"
+                       android:textSize="18sp"
+                       android:textColor="@color/yellow"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="¥ 120"/>
+               </LinearLayout>
+               <TextView
+                   android:id="@+id/tv_type"
+                   android:layout_marginBottom="16dp"
+                   android:layout_marginTop="13dp"
+                   android:layout_marginLeft="9dp"
+                   android:layout_marginRight="12dp"
+                   android:textSize="16sp"
+                   android:textColor="@color/color6"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="热菜类"/>
+           </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>

@@ -13,6 +13,9 @@ import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.base.BaseFragment;
 import com.canplay.repast_pad.base.RxBus;
 import com.canplay.repast_pad.base.SubscriptionBean;
+import com.canplay.repast_pad.fragment.DishManageFragment;
+import com.canplay.repast_pad.fragment.MenutFragment;
+import com.canplay.repast_pad.fragment.OrderMangerFragment;
 import com.canplay.repast_pad.fragment.SetFragment;
 import com.canplay.repast_pad.mvp.adapter.FragmentViewPagerAdapter;
 import com.canplay.repast_pad.mvp.component.OnChangeListener;
@@ -36,6 +39,9 @@ public class MainActivity extends BaseActivity {
     private List<Fragment> mFragments;
     private int current = 0;
     private long firstTime = 0l;
+    private OrderMangerFragment orderMangerFragment;
+    private DishManageFragment dishManageFragment;
+    private MenutFragment menutFragment;
     private SetFragment setFragment;
 
 
@@ -78,7 +84,7 @@ public class MainActivity extends BaseActivity {
         viewpagerMain.setAdapter(mainViewPagerAdapter);
         viewpagerMain.setOffscreenPageLimit(3);//设置缓存view 的个数
         viewpagerMain.setCurrentItem(current);
-
+        bnbHome.setSelect(current);
     }
 
     private void setViewPagerListener() {
@@ -111,7 +117,14 @@ public class MainActivity extends BaseActivity {
 
     private void addFragment() {
         mFragments = new ArrayList<>();
+        orderMangerFragment=new OrderMangerFragment();
+        dishManageFragment=new DishManageFragment();
+        menutFragment=new MenutFragment();
         setFragment=new SetFragment();
+        mFragments.add(orderMangerFragment);
+        mFragments.add(dishManageFragment);
+        mFragments.add(menutFragment);
+        mFragments.add(setFragment);
 
     }
 

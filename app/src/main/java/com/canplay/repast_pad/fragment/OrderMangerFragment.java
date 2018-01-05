@@ -1,5 +1,7 @@
 package com.canplay.repast_pad.fragment;
 
+import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,7 +15,10 @@ import android.widget.RelativeLayout;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.mvp.adapter.recycle.OrderMangerRecycleAdapter;
 import com.canplay.repast_pad.view.DivItemDecoration;
+import com.canplay.repast_pad.view.PhotoPopupWindow;
+import com.canplay.repast_pad.view.PopView_NavigationBar;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
@@ -41,7 +46,7 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
 
 //    private List<AD> list = new ArrayList<>();
     private SwipeRefreshLayout.OnRefreshListener refreshListener;
-
+    private OrderMangerRecycleAdapter adapter;
     private LinearLayoutManager mLinearLayoutManager;
     private final int TYPE_PULL_REFRESH = 1;
     private final int TYPE_PULL_MORE = 2;
@@ -53,10 +58,10 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_manger, null);
-
+        unbinder = ButterKnife.bind(this, view);
         initView();
         initListener();
-        unbinder = ButterKnife.bind(this, view);
+
         return view;
     }
 
@@ -67,7 +72,13 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void initListener() {
-
+        initPopView();
+        flChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popView_navigationBar.showPopView();
+            }
+        });
 
     }
 
@@ -77,8 +88,8 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
         mSuperRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSuperRecyclerView.addItemDecoration(new DivItemDecoration(2, true));
         mSuperRecyclerView.getMoreProgressView().getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-
-//        mSuperRecyclerView.setAdapter(adapter);
+        adapter=new OrderMangerRecycleAdapter(getActivity());
+        mSuperRecyclerView.setAdapter(adapter);
         // mSuperRecyclerView.setRefreshing(false);
         refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
 
@@ -152,5 +163,32 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
         switch (view.getId()) {
 
         }
+    }
+    private PopView_NavigationBar popView_navigationBar;
+    private void initPopView() {
+//        mWindowAddPhoto = new PhotoPopupWindow(getActivity());
+        popView_navigationBar = new PopView_NavigationBar(getActivity());
+
+
+        popView_navigationBar.setClickListener(new PopView_NavigationBar.ItemCliskListeners() {
+            @Override
+            public void clickListener(int poition) {
+                switch (poition) {
+                    case 0://全部
+                        break;
+                    case 1://待接单
+                        break;
+                    case 2://待结账
+                        break;
+                    case 3://已完成
+                        break;
+                    case 4://已撤销
+                        break;
+
+                }
+                popView_navigationBar.dismiss();
+            }
+
+        });
     }
 }

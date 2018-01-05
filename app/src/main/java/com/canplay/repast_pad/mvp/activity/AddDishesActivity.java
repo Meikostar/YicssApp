@@ -8,24 +8,22 @@ import com.canplay.repast_pad.base.BaseActivity;
 
 public class AddDishesActivity extends BaseActivity {
 
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initViews() {
         setContentView(R.layout.activity_add_dishes);
     }
 
     @Override
-    public void initInjector() {
+    public void bindEvents() {
 
     }
 
     @Override
-    public void initCustomerUI() {
+    public void initData() {
 
     }
 
-    @Override
-    public void initOther() {
 
-    }
 }

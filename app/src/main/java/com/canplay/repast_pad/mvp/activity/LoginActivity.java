@@ -7,12 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.view.ClearEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.tv_logo)
     ImageView tvLogo;
@@ -23,10 +24,21 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.tv_login)
     TextView tvLogin;
 
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initViews() {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void bindEvents() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 }

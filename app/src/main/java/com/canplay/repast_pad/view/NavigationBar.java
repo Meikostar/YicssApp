@@ -64,7 +64,7 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NavigationBar, defStyleAttr, 0);
         barStyle.left_type = a.getInt(R.styleable.NavigationBar_navigationLeft_type, IMG);//默认后退键为可见的
         barStyle.right_type = a.getInt(R.styleable.NavigationBar_navigationRight_type, MISS);//默认不可见
-        barStyle.right_imgId = a.getResourceId(R.styleable.NavigationBar_navigationRight_img, R.color.green);
+        barStyle.right_imgId = a.getResourceId(R.styleable.NavigationBar_navigationRight_img, R.drawable.caipin_add);
         barStyle.right_txt = a.getString(R.styleable.NavigationBar_navigationRight_txt);
         barStyle.right_txt_color = a.getResourceId(R.styleable.NavigationBar_navigationRight_txt_color, R.color.slow_black);
         barStyle.left_imgId = a.getResourceId(R.styleable.NavigationBar_navigationLeft_img, R.mipmap.arrow_left);

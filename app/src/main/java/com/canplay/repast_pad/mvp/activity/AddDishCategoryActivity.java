@@ -30,21 +30,7 @@ public class AddDishCategoryActivity extends BaseActivity {
     @BindView(R.id.fbl_tag)
     FlexboxLayout fblTag;
 
-    @Override
-    public void initInjector() {
-        initUI(R.layout.activity_add_dish_category);
-        ButterKnife.bind(this);
-    }
 
-    @Override
-    public void initCustomerUI() {
-
-    }
-
-    @Override
-    public void initOther() {
-
-    }
     private ArrayList<String> tags = new ArrayList<>();//标签数据
 
     /**
@@ -99,4 +85,19 @@ public class AddDishCategoryActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void initViews() {
+        setContentView(R.layout.activity_add_dish_category);
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void bindEvents() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
 }

@@ -10,29 +10,29 @@ import android.widget.TextView;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.mvp.model.CONTURY;
 import com.canplay.repast_pad.mvp.model.PROVINCE;
+import com.canplay.repast_pad.util.TextUtil;
 
 import java.util.List;
 
 
-public class MenuAdapter extends BaseAdapter {
+public class PowTypeAdapter extends BaseAdapter {
     private Context mContext;
-    private List<CONTURY> list;
-
-    public MenuAdapter(Context mContext) {
+    private List<String> list;
+    public PowTypeAdapter(Context mContext) {
 
         this.mContext = mContext;
     }
-
     public interface ItemCliks{
-        void getItem(int poistion, String name, int id);
+        void getItem(int poistion, int id);
     }
-    public void setData(List<PROVINCE> list){
+    public void setData(List<String> list){
+        this.list=list;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return list!=null?list.size():4;
+        return list!=null?list.size():0;
     }
 
     @Override
@@ -50,18 +50,16 @@ public class MenuAdapter extends BaseAdapter {
         ResultViewHolder holder;
         if (view == null){
             holder = new ResultViewHolder();
-            view = LayoutInflater.from(mContext).inflate(R.layout.menu_item, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.list_pop_itemview, parent, false);
             holder.name= (TextView) view.findViewById(R.id.tv_name);
-            holder.tv_count= (TextView) view.findViewById(R.id.tv_count);
+
             view.setTag(holder);
         }else{
             holder = (ResultViewHolder) view.getTag();
         }
-         if(position<10){
-             holder.tv_count.setText("0"+position+1);
-         }else {
-             holder.tv_count.setText(position+1);
-         }
+          if(TextUtil.isNotEmpty(list.get(position))){
+              holder.name.setText(list.get(position));
+          }
         return view;
 
 
@@ -70,7 +68,7 @@ public class MenuAdapter extends BaseAdapter {
     public  class ResultViewHolder{
 
         TextView name;
-        TextView tv_count;
+
 
     }
 }

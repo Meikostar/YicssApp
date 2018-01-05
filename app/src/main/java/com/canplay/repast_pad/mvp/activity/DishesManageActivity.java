@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.ViewGroup;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.mvp.adapter.recycle.DishesRecycleAdapter;
 import com.canplay.repast_pad.view.DivItemDecoration;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
  * 菜品管理
  */
 
-public class DishesManageActivity extends AppCompatActivity {
+public class DishesManageActivity extends BaseActivity {
 
     @BindView(R.id.super_recycle_view)
     SuperRecyclerView mSuperRecyclerView;
@@ -27,9 +28,10 @@ public class DishesManageActivity extends AppCompatActivity {
     private SwipeRefreshLayout.OnRefreshListener refreshListener;
     private DishesRecycleAdapter adapter;
 
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initViews() {
         setContentView(R.layout.activity_dishes_manage);
         ButterKnife.bind(this);
 
@@ -50,6 +52,16 @@ public class DishesManageActivity extends AppCompatActivity {
         };
 
         mSuperRecyclerView.setRefreshListener(refreshListener);
+    }
+
+    @Override
+    public void bindEvents() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     private void reflash() {

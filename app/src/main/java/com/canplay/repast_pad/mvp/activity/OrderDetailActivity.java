@@ -5,13 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.view.NavigationBar;
 import com.canplay.repast_pad.view.RegularListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class OrderDetailActivity extends AppCompatActivity {
+public class OrderDetailActivity extends BaseActivity {
 
     @BindView(R.id.navigationBar)
     NavigationBar navigationBar;
@@ -32,10 +33,20 @@ public class OrderDetailActivity extends AppCompatActivity {
     @BindView(R.id.tv_pay_sure)
     TextView tvPaySure;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initViews() {
         setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void bindEvents() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 }

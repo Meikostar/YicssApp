@@ -35,7 +35,7 @@ public class DishesRecycleAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public int getItemCount() {
-        int count=0;
+        int count=8;
 
         if(datas!=null && datas.size()>0)
         {

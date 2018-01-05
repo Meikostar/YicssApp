@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<com.canplay.repast_pad.view.NavigationBar
+    app:navigationTitle="菜单管理"
+    app:navigationRight_type="img"
+    android:id="@+id/navigationBar"
+    app:right_img="@drawable/caipin_add"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+    <com.canplay.repast_pad.view.RegularListView
+        android:layout_marginTop="3dp"
+        android:divider="#00000000"
+        android:dividerHeight="0dip"
+        android:listSelector="@android:color/transparent"
+        android:id="@+id/rl_menu"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        style="@style/lv_content"/>
+</LinearLayout>

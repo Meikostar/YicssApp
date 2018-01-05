@@ -7,11 +7,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PrintSetActivity extends AppCompatActivity {
+public class PrintSetActivity extends BaseActivity {
 
     @BindView(R.id.iv_star)
     ImageView ivStar;
@@ -22,10 +23,21 @@ public class PrintSetActivity extends AppCompatActivity {
     @BindView(R.id.ll_contact)
     LinearLayout llContact;
 
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initViews() {
         setContentView(R.layout.activity_print_set);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void bindEvents() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 }

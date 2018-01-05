@@ -26,6 +26,23 @@ public class DensityUtil {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    public static float getWidth(Context context){
+        if (context==null){
+            return 0;
+        }
+        float widthPixels = context.getResources().getDisplayMetrics().widthPixels;
+        return widthPixels;
+    }
+
+    public static float getHeight(Context context){
+        if (context==null){
+            return 0;
+        }
+        float heightPixels = context.getResources().getDisplayMetrics().heightPixels;
+        return heightPixels;
+    }
+
+
     public static int px2dip(int pxValue) {
 
         final float scale = BaseApplication.getInstance().getResources().getDisplayMetrics().density;
