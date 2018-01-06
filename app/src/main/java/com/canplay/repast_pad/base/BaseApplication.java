@@ -7,6 +7,11 @@ import android.support.multidex.MultiDex;
 import com.canplay.repast_pad.base.manager.AppManager;
 import com.canplay.repast_pad.util.ExceptionHandler;
 
+import io.valuesfeng.picker.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import io.valuesfeng.picker.universalimageloader.core.ImageLoader;
+import io.valuesfeng.picker.universalimageloader.core.ImageLoaderConfiguration;
+import io.valuesfeng.picker.universalimageloader.core.assist.QueueProcessingType;
+
 
 /**
  * App基类
@@ -32,6 +37,7 @@ public class BaseApplication extends Application{
         mAppComponent.inject(this);
         ApplicationConfig.setAppInfo(this);
         //全局异常处理
+        initImageLoader(this);
         new ExceptionHandler().init(this);
 //        JPushInterface.setDebugMode(true);
 //        JPushInterface.init(this);
@@ -57,7 +63,28 @@ public class BaseApplication extends Application{
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
+    public static void initImageLoader(Context context) {
+        // This configuration tuning is custom. You can tune every option, you may tune some of them,
+        // or you can create default configuration by
+//          ImageLoaderConfiguration.createDefault(this);
+        // method.
+        int maxMemory = (int) Runtime.getRuntime().maxMemory();
+        int cacheSize = maxMemory / 8;
 
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.memoryCacheSize(cacheSize);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(50 * 1024 * 1024); // 10 MiB
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+//        config.memoryCache(new WeakMemoryCache()).threadPoolSize(1);
+        config.memoryCacheExtraOptions(480, 800);
+        config.writeDebugLogs(); // Remove for release app
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
+
+    }
     public AppComponent getAppComponent(){
         return mAppComponent;
     }

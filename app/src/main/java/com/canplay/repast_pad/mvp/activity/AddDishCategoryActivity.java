@@ -38,6 +38,7 @@ public class AddDishCategoryActivity extends BaseActivity {
     public void initViews() {
         setContentView(R.layout.activity_add_dish_category);
         ButterKnife.bind(this);
+        navigationbar.setNavigationBarListener(this);
         type=getIntent().getIntExtra("type",1);
         if(type==1){
            navigationbar.setNaviTitle("添加做法分类");

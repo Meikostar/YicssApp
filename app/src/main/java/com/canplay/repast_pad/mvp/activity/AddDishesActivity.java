@@ -69,6 +69,9 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void bindEvents() {
+        tvAdd.setOnClickListener(this);
+        tvAdd2.setOnClickListener(this);
+        rlImg.setOnClickListener(this);
         mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
             @Override
             public void call(SubscriptionBean.RxBusSendBean bean) {
@@ -158,7 +161,12 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
             case R.id.ll_type:
                 break;
             case R.id.rl_img:
-
+                PermissionGen.with(AddDishesActivity.this)
+                        .addRequestCode(PermissionConst.REQUECT_CODE_CAMERA)
+                        .permissions(Manifest.permission.CAMERA,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .request();
                 break;
 
         }

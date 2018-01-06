@@ -76,14 +76,7 @@ public class Custom_TagBtn extends RelativeLayout {
         txt_content = (TextView) selfView.findViewById(R.id.txt_content);
 
 
-        rl_delete.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                    listener.clickDelete();
-                }
-            }
-        });
+
     }
 
 }
