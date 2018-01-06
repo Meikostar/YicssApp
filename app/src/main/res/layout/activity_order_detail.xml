@@ -11,6 +11,8 @@
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      app:navigationTitle="订单详情"
+     app:navigationRight_type="img"
+     app:navigationRight_img="@drawable/dayin_od"
      />
     <com.canplay.repast_pad.view.scrollView.StickyScrollView
         android:layout_marginBottom="60dp"
@@ -37,6 +39,7 @@
                     android:layout_height="wrap_content"
                     android:text="订单号：14667388844"/>
                 <TextView
+                    android:textSize="15sp"
                     android:id="@+id/tv_pay_state"
                     android:layout_marginRight="11dp"
                     android:layout_marginTop="13dp"
@@ -68,9 +71,10 @@
                 android:gravity="center_vertical"
                 android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="51dp"
                 android:orientation="horizontal">
                 <TextView
+                    android:textSize="16sp"
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:textColor="@color/slow_black"
@@ -80,22 +84,14 @@
                 <TextView
                     android:id="@+id/tv_money"
                     android:layout_marginRight="11dp"
-
-                    android:textColor="@color/blue"
+                    android:textSize="20sp"
+                    android:textColor="@color/orange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¥480"/>
 
             </LinearLayout>
-            <TextView
 
-                android:id="@+id/tv_time"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textColor="@color/slow_black"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:text="2017.12.16  10:30:35"/>
             <com.canplay.repast_pad.view.RegularListView
                 android:layout_marginTop="6dp"
                 android:divider="#00000000"
@@ -107,17 +103,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="visible"
                 style="@style/lv_content" />
-            <TextView
 
-                android:id="@+id/tv_remark"
-                android:background="@color/white"
-                android:layout_weight="1"
-                android:paddingLeft="13dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/slow_black"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:text="备注：所有菜都不需要辣椒"/>
 
         </LinearLayout>
     </com.canplay.repast_pad.view.scrollView.StickyScrollView>

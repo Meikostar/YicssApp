@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.mvp.activity.OrderDetailActivity;
 import com.canplay.repast_pad.mvp.adapter.recycle.OrderMangerRecycleAdapter;
 import com.canplay.repast_pad.view.DivItemDecoration;
 import com.canplay.repast_pad.view.PhotoPopupWindow;
@@ -108,6 +109,13 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
             }
         };
         mSuperRecyclerView.setRefreshListener(refreshListener);
+        adapter.setClickListener(new OrderMangerRecycleAdapter.OnItemClickListener() {
+            @Override
+            public void clickListener(int poiston, String id) {
+                Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -35,6 +35,7 @@ android {
             exclude group: 'stax', module: 'stax'
             exclude group: 'xpp3', module: 'xpp3'
         }
+        compile project(':gallery')
         //Logcat
         //圆形
         //加载图片

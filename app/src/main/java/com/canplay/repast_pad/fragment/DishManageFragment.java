@@ -1,5 +1,6 @@
 package com.canplay.repast_pad.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
 import com.canplay.repast_pad.mvp.adapter.recycle.DishesRecycleAdapter;
 import com.canplay.repast_pad.view.DivItemDecoration;
 import com.canplay.repast_pad.view.PopView_NavigationBar;
@@ -104,6 +106,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_new://新建
+                startActivity(new Intent(getActivity(), AddDishesActivity.class));
                 break;
             case R.id.iv_choose://赛选
                 popView_navigationBar.showPopView();

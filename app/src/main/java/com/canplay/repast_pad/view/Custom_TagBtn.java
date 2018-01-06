@@ -66,6 +66,9 @@ public class Custom_TagBtn extends RelativeLayout {
     public void setCustomText(String nameStr) {
         txt_content.setText(nameStr);
     }
+    public void setColors(int nameStr) {
+        txt_content.setTextColor(nameStr);
+    }
 
 
     private void initView(View selfView) {

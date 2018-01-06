@@ -8,7 +8,8 @@
     <color name="blue">#1098f2</color>
     <color name="green">#78bb4f</color>
     <color name="orange">#FFA228</color>
-    
+    <color name="e6">#e6e6e6</color>
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>

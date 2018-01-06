@@ -67,7 +67,7 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
         barStyle.right_imgId = a.getResourceId(R.styleable.NavigationBar_navigationRight_img, R.drawable.caipin_add);
         barStyle.right_txt = a.getString(R.styleable.NavigationBar_navigationRight_txt);
         barStyle.right_txt_color = a.getResourceId(R.styleable.NavigationBar_navigationRight_txt_color, R.color.slow_black);
-        barStyle.left_imgId = a.getResourceId(R.styleable.NavigationBar_navigationLeft_img, R.mipmap.arrow_left);
+        barStyle.left_imgId = a.getResourceId(R.styleable.NavigationBar_navigationLeft_img, R.drawable.arrow_right_blue);
         barStyle.right_img = a.getResourceId(R.styleable.NavigationBar_right_img, R.drawable.header_arrow_bg);
         barStyle.strTitle = a.getString(R.styleable.NavigationBar_navigationTitle);
         barStyle.backgroundColor = a.getResourceId(R.styleable.NavigationBar_navigation_bg, R.color.navibar_color);

@@ -60,6 +60,7 @@ public class OrderAdapter extends BaseAdapter {
         } else {
             holder = (ResultViewHolder) view.getTag();
         }
+
         return view;
 
 
@@ -71,10 +72,20 @@ public class OrderAdapter extends BaseAdapter {
         TextView tv_count;
 
     }
-
+    public void setClickListener(ClickListener listener){
+        this.listener=listener;
+    }
+    private ClickListener listener;
+    public interface ClickListener{
+        void clickListener(int type,String id);
+    }
     static class ViewHolder {
         @BindView(R.id.tv_name)
         TextView tvName;
+        @BindView(R.id.tv_remark)
+        TextView tv_remark;
+        @BindView(R.id.tv_time)
+        TextView tv_time;
         @BindView(R.id.tv_detail)
         TextView tvDetail;
         @BindView(R.id.tv_price)

@@ -11,6 +11,8 @@ public class SubscriptionBean {
     public static int TIME=111;
     public static int CHOOSE=112;
     public static int FINISH=211;
+    public static int ADD_PEICAI=113;
+    public static int ADD_FEILEI=114;
 
 
     /**

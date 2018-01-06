@@ -1,6 +1,7 @@
 package com.canplay.repast_pad.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +25,7 @@ public class PopView_NavigationBars extends BasePopView {
     ListView listView;
 
 
-   public Activity activity;
+   public Context activity;
     public PopView_NavigationBars(Activity activity) {
         super(activity);
         this.activity=activity;

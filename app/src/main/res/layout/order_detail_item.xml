@@ -1,108 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="101.5dp">
-<LinearLayout
-    android:background="@color/white"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
-
-    <ImageView
-        android:layout_marginRight="6dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginLeft="12dp"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        />
-    <LinearLayout
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_marginTop="16dp"
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="秘制烤鸭"
-            android:textColor="@color/slow_black"
-            android:textSize="14sp"
-            />
-        <TextView
-            android:id="@+id/tv_detail"
-            android:layout_marginTop="9dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="金典基地，香蒜，不辣"
-            android:textColor="@color/color9"
-            android:textSize="11.5sp"
-            />
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_marginTop="9dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="¥ 43"
-            android:textColor="@color/yellow"
-            android:textSize="11.5sp"
-            />
-
-    </LinearLayout>
-
-
-</LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_editor"
+    android:orientation="vertical">
+    <TextView
+        android:visibility="gone"
+        android:background="@color/content_bg"
+        android:id="@+id/tv_time"
+        android:layout_weight="1"
         android:gravity="center_vertical"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="12dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
+        android:textColor="@color/slow_black"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:text="2017.12.16  10:30:35"/>
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="109.5dp">
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-            android:gravity="center"
-            android:background="@drawable/blue_ring"
-            android:id="@+id/tv_less"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:text="—"
-            android:textColor="@color/blue"
-            android:textSize="17sp"
-            />
-        <TextView
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:id="@+id/tv_count"
+            <ImageView
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="13dp"
+                android:layout_marginLeft="12dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                />
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="19dp"
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="秘制烤鸭"
+                    android:textColor="@color/slow_black"
+                    android:textSize="14sp"
+                    />
+                <TextView
+                    android:id="@+id/tv_detail"
+                    android:layout_marginTop="11dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="金典基地，香蒜，不辣"
+                    android:textColor="@color/color9"
+                    android:textSize="12.5sp"
+                    />
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_marginTop="11dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥ 43"
+                    android:textColor="@color/yellow"
+                    android:textSize="15sp"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_editor"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:textColor="@color/color9"
-            android:textSize="14sp"
-            />
-        <TextView
-            android:gravity="center"
-            android:background="@drawable/cycle_blue"
-            android:id="@+id/tv_add"
+            android:orientation="horizontal">
+            <TextView
 
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:text="+"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            />
+                android:gravity="center"
+                android:background="@drawable/blue_ring"
+                android:id="@+id/tv_less"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:text="—"
+                android:textColor="@color/blue"
+                android:textSize="17sp"
+                />
+            <TextView
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="@color/color9"
+                android:textSize="14sp"
+                />
+            <TextView
+                android:gravity="center"
+                android:background="@drawable/cycle_blue"
+                android:id="@+id/tv_add"
 
-    </LinearLayout>
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:text="+"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                />
 
-    <View
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="13dp"
+        </LinearLayout>
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="13dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color"/>
+    </RelativeLayout>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_remark"
+        android:background="@color/white"
+        android:layout_weight="1"
+        android:paddingLeft="13dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/slow_black"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color"/>
-</RelativeLayout>
+        android:layout_height="38dp"
+        android:text="备注：所有菜都不需要辣椒"/>
+</LinearLayout>
