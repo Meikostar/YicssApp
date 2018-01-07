@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     >
     <ImageView
-        android:layout_width="160dp"
+        android:layout_width="120dp"
         android:layout_height="215dp"
         android:orientation="vertical"
         android:src="@drawable/saixuan_bg"
@@ -14,13 +14,13 @@
         />
 
     <LinearLayout
-        android:layout_width="130dp"
+        android:layout_width="120dp"
         android:layout_height="220dp"
         android:orientation="vertical"
 
         android:layout_alignParentRight="true"
         android:layout_marginTop="75dp"
-        android:layout_marginRight="23dp"
+        android:layout_marginRight="8dp"
         >
         <TextView
 

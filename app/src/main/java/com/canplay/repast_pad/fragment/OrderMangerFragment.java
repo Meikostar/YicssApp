@@ -175,7 +175,7 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
     private PopView_NavigationBar popView_navigationBar;
     private void initPopView() {
 //        mWindowAddPhoto = new PhotoPopupWindow(getActivity());
-        popView_navigationBar = new PopView_NavigationBar(getActivity());
+        popView_navigationBar = new PopView_NavigationBar(getActivity(),1);
 
 
         popView_navigationBar.setClickListener(new PopView_NavigationBar.ItemCliskListeners() {

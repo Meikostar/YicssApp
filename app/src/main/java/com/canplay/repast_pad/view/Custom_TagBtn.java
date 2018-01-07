@@ -3,12 +3,18 @@ package com.canplay.repast_pad.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.util.DensityUtil;
+
+import static android.R.attr.width;
 
 
 /**
@@ -24,12 +30,14 @@ public class Custom_TagBtn extends RelativeLayout {
     private View rl_bg;
     public View rl_delete;
     public TextView txt_content;
+    public ImageView iv_delelte;
+    private Context context;
     private Custom_TagBtnListener listener;
 
     private LayoutInflater inflater;
 
     public interface Custom_TagBtnListener {
-        void clickDelete();
+        void clickDelete(int type);
     }
 
     public void setCustom_TagBtnListener(Custom_TagBtnListener listener) {
@@ -39,14 +47,19 @@ public class Custom_TagBtn extends RelativeLayout {
 
     public Custom_TagBtn(Context context) {
         this(context, null);
+        this.context=context;
     }
 
     public Custom_TagBtn(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        this.context=context;
     }
-
+    public void show(){
+        iv_delelte.setVisibility(VISIBLE);
+    }
     public Custom_TagBtn(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context=context;
         inflater = LayoutInflater.from(context);
         selfView = inflater.inflate(R.layout.custom_tag, this);
         initView(selfView);
@@ -67,15 +80,36 @@ public class Custom_TagBtn extends RelativeLayout {
         txt_content.setText(nameStr);
     }
     public void setColors(int nameStr) {
-        txt_content.setTextColor(nameStr);
+        txt_content.setTextColor(getResources().getColor(nameStr));
     }
 
 
     private void initView(View selfView) {
 
         txt_content = (TextView) selfView.findViewById(R.id.txt_content);
+        iv_delelte = (ImageView) selfView.findViewById(R.id.iv_delelte);
+        txt_content.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.clickDelete(1);
+            }
+        });
+        txt_content.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.clickDelete(2);
+            }
+        });
 
 
+    }
+    public void setSize(int with,int height,int size){
+
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) txt_content.getLayoutParams();
+        lp.width = DensityUtil.dip2px(context, with);
+        lp.height=DensityUtil.dip2px(context, height);
+        txt_content.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
+        txt_content.setLayoutParams(lp);
 
     }
 

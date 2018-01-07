@@ -17,12 +17,14 @@ import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.base.RxBus;
 import com.canplay.repast_pad.base.SubscriptionBean;
+import com.canplay.repast_pad.mvp.model.BaseType;
 import com.canplay.repast_pad.permission.PermissionConst;
 import com.canplay.repast_pad.permission.PermissionGen;
 import com.canplay.repast_pad.permission.PermissionSuccess;
 import com.canplay.repast_pad.util.DensityUtil;
 import com.canplay.repast_pad.view.Custom_TagBtn;
 import com.canplay.repast_pad.view.FlexboxLayout;
+import com.canplay.repast_pad.view.NavigationBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,13 +62,23 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
     TextView tvAdd2;
     @BindView(R.id.fbl_garnish)
     FlexboxLayout fblGarnish;
+    @BindView(R.id.navigationBar)
+    NavigationBar navigationBar;
     private Subscription mSubscription;
     @Override
     public void initViews() {
         setContentView(R.layout.activity_add_dishes);
         ButterKnife.bind(this);
+        navigationBar.setNavigationBarListener(this);
+
     }
 
+    @Override
+    public void navigationRight() {
+        super.navigationRight();
+    }
+
+    private List<BaseType> datas=new ArrayList<>();
     @Override
     public void bindEvents() {
         tvAdd.setOnClickListener(this);
@@ -76,10 +88,14 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void call(SubscriptionBean.RxBusSendBean bean) {
                 if (bean == null) return;
+                 datas.clear();
+                List<BaseType> content = (List<BaseType>) bean.content;
                 if(bean.type==SubscriptionBean.ADD_FEILEI){
-
+                    datas.addAll(content);
+                    setTagAdapter(fblPractice);
                 }else if(bean.type==SubscriptionBean.ADD_PEICAI){
-
+                    datas.addAll(content);
+                    setTagAdapter(fblGarnish);
                 }
 
             }
@@ -97,21 +113,19 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
 
     }
 
-    private ArrayList<String> tags = new ArrayList<>();//标签数据
-
     /**
      * 初始化标签适配器
      */
     private void setTagAdapter(FlexboxLayout fblGarnish) {
         fblGarnish.removeAllViews();
-        if (tags.size() > 0) {
-            for (int i = 0; i < tags.size(); i++) {
-                final Custom_TagBtn tagBtn = createBaseFlexItemTextView(tags.get(i),1);
+        if (datas.size() > 0) {
+            for (int i = 0; i < datas.size(); i++) {
+                final Custom_TagBtn tagBtn = createBaseFlexItemTextView(datas.get(i));
                 final int position = i;
                 tagBtn.setCustom_TagBtnListener(new Custom_TagBtn.Custom_TagBtnListener() {
                     @Override
-                    public void clickDelete() {
-                        for (int j = 0; j < tags.size(); j++) {
+                    public void clickDelete(int type) {
+                        for (int j = 0; j < datas.size(); j++) {
 
                         }
                     }
@@ -126,21 +140,19 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
      * @param content
      * @return
      */
-    public Custom_TagBtn createBaseFlexItemTextView(String content,int type) {
+    public Custom_TagBtn createBaseFlexItemTextView(BaseType content) {
         FlexboxLayout.LayoutParams lp = new FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.topMargin = DensityUtil.dip2px(this, 10);
         lp.leftMargin = DensityUtil.dip2px(this, 15);
 
-        Custom_TagBtn view = (Custom_TagBtn) LayoutInflater.from(this).inflate(R.layout.dish_item, null);
-        if(type==1){
-            view.setBg(R.drawable.blue_regle);
-        }else {
-            view.setBg(R.drawable.white_regle);
-        }
 
+        Custom_TagBtn view = (Custom_TagBtn) LayoutInflater.from(this).inflate(R.layout.dish_item, null);
+        view.setBg(R.drawable.hui_regle);
+        view.setColors(R.color.slow_black);
+        view.setSize(55,30,13);
         view.setLayoutParams(lp);
-        view.setCustomText(content);
+        view.setCustomText(content.name);
 
         return view;
     }
@@ -190,10 +202,18 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                 case 4:
                     List<String> imgs = data.getStringArrayListExtra(ImageSelectActivity.EXTRA_RESULT_SELECTION);
                     path = imgs.get(0);
+                    ivImg.setVisibility(View.VISIBLE);
+                    rlImg.setVisibility(View.GONE);
                     Glide.with(this).load(path).asBitmap().into(ivImg);
                     break;
 
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSubscription.unsubscribe();
     }
 }

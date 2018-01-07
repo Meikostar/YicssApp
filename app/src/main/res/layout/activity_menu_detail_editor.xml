@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:infiniteCard="http://schemas.android.com/apk/res-auto"
+   >
+    <ImageView
+       android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+
+      android:src="@drawable/menu_bgs" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.01dp"
+        android:id="@+id/line"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height"
+        android:id="@+id/relativeLayout">
+
+        <LinearLayout
+            android:id="@+id/topview_left_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/ease_common_tab_bg"
+            >
+
+            <ImageView
+                android:id="@+id/top_view_back"
+                android:layout_width="@dimen/header_right_iconHw"
+                android:layout_height="@dimen/header_right_iconHw"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/header_left_paddingLeft"
+                android:layout_marginRight="@dimen/header_left_paddingLeft"
+                android:src="@drawable/arrow_left_whiite" />
+        </LinearLayout>
+
+        <TextView
+
+            android:id="@+id/navigationbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="菜单详情"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_big" />
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+
+
+                <TextView
+                    android:padding="5dp"
+                    android:id="@+id/tv_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_marginRight="1dp"
+                    android:text="删除"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+                <TextView
+                    android:padding="8dp"
+                    android:id="@+id/tv_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_marginRight="6dp"
+                    android:text="编辑"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.canplay.repast_pad.view.scrollView.StickyScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/viewpager"
+        android:layout_marginBottom="50dp">
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="275dp"/>
+            <TextView
+                android:layout_marginTop="17dp"
+                android:id="@+id/tv_chines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="秘制烤鸭"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+            <View
+                android:layout_marginTop="3dp"
+                android:layout_width="55dp"
+                android:background="@color/blue"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/tv_english"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="SECRET ROAST DCUK"
+                android:textColor="@color/color6"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="17dp"
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="￥  120"
+                android:textColor="#ffc618"
+                android:textSize="18sp" />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="规格："
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
+                android:id="@+id/tv_specif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="S蔬菜基地，仅需套餐酱料不要"
+                android:textColor="@color/color6"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_marginTop="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="口味："
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
+                android:id="@+id/tv_taste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="S蔬菜基地，仅需套餐酱料不要"
+                android:textColor="@color/color6"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_marginTop="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="酱料："
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
+                android:id="@+id/tv_sauce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="S蔬菜基地，仅需套餐酱料不要"
+                android:textColor="@color/color6"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </com.canplay.repast_pad.view.scrollView.StickyScrollView>
+
+        <android.support.v4.view.ViewPager
+            android:layout_marginTop="15dp"
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingEnd="38dp"
+            android:paddingLeft="38dp"
+            android:paddingRight="38dp"
+            android:paddingStart="38dp"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/linecolor"/>
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="12dp"
+        android:id="@+id/tv_staus"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:text="售空"
+        android:textColor="@color/blue"
+        android:textSize="16sp" />
+</RelativeLayout>

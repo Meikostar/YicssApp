@@ -82,7 +82,10 @@
         <activity android:name=".mvp.activity.PrintSetActivity" />
         <activity android:name=".mvp.activity.OrderDetailActivity" />
         <activity android:name=".mvp.activity.AddDishCategoryActivity" />
-        <activity android:name=".mvp.activity.AddDishesActivity"></activity>
+        <activity android:name=".mvp.activity.AddDishesActivity" />
+        <activity android:name=".mvp.activity.AddMenuActivity" />
+        <activity android:name=".mvp.activity.MenuDetailActivity" />
+        <activity android:name=".mvp.activity.MenuDetailEditorActivity"></activity>
     </application>
 
 </manifest>

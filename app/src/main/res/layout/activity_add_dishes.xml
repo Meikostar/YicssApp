@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <com.canplay.repast_pad.view.NavigationBar
+        android:id="@+id/navigationBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationRight_txt="保存"
@@ -224,8 +225,9 @@
                         android:textColor="@color/slow_black" />
 
                     <ImageView
-                        android:layout_width="13dp"
-                        android:layout_height="18dp"
+                        android:layout_width="12dp"
+                        android:layout_height="16dp"
+                        android:layout_marginRight="15dp"
                         android:src="@drawable/arrow_lefts" />
                 </LinearLayout>
 
@@ -316,8 +318,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/content_bg"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/white"
                     android:minHeight="60dp"
                     android:paddingBottom="10dp"
                     app:flexDirection="row"
@@ -365,14 +367,15 @@
                     android:background="@color/linecolor" />
 
                 <com.canplay.repast_pad.view.FlexboxLayout
+
                     android:id="@+id/fbl_garnish"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/content_bg"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/white"
                     android:minHeight="60dp"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="30dp"
                     app:flexDirection="row"
                     app:flexWrap="wrap"
                     app:justifyContent="flex_start" />

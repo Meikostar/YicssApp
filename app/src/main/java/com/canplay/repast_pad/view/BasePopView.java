@@ -19,7 +19,7 @@ public abstract class BasePopView implements View.OnClickListener{
 		infalter = LayoutInflater.from(activity);
 		popView = initPopView(infalter);
 	}
-
+   public int type;//1代表全透
 	protected abstract View initPopView(LayoutInflater infalter);
 
 	// 显示选择图片的popview
@@ -28,7 +28,13 @@ public abstract class BasePopView implements View.OnClickListener{
 				LayoutParams.MATCH_PARENT);
 		pop.setFocusable(true);
 		pop.setOutsideTouchable(true);
-		ColorDrawable dw = new ColorDrawable(0xb0000000);
+		ColorDrawable dw;
+		if(type!=0){
+			 dw = new ColorDrawable(0x00000000);
+		}else {
+			dw = new ColorDrawable(0xb0000000);
+		}
+
 		// 设置SelectPicPopupWindow弹出窗体的背景
 		pop.setBackgroundDrawable(dw);
 		pop.showAtLocation(activity.getWindow().getDecorView(), Gravity.RIGHT

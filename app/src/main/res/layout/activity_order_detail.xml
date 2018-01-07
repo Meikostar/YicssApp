@@ -21,8 +21,9 @@
         android:layout_height="match_parent"
         android:background="@color/content_bg">
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:background="@color/white"
@@ -50,23 +51,24 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/line_color"/>
+
             <TextView
 
                 android:id="@+id/tv_table_code"
                 android:background="@color/white"
                 android:layout_weight="1"
                 android:paddingLeft="13dp"
-                android:paddingTop="13dp"
+                android:layout_marginTop="13dp"
                 android:gravity="center_vertical"
                 android:paddingBottom="12dp"
                 android:textColor="@color/slow_black"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:text="桌号：30"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color"/>
             <LinearLayout
                 android:gravity="center_vertical"
                 android:background="@color/white"

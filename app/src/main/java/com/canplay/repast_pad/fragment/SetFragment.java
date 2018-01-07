@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.view.BaseTeatDialog;
+import com.canplay.repast_pad.view.PhotoPopupWindow;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +40,11 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
     Unbinder unbinder;
     @BindView(R.id.tv_tea_money)
     TextView teaMoney;
+    @BindView(R.id.line)
+    View line;
+
+    private PhotoPopupWindow mWindowAddPhoto;
+    private BaseTeatDialog dialog;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +54,8 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set, null);
         unbinder = ButterKnife.bind(this, view);
+                mWindowAddPhoto = new PhotoPopupWindow(getActivity());
+               dialog = new BaseTeatDialog(getActivity(),line);
         initListener();
         return view;
     }
@@ -64,7 +73,12 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
         llTea.setOnClickListener(this);
         llPrint.setOnClickListener(this);
         llExit.setOnClickListener(this);
+        mWindowAddPhoto.setSureListener(new PhotoPopupWindow.ClickListener() {
+            @Override
+            public void clickListener() {
 
+            }
+        });
     }
 
     private void initView() {
@@ -87,10 +101,13 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
             case R.id.ll_garnish://配菜
                 break;
             case R.id.ll_tea://茶位
+                dialog.show();
+
                 break;
             case R.id.ll_print://打印
                 break;
             case R.id.ll_exit://退出
+                mWindowAddPhoto.showAsDropDown(llDishe);
                 break;
         }
     }

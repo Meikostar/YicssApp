@@ -36,7 +36,7 @@ public class PhotoPopupWindow extends PopupWindow{
         tv_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listener.clickListener();
                 dismiss();
             }
         });
@@ -48,7 +48,13 @@ public class PhotoPopupWindow extends PopupWindow{
         });
     }
 
-
+   public void setSureListener(ClickListener listener){
+       this.listener=listener;
+   }
+   private ClickListener listener;
+   public interface  ClickListener{
+       void clickListener();
+   }
     @Override
     public void showAsDropDown(View anchor) {
         init();

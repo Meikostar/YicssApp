@@ -28,8 +28,9 @@ public class PopView_NavigationBar extends BasePopView {
     TextView tvCancel;
 
 
-    public PopView_NavigationBar(Activity activity) {
+    public PopView_NavigationBar(Activity activity,int type) {
         super(activity);
+        this.type=type;
     }
 
     public ItemCliskListeners listeners;

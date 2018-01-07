@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
-        android:layout_width="160dp"
+        android:layout_width="130dp"
         android:layout_height="215dp"
         android:orientation="vertical"
         android:src="@drawable/saixuan_bg"
@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:layout_alignParentRight="true"
         android:layout_marginTop="67dp"
-        android:layout_marginRight="23dp">
+        android:layout_marginRight="8dp">
         <ListView
             style="@style/lv_content"
             android:id="@+id/list_view"

@@ -7,6 +7,7 @@
 <com.canplay.repast_pad.view.NavigationBar
     app:navigationTitle="菜单管理"
     app:navigationRight_type="img"
+    app:navigationLeft_type="gone"
     android:id="@+id/navigationBar"
     app:right_img="@drawable/caipin_add"
     android:layout_width="match_parent"

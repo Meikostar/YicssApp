@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
@@ -25,6 +26,10 @@ public class MenuAdapter extends BaseAdapter {
 
     public interface ItemCliks{
         void getItem(int poistion, String name, int id);
+    }
+    private ItemCliks listener;
+    public void setClickListener(ItemCliks listener){
+        this.listener=listener;
     }
     public void setData(List<PROVINCE> list){
         notifyDataSetChanged();
@@ -53,6 +58,7 @@ public class MenuAdapter extends BaseAdapter {
             view = LayoutInflater.from(mContext).inflate(R.layout.menu_item, parent, false);
             holder.name= (TextView) view.findViewById(R.id.tv_name);
             holder.tv_count= (TextView) view.findViewById(R.id.tv_count);
+            holder.ll_item= (LinearLayout) view.findViewById(R.id.ll_item);
             view.setTag(holder);
         }else{
             holder = (ResultViewHolder) view.getTag();
@@ -62,6 +68,12 @@ public class MenuAdapter extends BaseAdapter {
          }else {
              holder.tv_count.setText(position+1);
          }
+         holder.ll_item.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 listener.getItem(0,"",0);
+             }
+         });
         return view;
 
 
@@ -71,6 +83,7 @@ public class MenuAdapter extends BaseAdapter {
 
         TextView name;
         TextView tv_count;
+        LinearLayout ll_item;
 
     }
 }

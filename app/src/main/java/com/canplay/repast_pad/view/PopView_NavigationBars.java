@@ -26,8 +26,9 @@ public class PopView_NavigationBars extends BasePopView {
 
 
    public Context activity;
-    public PopView_NavigationBars(Activity activity) {
+    public PopView_NavigationBars(Activity activity,int type) {
         super(activity);
+        this.type=type;
         this.activity=activity;
     }
 

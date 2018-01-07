@@ -50,7 +50,7 @@ public class PowTypeAdapter extends BaseAdapter {
         ResultViewHolder holder;
         if (view == null){
             holder = new ResultViewHolder();
-            view = LayoutInflater.from(mContext).inflate(R.layout.list_pop_itemview, parent, false);
+            view =View.inflate(mContext,R.layout.list_pop_itemview, null);
             holder.name= (TextView) view.findViewById(R.id.tv_name);
 
             view.setTag(holder);

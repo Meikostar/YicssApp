@@ -122,8 +122,8 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
         list.add("沙拉类");
         list.add("冷切类");
         list.add("甜品类");
-//        mWindowAddPhoto = new PhotoPopupWindow(getActivity());
-        popView_navigationBar = new PopView_NavigationBars(getActivity());
+
+        popView_navigationBar = new PopView_NavigationBars(getActivity(),1);
 
         popView_navigationBar.showData(list);
         popView_navigationBar.setClickListener(new PopView_NavigationBars.ItemCliskListeners() {

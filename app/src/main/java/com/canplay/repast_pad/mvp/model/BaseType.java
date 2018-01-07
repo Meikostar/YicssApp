@@ -8,6 +8,7 @@ public class BaseType {
     public boolean isChoos;
     public String name;
     public String id;
+    public int status;
 
 
 }
