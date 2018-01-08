@@ -3,6 +3,7 @@ package com.canplay.repast_pad.mvp.http;
 import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.bean.USER;
 import com.canplay.repast_pad.mvp.model.ApkUrl;
+import com.canplay.repast_pad.mvp.model.BaseType;
 import com.canplay.repast_pad.mvp.model.DEVICE;
 import com.canplay.repast_pad.mvp.model.Resps;
 import com.canplay.repast_pad.mvp.model.RespsTable;
@@ -34,31 +35,31 @@ public interface BaseApi {
      * @return
      */
     @POST("merchant/getCookBookClassifyList")
-    Observable<List<COOK>> getCookClassifyList(@QueryMap Map<String, String> options);
+    Observable<List<BaseType>> getCookClassifyList(@QueryMap Map<String, String> options);
 
     /**
-     * 手表端推送（自动转移和手动转移）
+     *
      * @param options
      * @return
      */
-    @POST("wx/watchPushMessage")
-    Observable<String> watchPushMessage(@QueryMap Map<String, String> options);
+    @POST("merchant/addCookBookClassify")
+    Observable<BaseType> addBookClassify(@QueryMap Map<String, String> options);
 
     /**
-     * 重新绑定
+     *
      * @param options
      * @return
      */
-    @POST("wx/deviceSignOut")
-    Observable<String> deviceSignOut(@QueryMap Map<String, String> options);
+    @POST("merchant/delCookBookClassify")
+    Observable<String> delCookClassify(@QueryMap Map<String, String> options);
 
     /**
-     * 获取转移的其他手表
+     *
      * @param options
      * @return
      */
-    @POST("wx/getWatchList")
-    Observable<RespsTable> getWatchList(@QueryMap Map<String, String> options);
+    @POST(" merchant/getFoodClassifyList")
+    Observable<List<BaseType>> getFoodClassifyList(@QueryMap Map<String, String> options);
 
 
     /**
@@ -66,26 +67,36 @@ public interface BaseApi {
      * @param options
      * @return
      */
-    @POST("wx/deviceInfo")
-    Observable<DEVICE> deviceInfo(@QueryMap Map<String, String> options);
+    @POST("merchant/getRecipesClassifyList")
+    Observable<List<BaseType>> getRecipesClassifyList(@QueryMap Map<String, String> options);
 
     /**
      * @param options
      * @return
      */
-    @GET("wx/getInit")
-    Observable<Version> getInit(@QueryMap Map<String, String> options);
+    @POST("merchant/addFoodClassify")
+    Observable<BaseType> addFoodClassify(@QueryMap Map<String, String> options);
 
     /**
      * @param options
      * @return
      */
-    @POST("wx/deletePushInfo")
-    Observable<String> deletePushInfo(@QueryMap Map<String, String> options);
+    @POST("merchant/delFoodClassify")
+    Observable<String> delFoodClassify(@QueryMap Map<String, String> options);
     /**
      *   apk下载 POST
      * @return
      */
-    @POST("wx/getApkInfo")
-    Observable<ApkUrl> getApkInfo(@QueryMap Map<String, String> options);
+    @POST("merchant/addRecipesClassify")
+    Observable<BaseType> addRecipesClassify(@QueryMap Map<String, String> options);
+
+    /**
+     *   apk下载 POST
+     * @return
+     */
+    @POST("merchant/delRecipesClassify")
+    Observable<String> delRecipesClassify(@QueryMap Map<String, String> options);
+
+
+
 }

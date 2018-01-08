@@ -215,11 +215,9 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
         }
     }
     public void setRightTxt(String name){
-        img_right.setVisibility(GONE);
+        txt_right.setBackground(null);
         txt_right.setVisibility(VISIBLE);
-        txt_right.setText(barStyle.right_txt);
-        txt_right.setTextColor(getResources().getColor(R.color.slow_black));
-        txt_right.setText(name);
+       txt_right.setText(name);
     }
 
     public class NavigationBarStyle {
@@ -235,5 +233,8 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
     }
     public void setColors(int id){
         txt_right.setTextColor(getResources().getColor(id));
+    }
+    public void hide(){
+        txt_right.setVisibility(GONE);
     }
 }

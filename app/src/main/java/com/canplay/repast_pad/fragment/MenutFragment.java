@@ -57,7 +57,7 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
         unbinder = ButterKnife.bind(this, view);
         DaggerBaseComponent.builder().appComponent(((BaseApplication) getActivity().getApplication()).getAppComponent()).build().inject(this);
         presenter.attachView(this);
-        presenter.getCookClassifyList();
+
         initView();
         initListener();
 

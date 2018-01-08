@@ -100,11 +100,20 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
             case R.id.ll_dishe://菜品
                 Intent intent3 = new Intent(getActivity(), AddMenueCategoryActivity.class);
                 intent3.putExtra("type",1);
+                intent3.putExtra("name","菜品分类");
                 startActivity(intent3);
                 break;
             case R.id.ll_practice://做法
+                Intent intent4 = new Intent(getActivity(), AddMenueCategoryActivity.class);
+                intent4.putExtra("type",3);
+                intent4.putExtra("name","做法分类");
+                startActivity(intent4);
                 break;
             case R.id.ll_garnish://配菜
+                Intent intent5 = new Intent(getActivity(), AddMenueCategoryActivity.class);
+                intent5.putExtra("type",4);
+                intent5.putExtra("name","配菜分类");
+                startActivity(intent5);
                 break;
             case R.id.ll_tea://茶位
                 dialog.show();

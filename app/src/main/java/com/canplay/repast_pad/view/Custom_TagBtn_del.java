@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,10 +26,11 @@ public class Custom_TagBtn_del extends RelativeLayout {
     private View selfView;
 
     //
-    private View rl_bg;
+
     public View rl_delete;
     public TextView txt_content;
     public ImageView iv_delelte;
+    public RelativeLayout rl_bg;
     private Context context;
     private Custom_TagBtnListener listener;
     private boolean isClick;
@@ -88,13 +90,14 @@ public class Custom_TagBtn_del extends RelativeLayout {
 
         txt_content = (TextView) selfView.findViewById(R.id.txt_content);
         iv_delelte = (ImageView) selfView.findViewById(R.id.iv_delelte);
+        rl_bg = (RelativeLayout) selfView.findViewById(R.id.rl_bg);
         txt_content.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.clickDelete(1);
             }
         });
-        txt_content.setOnClickListener(new OnClickListener() {
+        iv_delelte.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.clickDelete(2);
@@ -113,11 +116,11 @@ public class Custom_TagBtn_del extends RelativeLayout {
     }
     public void setSize(int with,int height,int size){
 
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) txt_content.getLayoutParams();
+        ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) rl_bg.getLayoutParams();
         lp.width = DensityUtil.dip2px(context, with);
         lp.height=DensityUtil.dip2px(context, height);
         txt_content.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
-        txt_content.setLayoutParams(lp);
+        rl_bg.setLayoutParams(lp);
 
     }
 

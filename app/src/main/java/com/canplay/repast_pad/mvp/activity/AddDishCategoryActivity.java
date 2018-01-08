@@ -12,9 +12,13 @@ import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
+import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.RxBus;
 import com.canplay.repast_pad.base.SubscriptionBean;
+import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_pad.mvp.model.BaseType;
+import com.canplay.repast_pad.mvp.present.CookClassifyContract;
+import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
 import com.canplay.repast_pad.util.DensityUtil;
 import com.canplay.repast_pad.view.Custom_TagBtn;
 import com.canplay.repast_pad.view.FlexboxLayout;
@@ -23,12 +27,15 @@ import com.canplay.repast_pad.view.NavigationBar;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddDishCategoryActivity extends BaseActivity {
+public class AddDishCategoryActivity extends BaseActivity implements CookClassifyContract.View{
 
-
+    @Inject
+    CookClassifyPresenter presenter;
     @BindView(R.id.navigationbar)
     NavigationBar navigationbar;
     @BindView(R.id.fbl_tag)
@@ -40,7 +47,10 @@ public class AddDishCategoryActivity extends BaseActivity {
     public void initViews() {
         setContentView(R.layout.activity_add_dish_category);
         ButterKnife.bind(this);
+        DaggerBaseComponent.builder().appComponent(((BaseApplication) getApplication()).getAppComponent()).build().inject(this);
+        presenter.attachView(this);
         navigationbar.setNavigationBarListener(this);
+        navigationbar.setRightTxt("保存");
         type=getIntent().getIntExtra("type",1);
         if(type==1){
            navigationbar.setNaviTitle("添加做法分类");
@@ -63,6 +73,7 @@ public class AddDishCategoryActivity extends BaseActivity {
             tags.add(baseType4);
             setTagAdapter();
         }else if(type==2){
+            presenter.getFoodClassifyList();
             BaseType baseType = new BaseType();
             baseType.name="土豆";
             BaseType baseType1 = new BaseType();
@@ -81,9 +92,9 @@ public class AddDishCategoryActivity extends BaseActivity {
             tags.add(baseType3);
             tags.add(baseType4);
             tags.add(baseType5);
-            setTagAdapter();
+
         }else if(type==3){
-            navigationbar.setNaviTitle("菜品分类");
+            navigationbar.setNaviTitle("添加菜品分类");
             BaseType baseType = new BaseType();
             baseType.name="土豆";
             BaseType baseType1 = new BaseType();
@@ -217,6 +228,22 @@ public class AddDishCategoryActivity extends BaseActivity {
         return view;
     }
 
+        @Override
+        public <T> void toList(List<T> list, int type) {
+
+        }
+
+        @Override
+        public <T> void toEntity(T entity, int type) {
+            tags= (List<BaseType>) entity;
+            setTagAdapter();
+        }
+
+        @Override
+        public void showTomast(String msg) {
+
+        }
 
 
 }
+

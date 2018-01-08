@@ -89,13 +89,18 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
             public void call(SubscriptionBean.RxBusSendBean bean) {
                 if (bean == null) return;
                  datas.clear();
-                List<BaseType> content = (List<BaseType>) bean.content;
+                List<BaseType> content ;
                 if(bean.type==SubscriptionBean.ADD_FEILEI){
+                    content = (List<BaseType>) bean.content;
                     datas.addAll(content);
                     setTagAdapter(fblPractice);
                 }else if(bean.type==SubscriptionBean.ADD_PEICAI){
+                    content = (List<BaseType>) bean.content;
                     datas.addAll(content);
                     setTagAdapter(fblGarnish);
+                }else if(bean.type==SubscriptionBean.ADD_MENU){
+                    BaseType  beans = (BaseType) bean.content;
+                    tvType.setText(beans.name);
                 }
 
             }
