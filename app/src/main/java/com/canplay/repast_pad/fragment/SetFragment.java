@@ -1,5 +1,6 @@
 package com.canplay.repast_pad.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
+import com.canplay.repast_pad.mvp.activity.AddMenueCategoryActivity;
 import com.canplay.repast_pad.view.BaseTeatDialog;
 import com.canplay.repast_pad.view.PhotoPopupWindow;
 
@@ -95,6 +98,9 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ll_dishe://菜品
+                Intent intent3 = new Intent(getActivity(), AddMenueCategoryActivity.class);
+                intent3.putExtra("type",1);
+                startActivity(intent3);
                 break;
             case R.id.ll_practice://做法
                 break;

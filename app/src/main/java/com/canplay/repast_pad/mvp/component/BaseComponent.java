@@ -2,7 +2,10 @@ package com.canplay.repast_pad.mvp.component;
 
 
 import com.canplay.repast_pad.base.AppComponent;
+import com.canplay.repast_pad.fragment.DishManageFragment;
+import com.canplay.repast_pad.fragment.MenutFragment;
 import com.canplay.repast_pad.mvp.ActivityScope;
+import com.canplay.repast_pad.mvp.activity.LoginActivity;
 import com.canplay.repast_pad.mvp.activity.MainActivity;
 
 import dagger.Component;
@@ -14,6 +17,9 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class)
 public interface BaseComponent{
 
-
+    void inject(LoginActivity binderActivity);
+    void inject(MainActivity binderActivity);
+    void inject(DishManageFragment binderActivity);
+    void inject(MenutFragment binderActivity);
 
 }

@@ -24,7 +24,10 @@
     <string name="count">账号</string>
     <string name="message">消息</string>
 
-
+    <string name="qingshurusjh">请输入手机号</string>
+    <string name="jingshuryzm">请输入验证码</string>
+    <string name="shoujigesibzq">手机号码格式不正确</string>
+    <string name="mimanull">密码不能为空</string>
     <string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">松开刷新数据</string>
     <string name="xlistview_header_hint_loading">正在加载...</string>

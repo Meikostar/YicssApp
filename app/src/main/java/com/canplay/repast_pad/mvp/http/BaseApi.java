@@ -1,11 +1,14 @@
 package com.canplay.repast_pad.mvp.http;
 
+import com.canplay.repast_pad.bean.COOK;
+import com.canplay.repast_pad.bean.USER;
 import com.canplay.repast_pad.mvp.model.ApkUrl;
 import com.canplay.repast_pad.mvp.model.DEVICE;
 import com.canplay.repast_pad.mvp.model.Resps;
 import com.canplay.repast_pad.mvp.model.RespsTable;
 import com.canplay.repast_pad.mvp.model.Version;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.http.GET;
@@ -14,24 +17,24 @@ import retrofit2.http.QueryMap;
 import rx.Observable;
 
 
-public interface MessageApi {
+public interface BaseApi {
 
 
     /**
-     * 获取消息列表
+     * Login
      * @param options
      * @return
      */
-    @POST("wx/getWatchMessageList")
-    Observable<Resps> getWatchMessageList(@QueryMap Map<String, String> options);
+    @POST("merchant/merchantLogin")
+    Observable<USER> Login(@QueryMap Map<String, String> options);
 
     /**
      * 完成
-     * @param options
+     * @param options 菜品分类列表 post /
      * @return
      */
-    @POST("wx/finishPushMessage")
-    Observable<String> finishPushMessage(@QueryMap Map<String, String> options);
+    @POST("merchant/getCookBookClassifyList")
+    Observable<List<COOK>> getCookClassifyList(@QueryMap Map<String, String> options);
 
     /**
      * 手表端推送（自动转移和手动转移）

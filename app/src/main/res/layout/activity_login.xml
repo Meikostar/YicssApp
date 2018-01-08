@@ -28,7 +28,7 @@
            android:background="@drawable/login_w"
            android:gravity="center_vertical"
            android:layout_width="match_parent"
-           android:layout_height="55dp"
+           android:layout_height="65dp"
            android:orientation="horizontal">
            <ImageView
                android:src="@drawable/yonghu"
@@ -39,13 +39,12 @@
                android:textSize="14sp"
                android:layout_marginLeft="12dp"
                android:layout_width="fill_parent"
-               android:layout_height="45dp"
+               android:layout_height="35dp"
                android:background="@null"
                android:gravity="center_vertical"
                android:text=""
                android:hint="用户名"
                android:id="@+id/et_user"
-               android:inputType="textPassword"
                android:maxLength="11"
                android:textColor="@color/slow_black"
                android:textColorHint="@color/blue"/>
@@ -68,7 +67,7 @@
                android:layout_marginLeft="12dp"
                android:id="@+id/et_pws"
                android:layout_width="fill_parent"
-               android:layout_height="45dp"
+               android:layout_height="35dp"
                android:background="@null"
                android:gravity="center_vertical"
                android:text=""

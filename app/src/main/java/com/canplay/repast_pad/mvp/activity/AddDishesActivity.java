@@ -171,6 +171,10 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                 startActivity(intent1);
                 break;
             case R.id.ll_type:
+                Intent intent3 = new Intent(AddDishesActivity.this, AddMenueCategoryActivity.class);
+                intent3.putExtra("type",2);
+                startActivity(intent3);
+
                 break;
             case R.id.rl_img:
                 PermissionGen.with(AddDishesActivity.this)

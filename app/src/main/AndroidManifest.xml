@@ -56,7 +56,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".mvp.activity.MainActivity"
+            android:name=".mvp.activity.LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -76,7 +76,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".mvp.activity.LoginActivity" />
+
+        <activity android:name=".mvp.activity.MainActivity" />
+        <activity android:name=".mvp.activity.AddMenueCategoryActivity" />
         <activity android:name=".mvp.activity.MenuManageActivity" />
         <activity android:name=".mvp.activity.DishesManageActivity" />
         <activity android:name=".mvp.activity.PrintSetActivity" />

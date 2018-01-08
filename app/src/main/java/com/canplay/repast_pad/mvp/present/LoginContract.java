@@ -7,23 +7,23 @@ import com.canplay.repast_pad.base.BaseView;
 
 import java.util.List;
 
-public class ContactContract {
-    interface View extends BaseView {
+public class LoginContract {
+    public    interface View extends BaseView {
 
-        <T> void toList(List<T> list, int type, int... refreshType);
+//        <T> void toList(List<T> list, int type, int... refreshType);
         <T> void toEntity(T entity);
 
-        void toNextStep(int type);
+//        void toNextStep(int type);
 
         void showTomast(String msg);
     }
 
-    interface Presenter extends BasePresenter<View> {
+    public  interface Presenter extends BasePresenter<View> {
 
         /**
          * 获得联系人列表
          */
-        void getContacts(long userId, Context context);
+        void goLogin(String account, String pwd);
 
     }
 }

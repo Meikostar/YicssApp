@@ -78,7 +78,7 @@ public class ClearEditText extends EditText implements
             mClearDrawable = getResources().getDrawable(R.drawable.delete);
         }   
           
-        mClearDrawable.setBounds(0-10, 0, mClearDrawable.getIntrinsicWidth()-10, mClearDrawable.getIntrinsicHeight());
+        mClearDrawable.setBounds(0-20, 0, mClearDrawable.getIntrinsicWidth()-20, mClearDrawable.getIntrinsicHeight());
 
         //默认设置隐藏图标
         setClearIconVisible(false);   

@@ -8,7 +8,7 @@
         android:orientation="vertical"
         android:src="@drawable/saixuan_bg"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="42dp"
         android:layout_marginRight="8dp"
         />
     <LinearLayout

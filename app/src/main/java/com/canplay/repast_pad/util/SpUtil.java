@@ -6,11 +6,12 @@ import android.content.SharedPreferences;
 import com.canplay.repast_pad.base.ApplicationConfig;
 
 public class SpUtil{
-    public static String PREFERENCE_NAME = "repast_pad_sp";
+    public static String PREFERENCE_NAME = "repast_app_sp";
 
     private static SpUtil instance;
 
     private static SharedPreferences settings;
+    public static String USER_ID="merchantId";
 
     private SpUtil() {
         settings = ApplicationConfig.context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -32,7 +33,9 @@ public class SpUtil{
         }
         return instance;
     }
-
+    public String getUserId(){
+        return settings.getString(USER_ID, "");
+    }
     /**
      * put string preferences
      *

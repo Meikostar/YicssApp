@@ -1,13 +1,15 @@
 package com.canplay.repast_pad.mvp.present;
 
-import android.content.Context;
+
 import android.support.annotation.NonNull;
-import android.widget.Toast;
+
 
 import com.canplay.repast_pad.base.manager.ApiManager;
-import com.canplay.repast_pad.mvp.http.ContactApi;
-import com.canplay.repast_pad.mvp.model.Contact;
+import com.canplay.repast_pad.bean.USER;
+import com.canplay.repast_pad.mvp.http.BaseApi;
+
 import com.canplay.repast_pad.net.MySubscriber;
+import com.canplay.repast_pad.util.SpUtil;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -17,37 +19,39 @@ import javax.inject.Inject;
 import rx.Subscription;
 
 
-public class ContactPresenter implements ContactContract.Presenter {
+public class LoginPresenter implements LoginContract.Presenter {
     private Subscription subscription;
 
-    private ContactContract.View mView;
+    private LoginContract.View mView;
 
-    private ContactApi contactApi;
+    private BaseApi contactApi;
 
     @Inject
-    ContactPresenter(ApiManager apiManager){
-        contactApi = apiManager.createApi(ContactApi.class);
+    LoginPresenter(ApiManager apiManager){
+        contactApi = apiManager.createApi(BaseApi.class);
     }
     @Override
-    public void getContacts(long userId, final Context context) {
+    public void goLogin(String account, String pwd) {
         Map<String, String> params = new TreeMap<>();
-        params.put("userId", userId + "");
-        subscription = ApiManager.setSubscribe(contactApi.getContacts(ApiManager.getParameters(params, false)), new MySubscriber<Contact>(){
+        params.put("account", account);
+        params.put("pwd", pwd);
+        subscription = ApiManager.setSubscribe(contactApi.Login(ApiManager.getParameters(params, true)), new MySubscriber<USER>(){
             @Override
             public void onError(Throwable e){
                 super.onError(e);
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                mView.showTomast(e.toString());
             }
 
             @Override
-            public void onNext(Contact entity){
+            public void onNext(USER entity){
                 mView.toEntity(entity);
+                SpUtil.getInstance().putString(SpUtil.USER_ID,entity.merchantId);
             }
         });
     }
 
     @Override
-    public void attachView(@NonNull ContactContract.View view){
+    public void attachView(@NonNull LoginContract.View view){
         mView = view;
     }
 

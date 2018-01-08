@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.mvp.adapter.PowTypeAdapter;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class PopView_NavigationBars extends BasePopView {
     }
 
     public interface ItemCliskListeners {
-        void clickListener(int poistion);
+        void clickListener(String id);
     }
 
     public void setClickListener(ItemCliskListeners listener) {
@@ -53,10 +54,11 @@ public class PopView_NavigationBars extends BasePopView {
         ButterKnife.bind(this, popView);
         adapter=new PowTypeAdapter(activity);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        adapter.setClickListener(new PowTypeAdapter.ItemCliks() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                listeners.clickListener(i);
+            public void getItem(int poistion, String id) {
+                listeners.clickListener(id);
             }
         });
         popView.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +70,7 @@ public class PopView_NavigationBars extends BasePopView {
         return popView;
     }
 
-   public void showData(List<String> list){
+   public void showData(List<COOK> list){
        if(list!=null&&list.size()>0){
            adapter.setData(list);
        }

@@ -8,26 +8,38 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.BaseFragment;
 import com.canplay.repast_pad.mvp.activity.AddMenuActivity;
 import com.canplay.repast_pad.mvp.activity.MenuDetailEditorActivity;
 import com.canplay.repast_pad.mvp.adapter.MenuAdapter;
+import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
+import com.canplay.repast_pad.mvp.present.CookClassifyContract;
+import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
 import com.canplay.repast_pad.view.NavigationBar;
 import com.canplay.repast_pad.view.PopView_NavigationBar;
 import com.canplay.repast_pad.view.PopView_NavigationBar_Menu;
 import com.canplay.repast_pad.view.RegularListView;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.antfortune.freeline.FreelineCore.getApplication;
 
 
 /**
  * Created by mykar on 17/4/10.
  */
-public class MenutFragment extends BaseFragment implements View.OnClickListener {
+public class MenutFragment extends BaseFragment implements View.OnClickListener  ,CookClassifyContract.View{
 
 
+    @Inject
+    CookClassifyPresenter presenter;
     @BindView(R.id.navigationBar)
     NavigationBar navigationBar;
     @BindView(R.id.rl_menu)
@@ -43,6 +55,9 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, null);
         unbinder = ButterKnife.bind(this, view);
+        DaggerBaseComponent.builder().appComponent(((BaseApplication) getActivity().getApplication()).getAppComponent()).build().inject(this);
+        presenter.attachView(this);
+        presenter.getCookClassifyList();
         initView();
         initListener();
 
@@ -122,5 +137,20 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
             }
 
         });
+    }
+
+    @Override
+    public <T> void toList(List<T> list, int type) {
+
+    }
+
+    @Override
+    public <T> void toEntity(T entity, int type) {
+
+    }
+
+    @Override
+    public void showTomast(String msg) {
+
     }
 }

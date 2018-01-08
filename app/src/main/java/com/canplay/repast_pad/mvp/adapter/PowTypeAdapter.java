@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.mvp.model.CONTURY;
 import com.canplay.repast_pad.mvp.model.PROVINCE;
 import com.canplay.repast_pad.util.TextUtil;
@@ -17,15 +18,19 @@ import java.util.List;
 
 public class PowTypeAdapter extends BaseAdapter {
     private Context mContext;
-    private List<String> list;
+    private List<COOK> list;
     public PowTypeAdapter(Context mContext) {
 
         this.mContext = mContext;
     }
     public interface ItemCliks{
-        void getItem(int poistion, int id);
+        void getItem(int poistion, String id);
     }
-    public void setData(List<String> list){
+    private ItemCliks listener;
+    public void setClickListener(ItemCliks listener){
+        this.listener=listener;
+    }
+    public void setData(List<COOK> list){
         this.list=list;
         notifyDataSetChanged();
     }
@@ -50,16 +55,22 @@ public class PowTypeAdapter extends BaseAdapter {
         ResultViewHolder holder;
         if (view == null){
             holder = new ResultViewHolder();
-            view =View.inflate(mContext,R.layout.list_pop_itemview, null);
+             view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.adapter, parent, false);
             holder.name= (TextView) view.findViewById(R.id.tv_name);
-
             view.setTag(holder);
         }else{
             holder = (ResultViewHolder) view.getTag();
         }
-          if(TextUtil.isNotEmpty(list.get(position))){
-              holder.name.setText(list.get(position));
+          if(TextUtil.isNotEmpty(list.get(position).name)){
+              holder.name.setText(list.get(position).name);
           }
+        holder.name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.getItem(position,list.get(position).cbClassifyId);
+            }
+        });
         return view;
 
 

@@ -77,6 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Handler.
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         getAppComponent().inject(this);
+
         translucentStatusBar();//状态栏
         //添加activity
         AppManager.getInstance(this).addActivity(this);
@@ -105,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Handler.
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){//5.0及以上
             View decorView = getWindow().getDecorView();
             decorView.setFitsSystemWindows(false);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.dominant_hue));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.slow_black));
         }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){//4.4到5.0
             /*WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);*/
@@ -361,7 +362,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Handler.
     private long oneTime = 0;
     private long twoTime = 0;
 
-    public void showToast(String s){
+    public void showToasts(String s){
         if(toast == null){
             toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
             toast.show();
@@ -387,7 +388,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Handler.
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
     public void showToast(int resId){
-        showToast(getString(resId));
+        showToasts(getString(resId));
     }
 
     @Override
