@@ -4,7 +4,9 @@ package com.canplay.repast_pad.mvp.present;
 import android.support.annotation.NonNull;
 
 import com.canplay.repast_pad.base.manager.ApiManager;
+import com.canplay.repast_pad.bean.BASEBEAN;
 import com.canplay.repast_pad.bean.COOK;
+import com.canplay.repast_pad.bean.MENU;
 import com.canplay.repast_pad.bean.USER;
 import com.canplay.repast_pad.mvp.http.BaseApi;
 import com.canplay.repast_pad.mvp.model.BaseType;
@@ -223,6 +225,28 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
 
     }
 
+
+    @Override
+    public void getMenuList() {
+        Map<String, String> params = new TreeMap<>();
+
+        params.put("merchantId", SpUtil.getInstance().getUserId());
+
+        subscription = ApiManager.setSubscribe(contactApi.getMenuList(ApiManager.getParameters(params, true)), new MySubscriber<List<MENU> >(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(List<MENU> entity){
+                mView.toEntity(entity,6);
+
+            }
+        });
+
+    }
     @Override
     public void getCookbookInfo(String cookbookId) {
         Map<String, String> params = new TreeMap<>();
@@ -248,7 +272,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
     public void getToken(final String path) {
         Map<String, String> params = new TreeMap<>();
 
-        subscription = ApiManager.setSubscribe(contactApi.getToken(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+        subscription = ApiManager.setSubscribe(contactApi.getToken(ApiManager.getParameters(params, true)), new MySubscriber<BASEBEAN>(){
             @Override
             public void onError(Throwable e){
                 super.onError(e);
@@ -256,11 +280,32 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
             }
 
             @Override
-            public void onNext(String token){
-                mView.toEntity(token,2);
+            public void onNext(BASEBEAN token){
+                mView.toEntity(token.upToken,2);
 
             }
         });
+    }
+
+    @Override
+    public void getMenuInfo(String menuId) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("menuId", menuId);
+
+        subscription = ApiManager.setSubscribe(contactApi.getMenuInfo(ApiManager.getParameters(params, true)), new MySubscriber<COOK>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(COOK entity){
+                mView.toEntity(entity,3);
+
+            }
+        });
+
     }
     @Override
     public void delRecipesClassify(String cbClassifyId) {

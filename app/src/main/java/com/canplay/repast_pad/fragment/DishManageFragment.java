@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.base.RxBus;
+import com.canplay.repast_pad.base.SubscriptionBean;
 import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
 import com.canplay.repast_pad.mvp.adapter.recycle.DishesRecycleAdapter;
@@ -38,6 +40,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.Subscription;
+import rx.functions.Action1;
 
 import static com.antfortune.freeline.FreelineCore.getApplication;
 
@@ -63,6 +67,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     private final int TYPE_PULL_REFRESH = 1;
     private final int TYPE_PULL_MORE = 2;
     private int currpage = 0;//第几页
+    private Subscription mSubscription;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +139,23 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
         };
 
         mSuperRecyclerView.setRefreshListener(refreshListener);
+        mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
+            @Override
+            public void call(SubscriptionBean.RxBusSendBean bean) {
+                if (bean == null) return;
+                datas.clear();
+                if(bean.type==SubscriptionBean.MENU_REFASH){
+                reflash();
+                }
+
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+        RxBus.getInstance().addSubscription(mSubscription);
     }
     private void reflash(){
         if(mSuperRecyclerView!=null) {
@@ -251,5 +273,11 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     @Override
     public void showTomast(String msg) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSubscription.unsubscribe();
     }
 }

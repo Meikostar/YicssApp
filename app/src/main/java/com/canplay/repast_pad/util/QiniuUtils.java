@@ -2,7 +2,10 @@ package com.canplay.repast_pad.util;
 
 import android.icu.util.ULocale;
 
+import com.bumptech.glide.provider.FixedLoadProvider;
+import com.qiniu.android.common.Zone;
 import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UpCancellationSignal;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UpProgressHandler;
@@ -26,7 +29,14 @@ public class QiniuUtils {
     public static QiniuUtils getInstance(){
         if(qiniu==null){
             qiniu=new QiniuUtils();
-            uploadManager = new UploadManager();
+            Configuration config = new Configuration.Builder()
+                    .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
+                    .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
+                    .connectTimeout(10)           // 链接超时。默认10秒
+                    .responseTimeout(60)          // 服务器响应超时。默认60秒
+                   .zone(Zone.zone1)        // 设置区域，指定不同区域的上传域名、备用域名、备用IP。
+                    .build();
+            uploadManager = new UploadManager(config);
         }
         return qiniu;
     }

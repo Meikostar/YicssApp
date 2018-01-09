@@ -77,5 +77,15 @@ public class CookClassifyContract {
         void getCookbookInfo(String cookbookId);
 
         void getToken( String path);
+        /**
+         * 商家菜谱列表
+         */
+        void getMenuList();
+
+        /**
+         * 商家菜谱详情
+         */
+        void getMenuInfo(String menuId);
+
     }
 }

@@ -1,6 +1,8 @@
 package com.canplay.repast_pad.mvp.http;
 
+import com.canplay.repast_pad.bean.BASEBEAN;
 import com.canplay.repast_pad.bean.COOK;
+import com.canplay.repast_pad.bean.MENU;
 import com.canplay.repast_pad.bean.USER;
 import com.canplay.repast_pad.mvp.model.ApkUrl;
 import com.canplay.repast_pad.mvp.model.BaseType;
@@ -109,7 +111,7 @@ public interface BaseApi {
      * @return
      */
     @POST("merchant/getUpToken")
-    Observable<String> getToken(@QueryMap Map<String, String> options);
+    Observable<BASEBEAN> getToken(@QueryMap Map<String, String> options);
     /**
      * POSTmerchant/getCookbookList
      * @return
@@ -118,9 +120,27 @@ public interface BaseApi {
     Observable<COOK> getCookbookList(@QueryMap Map<String, String> options);
 
     /**
-     * POST
+     * POSTmerchant/getMenuList
      * @return
      */
     @POST("merchant/getCookbookInfoById")
     Observable<COOK> getCookbookInfo(@QueryMap Map<String, String> options);
+
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/getMenuList")
+    Observable<List<MENU>> getMenuList(@QueryMap Map<String, String> options);
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/getMenuInfo")
+    Observable<COOK> getMenuInfo(@QueryMap Map<String, String> options);
+
+
+
+
+
 }

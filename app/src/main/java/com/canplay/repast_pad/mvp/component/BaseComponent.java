@@ -10,6 +10,7 @@ import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
 import com.canplay.repast_pad.mvp.activity.AddMenueCategoryActivity;
 import com.canplay.repast_pad.mvp.activity.LoginActivity;
 import com.canplay.repast_pad.mvp.activity.MainActivity;
+import com.canplay.repast_pad.mvp.activity.MenuDetailEditorActivity;
 
 import dagger.Component;
 
@@ -27,5 +28,6 @@ public interface BaseComponent{
     void inject(AddMenueCategoryActivity binderActivity);
     void inject(AddDishCategoryActivity binderActivity);
     void inject(AddDishesActivity binderActivity);
+    void inject(MenuDetailEditorActivity binderActivity);
 
 }

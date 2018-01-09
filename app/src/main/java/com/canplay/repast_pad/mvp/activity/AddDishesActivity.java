@@ -235,11 +235,13 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_add:
                 Intent intent = new Intent(AddDishesActivity.this, AddDishCategoryActivity.class);
                 intent.putExtra("type",1);
+                intent.putExtra("ids",recipesIds);
                 startActivity(intent);
                 break;
             case R.id.tv_add2:
                 Intent intent1 = new Intent(AddDishesActivity.this, AddDishCategoryActivity.class);
                 intent1.putExtra("type",2);
+                intent1.putExtra("ids",foodIds);
                 startActivity(intent1);
                 break;
             case R.id.ll_type:
@@ -303,12 +305,21 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
     @Override
     public <T> void toEntity(T entity, int type) {
         if(type==2){
+            token= (String) entity;
             QiniuUtils.getInstance().upFile(path, token, new QiniuUtils.CompleteListener() {
                 @Override
                 public void completeListener(String url) {
                     resourceKey=url;
                 }
             });
+        }else if(type==3){
+            if(TextUtil.isNotEmpty(cookbookId)){
+                showTomast("编辑成功");
+            }else {
+                showTomast("添加成功");
+            }
+           RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASH,""));
+            finish();
         }else {
             cook= (COOK) entity;
             datas.addAll(cook.recipesClassifyInfos);
@@ -339,8 +350,9 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                 tvEnglish.setText(cook.enName);
             }if(!TextUtil.isEmpty(cook.classifyName)){
                 tvType.setText(cook.classifyName);
-
             }
+            ivImg.setVisibility(View.VISIBLE);
+            rlImg.setVisibility(View.GONE);
             Glide.with(this).load(cook.imgUrl).asBitmap().placeholder(R.drawable.moren).into(ivImg);
             resourceKey="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C3%2C1000%2C660%3Bc0%3Dbaike116%2C5%2C5%2C116%2C38/sign=06593452ba1c8701c2f9e8a61a4fb21c/d01373f082025aaf8c25f47df2edab64034f1a74.jpg";
 

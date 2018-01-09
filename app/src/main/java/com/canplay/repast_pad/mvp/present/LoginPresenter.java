@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 
 import com.canplay.repast_pad.base.manager.ApiManager;
+import com.canplay.repast_pad.bean.BASEBEAN;
 import com.canplay.repast_pad.bean.USER;
 import com.canplay.repast_pad.mvp.http.BaseApi;
 
@@ -53,7 +54,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void getToken() {
         Map<String, String> params = new TreeMap<>();
 
-        subscription = ApiManager.setSubscribe(contactApi.getToken(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+        subscription = ApiManager.setSubscribe(contactApi.getToken(ApiManager.getParameters(params, true)), new MySubscriber<BASEBEAN>(){
             @Override
             public void onError(Throwable e){
                 super.onError(e);
@@ -61,7 +62,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             }
 
             @Override
-            public void onNext(String entity){
+            public void onNext(BASEBEAN entity){
                 mView.toEntity(entity);
 
             }

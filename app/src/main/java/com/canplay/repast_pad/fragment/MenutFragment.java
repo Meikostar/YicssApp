@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.bean.MENU;
 import com.canplay.repast_pad.mvp.activity.AddMenuActivity;
 import com.canplay.repast_pad.mvp.activity.MenuDetailEditorActivity;
 import com.canplay.repast_pad.mvp.adapter.MenuAdapter;
@@ -57,7 +58,7 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
         unbinder = ButterKnife.bind(this, view);
         DaggerBaseComponent.builder().appComponent(((BaseApplication) getActivity().getApplication()).getAppComponent()).build().inject(this);
         presenter.attachView(this);
-
+        presenter.getMenuList();
         initView();
         initListener();
 
@@ -83,8 +84,10 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
      });
         adapter.setClickListener(new MenuAdapter.ItemCliks() {
             @Override
-            public void getItem(int poistion, String name, int id) {
-                startActivity(new Intent(getActivity(), MenuDetailEditorActivity.class));
+            public void getItem(MENU menu) {
+                Intent intent = new Intent(getActivity(), MenuDetailEditorActivity.class);
+                intent.putExtra("id",menu.menuId);
+                startActivity(intent);
             }
         });
 
@@ -138,10 +141,11 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
 
         });
     }
-
+   private List<MENU> menus;
     @Override
     public <T> void toList(List<T> list, int type) {
-
+        menus= (List<MENU>) list;
+        adapter.setData(menus);
     }
 
     @Override

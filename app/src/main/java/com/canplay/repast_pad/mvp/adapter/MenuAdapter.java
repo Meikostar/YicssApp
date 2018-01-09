@@ -9,15 +9,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.bean.MENU;
 import com.canplay.repast_pad.mvp.model.CONTURY;
 import com.canplay.repast_pad.mvp.model.PROVINCE;
+import com.canplay.repast_pad.util.TextUtil;
 
 import java.util.List;
 
 
 public class MenuAdapter extends BaseAdapter {
     private Context mContext;
-    private List<CONTURY> list;
+    private List<MENU> list;
 
     public MenuAdapter(Context mContext) {
 
@@ -25,19 +27,20 @@ public class MenuAdapter extends BaseAdapter {
     }
 
     public interface ItemCliks{
-        void getItem(int poistion, String name, int id);
+        void getItem(MENU menu);
     }
     private ItemCliks listener;
     public void setClickListener(ItemCliks listener){
         this.listener=listener;
     }
-    public void setData(List<PROVINCE> list){
+    public void setData(List<MENU> list){
+        this.list=list;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return list!=null?list.size():4;
+        return list!=null?list.size():0;
     }
 
     @Override
@@ -63,6 +66,9 @@ public class MenuAdapter extends BaseAdapter {
         }else{
             holder = (ResultViewHolder) view.getTag();
         }
+        if(TextUtil.isNotEmpty(list.get(position).classifyName)){
+            holder.name.setText(list.get(position).classifyName);
+        }
          if(position<10){
              holder.tv_count.setText("0"+position+1);
          }else {
@@ -71,7 +77,7 @@ public class MenuAdapter extends BaseAdapter {
          holder.ll_item.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 listener.getItem(0,"",0);
+                 listener.getItem(list.get(position));
              }
          });
         return view;

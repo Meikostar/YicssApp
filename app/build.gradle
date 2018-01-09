@@ -64,7 +64,7 @@ android {
         apt 'com.google.dagger:dagger-compiler:2.5'
         compile 'me.guhy:SwipeRefreshPlus:1.0.8'
         compile 'com.android.support:cardview-v7:24.2.0'
-        compile 'com.qiniu:qiniu-android-sdk:7.2.+'
+        compile 'com.qiniu:qiniu-android-sdk:7.3.+'
 
     }
 }

@@ -36,7 +36,7 @@ public class DishesRecycleAdapter extends BaseRecycleViewAdapter {
         if(TextUtil.isNotEmpty(data.classifyName)){
             holders.typeName.setText(data.classifyName);
         }   if(TextUtil.isNotEmpty(data.cnName)){
-            holders.tvName.setText(data.classifyName);
+            holders.tvName.setText(data.cnName);
         }
         holders.tvPrice.setText(data.price);
         Glide.with(context).load(data.imgUrl).asBitmap().placeholder(R.drawable.moren).into(holders.img);

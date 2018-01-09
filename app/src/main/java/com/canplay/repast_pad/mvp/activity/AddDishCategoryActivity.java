@@ -20,12 +20,15 @@ import com.canplay.repast_pad.mvp.model.BaseType;
 import com.canplay.repast_pad.mvp.present.CookClassifyContract;
 import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
 import com.canplay.repast_pad.util.DensityUtil;
+import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.view.Custom_TagBtn;
 import com.canplay.repast_pad.view.FlexboxLayout;
 import com.canplay.repast_pad.view.NavigationBar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -42,7 +45,9 @@ public class AddDishCategoryActivity extends BaseActivity implements CookClassif
     FlexboxLayout fblTag;
 
     private int type=1;//1代表做法分类2代表菜品
+    private String ids;
     private List<BaseType> tags = new ArrayList<>();//标签数据
+    private Map<String ,String> map=new HashMap<>();
     @Override
     public void initViews() {
         setContentView(R.layout.activity_add_dish_category);
@@ -52,6 +57,15 @@ public class AddDishCategoryActivity extends BaseActivity implements CookClassif
         navigationbar.setNavigationBarListener(this);
         navigationbar.setRightTxt("保存");
         type=getIntent().getIntExtra("type",1);
+        ids=getIntent().getStringExtra("ids");
+        if(TextUtil.isNotEmpty(ids)){
+            String[] split = ids.split(",");
+            map.clear();
+            for(String id:split){
+                map.put(id,id);
+            }
+        }
+
         if(type==1){
            navigationbar.setNaviTitle("添加做法分类");
             presenter.getRecipesClassifyList();
@@ -207,6 +221,12 @@ public class AddDishCategoryActivity extends BaseActivity implements CookClassif
         @Override
         public <T> void toEntity(T entity, int type) {
             tags= (List<BaseType>) entity;
+            for(BaseType base:tags){
+                String id= map.get(base.classifyId);
+                if(TextUtil.isNotEmpty(id)){
+                    base.isChoos=true;
+                }
+            }
             setTagAdapter();
         }
 
