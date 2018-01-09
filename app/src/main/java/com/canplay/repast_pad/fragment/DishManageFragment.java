@@ -2,6 +2,7 @@ package com.canplay.repast_pad.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,12 +20,14 @@ import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
 import com.canplay.repast_pad.mvp.adapter.recycle.DishesRecycleAdapter;
 import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
+import com.canplay.repast_pad.mvp.model.BaseType;
 import com.canplay.repast_pad.mvp.present.CookClassifyContract;
 import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
 import com.canplay.repast_pad.mvp.present.LoginPresenter;
 import com.canplay.repast_pad.view.DivItemDecoration;
 import com.canplay.repast_pad.view.PopView_NavigationBar;
 import com.canplay.repast_pad.view.PopView_NavigationBars;
+import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
 import java.util.ArrayList;
@@ -57,7 +60,9 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     private SwipeRefreshLayout.OnRefreshListener refreshListener;
     private DishesRecycleAdapter adapter;
     Unbinder unbinder;
-
+    private final int TYPE_PULL_REFRESH = 1;
+    private final int TYPE_PULL_MORE = 2;
+    private int currpage = 0;//第几页
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +74,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
         DaggerBaseComponent.builder().appComponent(((BaseApplication) getActivity().getApplication()).getAppComponent()).build().inject(this);
         presenter.attachView(this);
         ButterKnife.bind(this, view);
-
+        presenter.getCookClassifyList();
         initView();
         initListener();
         unbinder = ButterKnife.bind(this, view);
@@ -81,13 +86,33 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
         super.onResume();
 
     }
+    private boolean isFirst=true;
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if(isFirst){
+                reflash();
+                isFirst=false;
+            }
+//            initData();
+            //相当于Fragment的onResume
 
+        }
+    }
     private void initListener() {
 
         ivChoose.setOnClickListener(this);
         tvNew.setOnClickListener(this);
+        adapter.setItemCikcListener(new DishesRecycleAdapter.ItemClikcListener() {
+            @Override
+            public void itemClick(String classifyId) {
+                Intent intent = new Intent(getActivity(), AddDishesActivity.class);
+                intent.putExtra("id",classifyId);
+                startActivity(intent);
+            }
+        });
     }
-
+    private String classifyId;
     private void initView() {
 
         layoutManager = new GridLayoutManager(this.getActivity(), 2);
@@ -103,13 +128,25 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onRefresh() {
                 //  mSuperRecyclerView.showMoreProgress();
+                 presenter.getCookbookList(classifyId,1,TYPE_PULL_REFRESH);
 
             }
         };
 
         mSuperRecyclerView.setRefreshListener(refreshListener);
     }
-
+    private void reflash(){
+        if(mSuperRecyclerView!=null) {
+            //实现自动下拉刷新功能
+            mSuperRecyclerView.getSwipeToRefresh().post(new Runnable(){
+                @Override
+                public void run() {
+                    mSuperRecyclerView.setRefreshing(true);//执行下拉刷新的动画
+                    refreshListener.onRefresh();//执行数据加载操作
+                }
+            });
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -138,23 +175,77 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
         popView_navigationBar.showData(datas);
         popView_navigationBar.setClickListener(new PopView_NavigationBars.ItemCliskListeners() {
             @Override
-            public void clickListener(String poition) {
+            public void clickListener(String id) {
 
                 popView_navigationBar.dismiss();
             }
 
         });
     }
-    List<COOK> datas;
+
+
+   private List<COOK> cooks=new ArrayList<>();
+    public void onDataLoaded(int loadType, final boolean haveNext, List<COOK> list) {
+
+        if (loadType == TYPE_PULL_REFRESH) {
+            currpage = 1;
+            cooks.clear();
+            for (COOK info : list) {
+                cooks.add(info);
+            }
+        } else {
+            for (COOK info : list) {
+                cooks.add(info);
+            }
+        }
+
+            adapter.setDatas(cooks);
+            adapter.notifyDataSetChanged();
+
+
+        mSuperRecyclerView.hideMoreProgress();
+
+        if (haveNext) {
+            mSuperRecyclerView.setupMoreListener(new OnMoreListener() {
+                @Override
+                public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
+                    currpage++;
+                    mSuperRecyclerView.showMoreProgress();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (haveNext)
+                                mSuperRecyclerView.hideMoreProgress();
+                         presenter.getCookbookList(classifyId,currpage,TYPE_PULL_MORE);
+
+                        }
+                    }, 2000);
+                }
+            }, 1);
+        } else {
+            mSuperRecyclerView.removeMoreListener();
+            mSuperRecyclerView.hideMoreProgress();
+
+        }
+
+
+    }
+    List<BaseType> datas;
     @Override
     public <T> void toList(List<T> list, int type) {
-        datas= (List<COOK>) list;
+        datas= (List<BaseType>) list;
+        BaseType baseType = new BaseType();
+        baseType.name="全部";
+        baseType.cbClassifyId="";
+        datas.add(0,baseType);
         initPopView();
     }
 
     @Override
     public <T> void toEntity(T entity, int type) {
-
+        COOK data= (COOK) entity;
+        onDataLoaded(type,data.hasNext!=0,data.cookbookInfos);
     }
 
     @Override

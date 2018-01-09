@@ -54,44 +54,10 @@ public class AddDishCategoryActivity extends BaseActivity implements CookClassif
         type=getIntent().getIntExtra("type",1);
         if(type==1){
            navigationbar.setNaviTitle("添加做法分类");
-            BaseType baseType = new BaseType();
-            baseType.name="Meiko";
-            BaseType baseType1 = new BaseType();
-            baseType1.name="Hello";
-            BaseType baseType2 = new BaseType();
-            baseType2.name="Good";
-            BaseType baseType3 = new BaseType();
-            baseType3.name="Case";
-            BaseType baseType4 = new BaseType();
-            baseType4.name="Sun";
-            BaseType baseType5 = new BaseType();
-            baseType5.name="Moon";
-            tags.add(baseType);
-            tags.add(baseType1);
-            tags.add(baseType2);
-            tags.add(baseType3);
-            tags.add(baseType4);
-            setTagAdapter();
+            presenter.getRecipesClassifyList();
         }else if(type==2){
             presenter.getFoodClassifyList();
-            BaseType baseType = new BaseType();
-            baseType.name="土豆";
-            BaseType baseType1 = new BaseType();
-            baseType1.name="经典基底";
-            BaseType baseType2 = new BaseType();
-            baseType2.name="蔬菜基底";
-            BaseType baseType3 = new BaseType();
-            baseType3.name="萝卜";
-            BaseType baseType4 = new BaseType();
-            baseType4.name="腐竹";
-            BaseType baseType5 = new BaseType();
-            baseType5.name="生菜";
-            tags.add(baseType);
-            tags.add(baseType1);
-            tags.add(baseType2);
-            tags.add(baseType3);
-            tags.add(baseType4);
-            tags.add(baseType5);
+
 
         }else if(type==3){
             navigationbar.setNaviTitle("添加菜品分类");
@@ -171,7 +137,12 @@ public class AddDishCategoryActivity extends BaseActivity implements CookClassif
                         if(type==1){
                             for (int j = 0; j < tags.size(); j++) {
                                 if(position==j){
-                                    tags.get(j).isChoos=true;
+                                    if(tags.get(j).isChoos){
+                                        tags.get(j).isChoos=false;
+                                    }else {
+                                        tags.get(j).isChoos=true;
+                                    }
+
                                 }
                             }
                         }else if(type==2){

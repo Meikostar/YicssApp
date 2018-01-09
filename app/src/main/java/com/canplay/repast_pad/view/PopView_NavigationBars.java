@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.mvp.adapter.PowTypeAdapter;
+import com.canplay.repast_pad.mvp.model.BaseType;
 
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class PopView_NavigationBars extends BasePopView {
         return popView;
     }
 
-   public void showData(List<COOK> list){
+   public void showData(List<BaseType> list){
        if(list!=null&&list.size()>0){
            adapter.setData(list);
        }

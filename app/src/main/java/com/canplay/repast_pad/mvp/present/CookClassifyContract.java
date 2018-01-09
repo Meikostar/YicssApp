@@ -60,8 +60,22 @@ public class CookClassifyContract {
          * 删除菜品分类
          */
         void delRecipesClassify(String content);
+        /**
+         * 2 商家菜谱列表
+         */
+        void getCookbookList(String classifyId ,int pageIndex ,int pageSize ) ;
 
+        /**
+         * 新增修改菜谱
+         */
+        void createOrEditCookbook(String cookbookId,String resourceKey,String cnName,String enName,String classifyId,
+                             String price,String foodIds,String recipesIds);
 
+        /**
+         * 菜谱详情
+         */
+        void getCookbookInfo(String cookbookId);
 
+        void getToken( String path);
     }
 }

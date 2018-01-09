@@ -91,12 +91,36 @@ public interface BaseApi {
     Observable<BaseType> addRecipesClassify(@QueryMap Map<String, String> options);
 
     /**
-     *   apk下载 POST
+     *   apk下载 POSTmerchant/createOrEditCookbook
      * @return
      */
     @POST("merchant/delRecipesClassify")
     Observable<String> delRecipesClassify(@QueryMap Map<String, String> options);
 
 
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/createOrEditCookbook")
+    Observable<String> createOrEditCookbook(@QueryMap Map<String, String> options);
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/getUpToken")
+    Observable<String> getToken(@QueryMap Map<String, String> options);
+    /**
+     * POSTmerchant/getCookbookList
+     * @return
+     */
+    @POST("merchant/getCookbookList")
+    Observable<COOK> getCookbookList(@QueryMap Map<String, String> options);
 
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/getCookbookInfoById")
+    Observable<COOK> getCookbookInfo(@QueryMap Map<String, String> options);
 }

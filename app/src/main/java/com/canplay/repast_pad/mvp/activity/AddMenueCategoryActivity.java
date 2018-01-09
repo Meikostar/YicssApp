@@ -63,24 +63,27 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
         if(type==1){
             presenter.getCookClassifyList();
         }else if(type==2){
+            presenter.getCookClassifyList();
             navigationbar.hide();
         }else if(type==3){
-            presenter.getFoodClassifyList();
-        }else if(type==4){
             presenter.getRecipesClassifyList();
+
+        }else if(type==4){
+            presenter.getFoodClassifyList();
         }
 
 
         dialog = new AddmenuDialog(this,line);
     }
 
-
+   private String content;
     @Override
     public void bindEvents() {
         dialog.setBindClickListener(new AddmenuDialog.BindClickListener() {
             @Override
             public void teaMoney(String money) {
                 status=1;
+                content=money;
                 if(type==1){
                     presenter.addBookClassfy(money);
                 }else if(type==3){
@@ -110,7 +113,7 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
         dialog.show();
 
     }
-
+    private int del;
     /**
      * 初始化标签适配器
      */
@@ -123,9 +126,9 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
                 final int position = i;
                 tagBtn.setCustom_TagBtnListener(new Custom_TagBtn_del.Custom_TagBtnListener() {
                     @Override
-                    public void clickDelete(int type) {
+                    public void clickDelete(int types) {
 
-                        if(type==1){
+                        if(types==1){
                             for (int j = 0; j < tags.size(); j++) {
                                 if(position==j){
                                    if(type==2){
@@ -135,23 +138,27 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
 
                                 }
                             }
-                        }else if(type==2){
-                            for (int j = 0; j < tags.size(); j++) {
+                        }else if(types==2){
+                           if(del==0){
+                               for (int j = 0; j < tags.size(); j++) {
 
-                                if(position==j){
-                                    status=2;
-                                    poistion=j;
-                                    if(type==1){
-                                        presenter.delBookClassfy(tags.get(j).cbClassifyId);
-                                    }else if(type==3){
-                                        presenter.delRecipesClassify(tags.get(j).classifyId);
-                                    }else if(type==4){
-                                        presenter.delFoodClassify(tags.get(j).classifyId);
-                                    }
-                                }
-                            }
+                                   if(position==j){
+                                       del=1;
+                                       status=2;
+                                       poistion=j;
+                                       if(type==1){
+                                           presenter.delBookClassfy(tags.get(j).cbClassifyId);
+                                       }else if(type==3){
+                                           presenter.delRecipesClassify(tags.get(j).classifyId);
+                                       }else if(type==4){
+                                           presenter.delFoodClassify(tags.get(j).classifyId);
+                                       }
+                                   }
+                               }
 
-                        }else if(type==3){
+                           }
+
+                        }else if(types==3){
                             for (int j = 0; j < tags.size(); j++) {
                                 if(position==j){
                                     tags.get(j).status=1;
@@ -184,7 +191,7 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
 
         Custom_TagBtn_del view = (Custom_TagBtn_del) LayoutInflater.from(this).inflate(R.layout.dish_item_del, null);
 
-        if(type==1){
+        if(type!=2){
             view.setCannotClick(true);
         }else {
             view.setCannotClick(false);
@@ -212,8 +219,12 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
             setTagAdapter();
         }else if(status==1){
             BaseType  tag= (BaseType) entity;
+            tag.name=content;
+//            tag.cbClassifyId=tag.classifyId;
             tags.add(tag);
+            setTagAdapter();
         }else if(status==2){
+            del=0;
             tags.remove(poistion);
         }
 

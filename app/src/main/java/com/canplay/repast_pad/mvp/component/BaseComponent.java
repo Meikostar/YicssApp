@@ -6,6 +6,7 @@ import com.canplay.repast_pad.fragment.DishManageFragment;
 import com.canplay.repast_pad.fragment.MenutFragment;
 import com.canplay.repast_pad.mvp.ActivityScope;
 import com.canplay.repast_pad.mvp.activity.AddDishCategoryActivity;
+import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
 import com.canplay.repast_pad.mvp.activity.AddMenueCategoryActivity;
 import com.canplay.repast_pad.mvp.activity.LoginActivity;
 import com.canplay.repast_pad.mvp.activity.MainActivity;
@@ -25,5 +26,6 @@ public interface BaseComponent{
     void inject(MenutFragment binderActivity);
     void inject(AddMenueCategoryActivity binderActivity);
     void inject(AddDishCategoryActivity binderActivity);
+    void inject(AddDishesActivity binderActivity);
 
 }

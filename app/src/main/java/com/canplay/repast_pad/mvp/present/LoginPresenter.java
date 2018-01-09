@@ -49,7 +49,24 @@ public class LoginPresenter implements LoginContract.Presenter {
             }
         });
     }
+    @Override
+    public void getToken() {
+        Map<String, String> params = new TreeMap<>();
 
+        subscription = ApiManager.setSubscribe(contactApi.getToken(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(String entity){
+                mView.toEntity(entity);
+
+            }
+        });
+    }
     @Override
     public void attachView(@NonNull LoginContract.View view){
         mView = view;

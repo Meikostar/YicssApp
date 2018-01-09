@@ -25,5 +25,10 @@ public class LoginContract {
          */
         void goLogin(String account, String pwd);
 
+        /**
+         * 获取token
+         */
+        void getToken();
+
     }
 }

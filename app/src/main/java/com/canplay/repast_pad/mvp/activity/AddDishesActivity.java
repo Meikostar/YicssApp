@@ -15,19 +15,28 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
+import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.RxBus;
 import com.canplay.repast_pad.base.SubscriptionBean;
+import com.canplay.repast_pad.bean.COOK;
+import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_pad.mvp.model.BaseType;
+import com.canplay.repast_pad.mvp.present.CookClassifyContract;
+import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
 import com.canplay.repast_pad.permission.PermissionConst;
 import com.canplay.repast_pad.permission.PermissionGen;
 import com.canplay.repast_pad.permission.PermissionSuccess;
 import com.canplay.repast_pad.util.DensityUtil;
+import com.canplay.repast_pad.util.QiniuUtils;
+import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.view.Custom_TagBtn;
 import com.canplay.repast_pad.view.FlexboxLayout;
 import com.canplay.repast_pad.view.NavigationBar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,9 +46,10 @@ import io.valuesfeng.picker.widget.ImageLoaderEngine;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class AddDishesActivity extends BaseActivity implements View.OnClickListener{
+public class AddDishesActivity extends BaseActivity implements View.OnClickListener, CookClassifyContract.View{
 
-
+    @Inject
+    CookClassifyPresenter presenter;
     @BindView(R.id.rl_img)
     RelativeLayout rlImg;
     @BindView(R.id.iv_img)
@@ -48,12 +58,13 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
     EditText tvChines;
     @BindView(R.id.tv_english)
     EditText tvEnglish;
+    @BindView(R.id.et_price)
+    EditText et_price;
     @BindView(R.id.tv_type)
     TextView tvType;
     @BindView(R.id.ll_type)
     LinearLayout llType;
-    @BindView(R.id.tv_price)
-    TextView tvPrice;
+
     @BindView(R.id.tv_add)
     TextView tvAdd;
     @BindView(R.id.fbl_practice)
@@ -65,17 +76,52 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
     @BindView(R.id.navigationBar)
     NavigationBar navigationBar;
     private Subscription mSubscription;
+    private String cookbookId;
+    private String resourceKey;
+    private String cnName;
+    private String enName;
+    private String classifyId;
+    private String price;
+    private String foodIds;
+    private String recipesIds;
+
     @Override
     public void initViews() {
         setContentView(R.layout.activity_add_dishes);
         ButterKnife.bind(this);
+        DaggerBaseComponent.builder().appComponent(((BaseApplication) getApplication()).getAppComponent()).build().inject(this);
+
+        presenter.attachView(this);
         navigationBar.setNavigationBarListener(this);
+        cookbookId= getIntent().getStringExtra("id");
+        if(TextUtil.isNotEmpty(cookbookId)){
+            presenter.getCookbookInfo(cookbookId);
+        }
 
     }
 
     @Override
     public void navigationRight() {
         super.navigationRight();
+        price=  et_price.getText().toString().trim();
+        cnName=  tvChines.getText().toString().trim();
+        enName=  tvEnglish.getText().toString().trim();
+        resourceKey="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C3%2C1000%2C660%3Bc0%3Dbaike116%2C5%2C5%2C116%2C38/sign=06593452ba1c8701c2f9e8a61a4fb21c/d01373f082025aaf8c25f47df2edab64034f1a74.jpg";
+
+        if(TextUtil.isEmpty(resourceKey)){
+            showToasts("请上传菜品图片");
+            return;
+        }if(TextUtil.isEmpty(cnName)){
+            showToasts("请填写中文名");
+            return;
+        }   if(TextUtil.isEmpty(classifyId)){
+            showToasts("请选择菜品类型");
+            return;
+        }   if(TextUtil.isEmpty(price)){
+            showToasts("请填写菜品价格");
+            return;
+        }
+        presenter.createOrEditCookbook(cookbookId,resourceKey,cnName,enName,classifyId,price,foodIds,recipesIds);
     }
 
     private List<BaseType> datas=new ArrayList<>();
@@ -83,6 +129,7 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
     public void bindEvents() {
         tvAdd.setOnClickListener(this);
         tvAdd2.setOnClickListener(this);
+        llType.setOnClickListener(this);
         rlImg.setOnClickListener(this);
         mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
             @Override
@@ -94,13 +141,33 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                     content = (List<BaseType>) bean.content;
                     datas.addAll(content);
                     setTagAdapter(fblPractice);
+                    int i=0;
+                    for(BaseType base:content){
+                        if(i==0){
+                            recipesIds=base.classifyId;
+                        }else {
+                            recipesIds=recipesIds+","+base.classifyId;
+                        }
+                        i++;
+                    }
                 }else if(bean.type==SubscriptionBean.ADD_PEICAI){
                     content = (List<BaseType>) bean.content;
                     datas.addAll(content);
                     setTagAdapter(fblGarnish);
+                    int i=0;
+                    for(BaseType base:content){
+                        if(i==0){
+                            foodIds=base.classifyId;
+                        }else {
+                            foodIds=foodIds+","+base.classifyId;
+                        }
+                        i++;
+                    }
                 }else if(bean.type==SubscriptionBean.ADD_MENU){
                     BaseType  beans = (BaseType) bean.content;
+                    classifyId=beans.cbClassifyId;
                     tvType.setText(beans.name);
+                    tvType.setTextColor(getResources().getColor(R.color.slow_black));
                 }
 
             }
@@ -214,6 +281,7 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                     ivImg.setVisibility(View.VISIBLE);
                     rlImg.setVisibility(View.GONE);
                     Glide.with(this).load(path).asBitmap().into(ivImg);
+                    presenter.getToken(path);
                     break;
 
             }
@@ -224,5 +292,65 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         mSubscription.unsubscribe();
+    }
+
+    @Override
+    public <T> void toList(List<T> list, int type) {
+
+    }
+    private COOK cook;
+    private String token;
+    @Override
+    public <T> void toEntity(T entity, int type) {
+        if(type==2){
+            QiniuUtils.getInstance().upFile(path, token, new QiniuUtils.CompleteListener() {
+                @Override
+                public void completeListener(String url) {
+                    resourceKey=url;
+                }
+            });
+        }else {
+            cook= (COOK) entity;
+            datas.addAll(cook.recipesClassifyInfos);
+            setTagAdapter(fblPractice);
+            int i=0;
+            for(BaseType base:cook.recipesClassifyInfos){
+                if(i==0){
+                    recipesIds=base.classifyId;
+                }else {
+                    recipesIds=recipesIds+","+base.classifyId;
+                }
+                i++;
+            }
+            datas.addAll(cook.foodClassifyInfos);
+            setTagAdapter(fblGarnish);
+            int a=0;
+            for(BaseType base:cook.foodClassifyInfos){
+                if(a==0){
+                    foodIds=base.classifyId;
+                }else {
+                    foodIds=foodIds+","+base.classifyId;
+                }
+                i++;
+            }
+            et_price.setText(cook.price);
+            tvChines.setText(cook.cnName);
+            if(!TextUtil.isEmpty(cook.enName)){
+                tvEnglish.setText(cook.enName);
+            }if(!TextUtil.isEmpty(cook.classifyName)){
+                tvType.setText(cook.classifyName);
+
+            }
+            Glide.with(this).load(cook.imgUrl).asBitmap().placeholder(R.drawable.moren).into(ivImg);
+            resourceKey="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C3%2C1000%2C660%3Bc0%3Dbaike116%2C5%2C5%2C116%2C38/sign=06593452ba1c8701c2f9e8a61a4fb21c/d01373f082025aaf8c25f47df2edab64034f1a74.jpg";
+
+        }
+
+
+    }
+
+    @Override
+    public void showTomast(String msg) {
+
     }
 }

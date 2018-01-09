@@ -83,6 +83,7 @@ public class AddmenuDialog {
             @Override
             public void onClick(View v) {
                     dismiss();
+
                     mBindClickListener.teaMoney(editText.getText().toString().trim());
             }
         });
@@ -105,6 +106,7 @@ public class AddmenuDialog {
 
     public void show() {
      if(mPopupWindow!=null){
+         editText.setText("");
          if (mPopupWindow.isShowing()) {
              mPopupWindow.dismiss();
          } else {

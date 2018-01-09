@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.bean.COOK;
+import com.canplay.repast_pad.mvp.model.BaseType;
 import com.canplay.repast_pad.mvp.model.CONTURY;
 import com.canplay.repast_pad.mvp.model.PROVINCE;
 import com.canplay.repast_pad.util.TextUtil;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class PowTypeAdapter extends BaseAdapter {
     private Context mContext;
-    private List<COOK> list;
+    private List<BaseType> list;
     public PowTypeAdapter(Context mContext) {
 
         this.mContext = mContext;
@@ -30,7 +31,7 @@ public class PowTypeAdapter extends BaseAdapter {
     public void setClickListener(ItemCliks listener){
         this.listener=listener;
     }
-    public void setData(List<COOK> list){
+    public void setData(List<BaseType> list){
         this.list=list;
         notifyDataSetChanged();
     }
