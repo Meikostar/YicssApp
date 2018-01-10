@@ -175,7 +175,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
         unbinder.unbind();
 
     }
-
+   private int show;
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -183,7 +183,12 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
                 startActivity(new Intent(getActivity(), AddDishesActivity.class));
                 break;
             case R.id.iv_choose://赛选
-                popView_navigationBar.showPopView();
+                if(popView_navigationBar==null){
+                    presenter.getCookClassifyList();
+                    show=1;
+                }else {
+                    popView_navigationBar.showPopView();
+                }
                 break;
 
         }
@@ -198,7 +203,8 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
         popView_navigationBar.setClickListener(new PopView_NavigationBars.ItemCliskListeners() {
             @Override
             public void clickListener(String id) {
-
+                classifyId=id;
+                reflash();
                 popView_navigationBar.dismiss();
             }
 

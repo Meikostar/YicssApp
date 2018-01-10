@@ -34,6 +34,7 @@ public class COOK implements Serializable {
     public String classifyName;
     public String cnName;
     public String imgUrl;
+    public String menuId;
     public String merchantId;
     public String resourceKey;
     public String classifyId;

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.base.RxBus;
+import com.canplay.repast_pad.base.SubscriptionBean;
 import com.canplay.repast_pad.bean.MENU;
 import com.canplay.repast_pad.mvp.activity.AddMenuActivity;
 import com.canplay.repast_pad.mvp.activity.MenuDetailEditorActivity;
@@ -29,6 +31,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.Subscription;
+import rx.functions.Action1;
 
 import static com.antfortune.freeline.FreelineCore.getApplication;
 
@@ -70,8 +74,25 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
         super.onResume();
 
     }
-
+    private Subscription mSubscription;
     private void initListener() {
+        mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
+            @Override
+            public void call(SubscriptionBean.RxBusSendBean bean) {
+                if (bean == null) return;
+
+                if(bean.type==SubscriptionBean.MENU_REFASHS){
+                    presenter.getMenuList();;
+                }
+
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+        RxBus.getInstance().addSubscription(mSubscription);
      navigationBar.setNavigationBarListener(new NavigationBar.NavigationBarListener() {
          @Override
          public void navigationLeft() {}
@@ -146,6 +167,10 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
     public <T> void toList(List<T> list, int type) {
         menus= (List<MENU>) list;
         adapter.setData(menus);
+        BaseApplication.map.clear();
+        for(MENU menu:menus){
+            BaseApplication.map.put(menu.sort,menu.sort);
+        }
     }
 
     @Override
@@ -156,5 +181,11 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void showTomast(String msg) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSubscription.unsubscribe();
     }
 }

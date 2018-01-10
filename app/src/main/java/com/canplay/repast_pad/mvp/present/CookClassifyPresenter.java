@@ -49,7 +49,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
 
             @Override
             public void onNext(List<BaseType> entity){
-                mView.toEntity(entity,1);
+                mView.toList(entity,1);
 
             }
         });
@@ -107,6 +107,71 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
         });
 
     }
+
+    @Override
+    public void editCookbookState(String cookbookId,String state) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("cookbookId",cookbookId);
+        params.put("state", state);
+
+        subscription = ApiManager.setSubscribe(contactApi.editCookbookState(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(String entity){
+                mView.toEntity(entity,2);
+
+            }
+        });
+
+    }
+    @Override
+    public void getSurcharge() {
+        Map<String, String> params = new TreeMap<>();
+        params.put("merchantId", SpUtil.getInstance().getUserId());
+
+        subscription = ApiManager.setSubscribe(contactApi.getSurcharge(ApiManager.getParameters(params, true)), new MySubscriber<BASEBEAN>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(BASEBEAN entity){
+                mView.toEntity(entity.surcharge,2);
+
+            }
+        });
+
+    }
+    @Override
+    public void editSurcharge(String surcharge) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("merchantId", SpUtil.getInstance().getUserId());
+        params.put("surcharge", surcharge);
+
+        subscription = ApiManager.setSubscribe(contactApi.editSurcharge(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(String entity){
+                mView.toEntity(entity,6);
+
+            }
+        });
+
+    }
+
+
 
     @Override
     public void getFoodClassifyList() {
@@ -268,12 +333,34 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
 
             @Override
             public void onNext(List<MENU> entity){
-                mView.toEntity(entity,6);
+                mView.toList(entity,6);
 
             }
         });
 
     }
+    @Override
+    public void delMenuInfo(String menuId) {
+        Map<String, String> params = new TreeMap<>();
+
+        params.put("menuId", menuId);
+
+        subscription = ApiManager.setSubscribe(contactApi.delMenuInfo(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(String entity){
+                mView.toEntity(entity,8);
+
+            }
+        });
+
+    }
+
     @Override
     public void getCookbookInfo(String cookbookId) {
         Map<String, String> params = new TreeMap<>();

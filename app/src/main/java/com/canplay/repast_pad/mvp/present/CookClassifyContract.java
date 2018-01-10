@@ -91,5 +91,20 @@ public class CookClassifyContract {
          *  新增修改菜单
          */
         void createOrEditMenu(String menuId ,String templateId ,String classifyId ,String cookbookIds ,String sort  );
+
+
+        /**
+         *  删除菜谱
+         */
+
+        void delMenuInfo(String menuId);
+
+
+
+        void editSurcharge(String surcharge);
+
+        void getSurcharge();
+
+        void  editCookbookState(String cookbookId,String state);
     }
 }

@@ -14,7 +14,8 @@ public class SubscriptionBean {
     public static int ADD_PEICAI=113;
     public static int ADD_FEILEI=114;
     public static int ADD_MENU=115;
-    public static int MENU_REFASH=115;
+    public static int MENU_REFASH=117;
+    public static int MENU_REFASHS=116;
 
 
     /**

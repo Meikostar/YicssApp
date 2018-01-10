@@ -106,7 +106,7 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
         price=  et_price.getText().toString().trim();
         cnName=  tvChines.getText().toString().trim();
         enName=  tvEnglish.getText().toString().trim();
-        resourceKey="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C3%2C1000%2C660%3Bc0%3Dbaike116%2C5%2C5%2C116%2C38/sign=06593452ba1c8701c2f9e8a61a4fb21c/d01373f082025aaf8c25f47df2edab64034f1a74.jpg";
+//        resourceKey="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C3%2C1000%2C660%3Bc0%3Dbaike116%2C5%2C5%2C116%2C38/sign=06593452ba1c8701c2f9e8a61a4fb21c/d01373f082025aaf8c25f47df2edab64034f1a74.jpg";
 
         if(TextUtil.isEmpty(resourceKey)){
             showToasts("请上传菜品图片");
@@ -121,6 +121,7 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
             showToasts("请填写菜品价格");
             return;
         }
+        showProgress("添加中...");
         presenter.createOrEditCookbook(cookbookId,resourceKey,cnName,enName,classifyId,price,foodIds,recipesIds);
     }
 
@@ -313,6 +314,7 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                 }
             });
         }else if(type==3){
+            dimessProgress();
             if(TextUtil.isNotEmpty(cookbookId)){
                 showTomast("编辑成功");
             }else {

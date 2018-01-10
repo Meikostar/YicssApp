@@ -3,7 +3,10 @@ package com.canplay.repast_pad.mvp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.canplay.repast_pad.R;
@@ -11,9 +14,13 @@ import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.base.RxBus;
 import com.canplay.repast_pad.base.SubscriptionBean;
 import com.canplay.repast_pad.mvp.adapter.TypesAdapter;
+import com.canplay.repast_pad.mvp.adapter.recycle.DishesRecycleAdapter;
+import com.canplay.repast_pad.mvp.adapter.recycle.MenuRecycleAdapter;
 import com.canplay.repast_pad.mvp.model.BaseType;
+import com.canplay.repast_pad.view.DivItemDecoration;
 import com.canplay.repast_pad.view.NavigationBar;
 import com.canplay.repast_pad.view.RegularListView;
+import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
 import java.util.List;
 
@@ -27,16 +34,25 @@ public class AddMenuActivity extends BaseActivity  {
 
     @BindView(R.id.navigationbar)
     NavigationBar navigationbar;
-    @BindView(R.id.rl_menu)
-    ListView rlMenu;
-    private TypesAdapter adapter;
+    @BindView(R.id.super_recycle_view)
+    SuperRecyclerView mSuperRecyclerView;
+    private MenuRecycleAdapter adapter;
     private Subscription mSubscription;
+
+    private LinearLayoutManager mLinearLayoutManager;
     @Override
     public void initViews() {
         setContentView(R.layout.activity_add_menu);
         ButterKnife.bind(this);
-        adapter=new TypesAdapter(this);
-        rlMenu.setAdapter(adapter);
+
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mSuperRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mSuperRecyclerView.addItemDecoration(new DivItemDecoration(2, true));
+        mSuperRecyclerView.getMoreProgressView().getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        adapter=new MenuRecycleAdapter(this);
+        mSuperRecyclerView.setAdapter(adapter);
+        mSuperRecyclerView.setRefreshing(false);
         mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
             @Override
             public void call(SubscriptionBean.RxBusSendBean bean) {
@@ -58,14 +74,15 @@ public class AddMenuActivity extends BaseActivity  {
 
     @Override
     public void bindEvents() {
-        adapter.setClickListener(new TypesAdapter.ItemCliks() {
+        adapter.setItemCikcListener(new MenuRecycleAdapter.ItemClikcListener() {
             @Override
-            public void getItem(int poistioin) {
+            public void itemClick(int poistioin) {
                 Intent intent = new Intent(AddMenuActivity.this, MenuDetailActivity.class);
                 intent.putExtra("type", poistioin+1);
                 startActivity(intent);
             }
         });
+
     }
 
     @Override

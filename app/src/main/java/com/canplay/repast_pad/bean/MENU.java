@@ -15,7 +15,7 @@ public class MENU {
 //    },
     public String classifyId;
     public String menuId;
-    public int sort;
+    public String sort;
     public String classifyName;
 
 

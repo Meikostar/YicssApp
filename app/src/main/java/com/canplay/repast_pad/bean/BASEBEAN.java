@@ -10,5 +10,6 @@ public class BASEBEAN {
 //            "type": "city"
 
     public String upToken;
+    public String surcharge;
 
 }

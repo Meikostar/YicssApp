@@ -88,6 +88,8 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         tv_money.setText(cok.price);
         if(TextUtil.isNotEmpty(cok.enName)){
             tv_english.setText(cok.enName);
+        }else {
+            tv_english.setVisibility(View.GONE);
         }
         if(position<10){
             tv_number.setText("0"+(position+1));
@@ -108,6 +110,8 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                 }
             }
             tv_taste.setText(name);
+        }else {
+            tv_taste.setVisibility(View.GONE);
         }  if(foodClassifyInfos!=null&&foodClassifyInfos.size()>0){
             int i=0;
             String name="";
@@ -119,6 +123,8 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                 }
             }
             tv_sauce.setText(name);
+        }else {
+            tv_sauce.setVisibility(View.GONE);
         }
         if(cok.state==0){
             tv_staus.setText("在售");
@@ -126,12 +132,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
             tv_staus.setText("售空");
         }
         Glide.with(context).load(mData.get(position).imgUrl).placeholder(R.drawable.blue_regle).into(imgview);
-        if (mBaseElevation == 0) {
+        if (mBaseElevation ==0) {
             mBaseElevation = cardView.getCardElevation();
         }
-
         cardView.setMaxCardElevation(mBaseElevation * MAX_ELEVATION_FACTOR);
-
         mViews.set(position, cardView);
         return view;
     }

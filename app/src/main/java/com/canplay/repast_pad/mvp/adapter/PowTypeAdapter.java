@@ -57,7 +57,7 @@ public class PowTypeAdapter extends BaseAdapter {
         if (view == null){
             holder = new ResultViewHolder();
              view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.adapter, parent, false);
+                    .inflate(R.layout.dishes_item, parent, false);
             holder.name= (TextView) view.findViewById(R.id.tv_name);
             view.setTag(holder);
         }else{

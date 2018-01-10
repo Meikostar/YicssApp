@@ -10,11 +10,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.BaseFragment;
 import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
 import com.canplay.repast_pad.mvp.activity.AddMenueCategoryActivity;
+import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
+import com.canplay.repast_pad.mvp.present.CookClassifyContract;
+import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
+import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.view.BaseTeatDialog;
 import com.canplay.repast_pad.view.PhotoPopupWindow;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,9 +34,10 @@ import butterknife.Unbinder;
 /**
  * Created by mykar on 17/4/10.
  */
-public class SetFragment extends BaseFragment implements View.OnClickListener{
+public class SetFragment extends BaseFragment implements View.OnClickListener ,CookClassifyContract.View{
 
-
+    @Inject
+    CookClassifyPresenter presenter;
     @BindView(R.id.ll_dishe)
     LinearLayout llDishe;
     @BindView(R.id.ll_practice)
@@ -57,6 +67,9 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set, null);
         unbinder = ButterKnife.bind(this, view);
+        DaggerBaseComponent.builder().appComponent(((BaseApplication) getActivity().getApplication()).getAppComponent()).build().inject(this);
+        presenter.attachView(this);
+        presenter.getSurcharge();
                 mWindowAddPhoto = new PhotoPopupWindow(getActivity());
                dialog = new BaseTeatDialog(getActivity(),line);
         initListener();
@@ -68,7 +81,7 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
         super.onResume();
 
     }
-
+    private String money;
     private void initListener() {
         llDishe.setOnClickListener(this);
         llPractice.setOnClickListener(this);
@@ -80,6 +93,13 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
             @Override
             public void clickListener() {
 
+            }
+        });
+        dialog.setBindClickListener(new BaseTeatDialog.BindClickListener() {
+            @Override
+            public void teaMoney(String moneys) {
+                money=moneys;
+                presenter.editSurcharge(moneys);
             }
         });
     }
@@ -125,5 +145,28 @@ public class SetFragment extends BaseFragment implements View.OnClickListener{
                 mWindowAddPhoto.showAsDropDown(llDishe);
                 break;
         }
+    }
+
+    @Override
+    public <T> void toList(List<T> list, int type) {
+
+    }
+
+    @Override
+    public <T> void toEntity(T entity, int type) {
+        if(type==6){
+            teaMoney.setText(money+"元/位");
+        }else {
+            String tea= (String) entity;
+            if(!tea.equals("0")){
+                teaMoney.setText(tea+"元/位");
+            }
+        }
+
+    }
+
+    @Override
+    public void showTomast(String msg) {
+
     }
 }

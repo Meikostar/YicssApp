@@ -7,6 +7,9 @@ import android.support.multidex.MultiDex;
 import com.canplay.repast_pad.base.manager.AppManager;
 import com.canplay.repast_pad.util.ExceptionHandler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.valuesfeng.picker.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import io.valuesfeng.picker.universalimageloader.core.ImageLoader;
 import io.valuesfeng.picker.universalimageloader.core.ImageLoaderConfiguration;
@@ -22,6 +25,7 @@ public class BaseApplication extends Application{
     //全局单例
     AppComponent mAppComponent;
     public static  BaseApplication cplayApplication;
+    public static Map<String,String> map=new HashMap<>();
     public static BaseApplication getInstance() {
         if (cplayApplication == null) {
             cplayApplication = new BaseApplication();

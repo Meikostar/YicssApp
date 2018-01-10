@@ -69,11 +69,14 @@ public class MenuAdapter extends BaseAdapter {
         if(TextUtil.isNotEmpty(list.get(position).classifyName)){
             holder.name.setText(list.get(position).classifyName);
         }
-         if(position<10){
-             holder.tv_count.setText("0"+position+1);
-         }else {
-             holder.tv_count.setText(position+1);
-         }
+        if(TextUtil.isNotEmpty(list.get(position).sort)){
+            holder.tv_count.setText(list.get(position).sort);
+        }
+//         if(position<10){
+//             holder.tv_count.setText("0"+position+1);
+//         }else {
+//             holder.tv_count.setText(position+1);
+//         }
          holder.ll_item.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {

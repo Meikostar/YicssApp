@@ -51,14 +51,10 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    private String id;
 
-    @Override
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-    }
+
 
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
@@ -74,10 +70,10 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
         presenter.attachView(this);
 
 
-        id = getIntent().getStringExtra("id");
+        menuId = getIntent().getStringExtra("id");
 
-        if (TextUtil.isNotEmpty(id)) {
-            presenter.getMenuInfo(id);
+        if (TextUtil.isNotEmpty(menuId)) {
+            presenter.getMenuInfo(menuId);
         }
         dialog = new BaseSelectDialog(this, line);
 
@@ -102,6 +98,14 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
     @Override
     public void bindEvents() {
 
+        tvDelete.setOnClickListener(this);
+        tvNew.setOnClickListener(this);
+        topviewLeftLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -121,7 +125,7 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
         dialog.setBindClickListener(new BaseSelectDialog.BindClickListener() {
             @Override
             public void tasteNum() {
-
+                presenter.delMenuInfo(menuId);
             }
         });
     }
@@ -140,7 +144,7 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
             case R.id.tv_new:
                 Intent intent = new Intent(MenuDetailEditorActivity.this, MenuDetailActivity.class);
                 intent.putExtra("cook",cook);
-                startActivity(intent);
+                startActivityForResult(intent,1);
                 break;
 
         }
@@ -153,11 +157,19 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
 
     private List<COOK> datas;
     private COOK cook;
+    private String menuId;
     @Override
     public <T> void toEntity(T entity, int type) {
-        cook = (COOK) entity;
-        datas = cook.cookbookInfo;
-        initDats(datas);
+        if(type==8){
+            showToasts("删除成功");
+            finish();
+        }else {
+            cook = (COOK) entity;
+            datas = cook.cookbookInfo;
+
+            initDats(datas);
+        }
+
     }
 
     @Override
@@ -165,5 +177,11 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
 
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            presenter.getMenuInfo(menuId);
+        }
+    }
 }

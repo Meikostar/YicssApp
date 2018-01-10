@@ -8,16 +8,16 @@
         android:orientation="vertical"
         android:src="@drawable/saixuan_bg"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="42dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginRight="5dp"
         />
     <LinearLayout
         android:layout_width="130dp"
         android:layout_height="213dp"
         android:orientation="vertical"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="67dp"
-        android:layout_marginRight="8dp">
+        android:layout_marginTop="72dp"
+        android:layout_marginRight="5dp">
         <ListView
             style="@style/lv_content"
             android:id="@+id/list_view"

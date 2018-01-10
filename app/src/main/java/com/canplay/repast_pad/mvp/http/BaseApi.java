@@ -148,4 +148,32 @@ public interface BaseApi {
     Observable<String> createOrEditMenu(@QueryMap Map<String, String> options);
 
 
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/delMenuInfo")
+    Observable<String> delMenuInfo(@QueryMap Map<String, String> options);
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/editCookbookState")
+    Observable<String> editCookbookState(@QueryMap Map<String, String> options);
+
+
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/getSurcharge")
+    Observable<BASEBEAN> getSurcharge(@QueryMap Map<String, String> options);
+
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/editSurcharge")
+    Observable<String> editSurcharge(@QueryMap Map<String, String> options);
+
 }

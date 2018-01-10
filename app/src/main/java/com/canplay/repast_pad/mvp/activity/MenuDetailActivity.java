@@ -11,11 +11,15 @@ import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
+import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.RxBus;
 import com.canplay.repast_pad.base.SubscriptionBean;
 import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.mvp.adapter.CountAdapter;
+import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_pad.mvp.model.BaseType;
+import com.canplay.repast_pad.mvp.present.CookClassifyContract;
+import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
 import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.view.NavigationBar;
 import com.canplay.repast_pad.view.RegularListView;
@@ -23,14 +27,18 @@ import com.canplay.repast_pad.view.RegularListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class MenuDetailActivity extends BaseActivity {
+public class MenuDetailActivity extends BaseActivity  implements CookClassifyContract.View {
 
 
+    @Inject
+    CookClassifyPresenter presenter;
     @BindView(R.id.navigationBar)
     NavigationBar navigationBar;
     @BindView(R.id.tv_style)
@@ -45,6 +53,8 @@ public class MenuDetailActivity extends BaseActivity {
     RegularListView rlMenu;
     @BindView(R.id.tv_pay_sure)
     TextView tvPaySure;
+    @BindView(R.id.tv_hint)
+    TextView tvHint;
     @BindView(R.id.et_sort)
     EditText etSort;
     private CountAdapter adapter;
@@ -58,7 +68,10 @@ public class MenuDetailActivity extends BaseActivity {
     public void initViews() {
         setContentView(R.layout.activity_menu_detail);
         ButterKnife.bind(this);
-        cout = getIntent().getIntExtra("type", 1);
+        DaggerBaseComponent.builder().appComponent(((BaseApplication)getApplication()).getAppComponent()).build().inject(this);
+        presenter.attachView(this);
+        navigationBar.setNavigationBarListener(this);
+        cout = getIntent().getIntExtra("type", 0);
 
         adapter = new CountAdapter(this);
         rlMenu.setAdapter(adapter);
@@ -100,7 +113,7 @@ public class MenuDetailActivity extends BaseActivity {
                 startActivityForResult(intent, CHOOSE);
             }
         });
-        llStyle.setOnClickListener(new View.OnClickListener() {
+        llType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent3 = new Intent(MenuDetailActivity.this, AddMenueCategoryActivity.class);
@@ -134,7 +147,13 @@ public class MenuDetailActivity extends BaseActivity {
                     showToasts("请填写序号");
                     return;
                 }
+                if(!TextUtil.isEmpty(tvHint.getText().toString())){
+                    showToasts("该菜单号已经存在，请重新输入");
+                    return;
+                }
 
+
+                presenter.createOrEditMenu(menuId,templateId,classifyId,cookbookIds,sort);
             }
         });
         etSort.addTextChangedListener(new TextWatcher() {
@@ -145,7 +164,20 @@ public class MenuDetailActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(TextUtil.isNotEmpty(s.toString())){
+                    String sort = BaseApplication.map.get(s.toString());
 
+                    if(TextUtil.isNotEmpty(sort)){
+                        if(!tvHint.getText().toString().trim().equals(sort)){
+                            tvHint.setVisibility(View.VISIBLE);
+                            tvHint.setText("提示: 序号"+sort+"菜单已经存在，请重新输入菜单序列号。");
+
+                        }
+                   }else {
+                        tvHint.setVisibility(View.GONE);
+                        tvHint.setText("");
+                    }
+                }
             }
 
             @Override
@@ -154,7 +186,7 @@ public class MenuDetailActivity extends BaseActivity {
             }
         });
     }
-
+    private String menuId;
     @Override
     public void initData() {
         for (int i = 0; i < cout; i++) {
@@ -165,6 +197,16 @@ public class MenuDetailActivity extends BaseActivity {
             classifyId=cook.classifyId;
             sort=cook.sort;
             templateId=cook.templateId;
+            menuId=cook.menuId;
+            if(TextUtil.isNotEmpty(cook.classifyName)){
+                tvType.setText(cook.classifyName);
+                tvType.setTextColor(getResources().getColor(R.color.slow_black));
+            }
+            if(TextUtil.isNotEmpty(sort)){
+                etSort.setText(sort);
+            }
+
+
             for (COOK ck : cook.cookbookInfo) {
                 BaseType baseType = new BaseType();
                 baseType.name = ck.cnName;
@@ -201,5 +243,30 @@ public class MenuDetailActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         mSubscription.unsubscribe();
+    }
+
+    @Override
+    public <T> void toList(List<T> list, int type) {
+
+    }
+
+    @Override
+    public <T> void toEntity(T entity, int type) {
+       if(cook!=null){
+           showToasts("编辑成功");
+           Intent intent = new Intent();
+           setResult(RESULT_OK,intent);
+
+       }else {
+           showToasts("添加成功");
+       }
+        RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASHS,""));
+       finish();
+
+    }
+
+    @Override
+    public void showTomast(String msg) {
+
     }
 }

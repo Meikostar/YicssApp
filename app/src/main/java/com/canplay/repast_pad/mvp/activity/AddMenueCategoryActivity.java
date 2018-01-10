@@ -210,7 +210,8 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
 
     @Override
     public <T> void toList(List<T> list, int type) {
-
+        tags= (List<BaseType>) list;
+        setTagAdapter();
     }
     @Override
     public <T> void toEntity(T entity, int type) {

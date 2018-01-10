@@ -85,6 +85,7 @@
 
 
         <android.support.v4.view.ViewPager
+
             android:layout_marginTop="15dp"
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
@@ -98,6 +99,11 @@
             android:layout_below="@+id/relativeLayout"
             android:layout_alignParentStart="true" />
 
-
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor"/>
 
 </RelativeLayout>
