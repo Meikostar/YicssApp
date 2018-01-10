@@ -8,21 +8,19 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.bean.COOK;
-import com.canplay.repast_pad.mvp.adapter.CardFragmentPagerAdapter;
 import com.canplay.repast_pad.mvp.adapter.CardPagerAdapter;
 import com.canplay.repast_pad.mvp.adapter.recycle.ShadowTransformer;
-import com.canplay.repast_pad.mvp.adapter.viewholder.CardItem;
 import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_pad.mvp.model.BaseType;
 import com.canplay.repast_pad.mvp.present.CookClassifyContract;
 import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
-import com.canplay.repast_pad.util.DensityUtil;
 import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.view.BaseSelectDialog;
 
@@ -33,9 +31,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MenuDetailEditorActivity extends BaseActivity  implements View.OnClickListener, CookClassifyContract.View {
+public class MenuDetailEditorActivity extends BaseActivity implements View.OnClickListener, CookClassifyContract.View {
     @Inject
     CookClassifyPresenter presenter;
+    @BindView(R.id.line)
+    View line;
     @BindView(R.id.top_view_back)
     ImageView topViewBack;
     @BindView(R.id.topview_left_layout)
@@ -46,35 +46,24 @@ public class MenuDetailEditorActivity extends BaseActivity  implements View.OnCl
     TextView tvDelete;
     @BindView(R.id.tv_new)
     TextView tvNew;
+    @BindView(R.id.relativeLayout)
+    RelativeLayout relativeLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-    @BindView(R.id.tv_chines)
-    TextView tvChines;
-    @BindView(R.id.tv_english)
-    TextView tvEnglish;
-    @BindView(R.id.tv_money)
-    TextView tvMoney;
-    @BindView(R.id.tv_specif)
-    TextView tvSpecif;
-    @BindView(R.id.tv_taste)
-    TextView tvTaste;
-    @BindView(R.id.tv_sauce)
-    TextView tvSauce;
-    @BindView(R.id.tv_staus)
-    TextView tvStaus;
-    @BindView(R.id.line)
-    View line;
 
     private String id;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
+
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
     private BaseSelectDialog dialog;
+
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     public void initViews() {
@@ -85,24 +74,22 @@ public class MenuDetailEditorActivity extends BaseActivity  implements View.OnCl
         presenter.attachView(this);
 
 
-        id=getIntent().getStringExtra("id");
+        id = getIntent().getStringExtra("id");
 
-        if(TextUtil.isNotEmpty(id)){
+        if (TextUtil.isNotEmpty(id)) {
             presenter.getMenuInfo(id);
         }
-        dialog=new  BaseSelectDialog(this,line);
+        dialog = new BaseSelectDialog(this, line);
 
         mCardAdapter = new CardPagerAdapter(this);
 
 
-
-
     }
-    public void initDats(List<COOK> cooks){
-        for(COOK cook:cooks){
-            mCardAdapter.addCardItem(cook.imgUrl);
-        }
 
+    public void initDats(List<COOK> cooks) {
+        for (COOK cook : cooks) {
+            mCardAdapter.addCardItem(cook);
+        }
         mCardShadowTransformer = new ShadowTransformer(viewPager, mCardAdapter);
         viewPager.setAdapter(mCardAdapter);
         viewPager.setPageTransformer(false, mCardShadowTransformer);
@@ -111,8 +98,10 @@ public class MenuDetailEditorActivity extends BaseActivity  implements View.OnCl
 
         mCardShadowTransformer = new ShadowTransformer(viewPager, mCardAdapter);
     }
+    private int poistions;
     @Override
     public void bindEvents() {
+
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -121,7 +110,7 @@ public class MenuDetailEditorActivity extends BaseActivity  implements View.OnCl
 
             @Override
             public void onPageSelected(int position) {
-                   setInfo(datas.get(position));
+                poistions=position;
             }
 
             @Override
@@ -144,12 +133,13 @@ public class MenuDetailEditorActivity extends BaseActivity  implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_delete:
                 dialog.show();
                 break;
             case R.id.tv_new:
                 Intent intent = new Intent(MenuDetailEditorActivity.this, MenuDetailActivity.class);
+                intent.putExtra("cook",cook);
                 startActivity(intent);
                 break;
 
@@ -160,11 +150,13 @@ public class MenuDetailEditorActivity extends BaseActivity  implements View.OnCl
     public <T> void toList(List<T> list, int type) {
 
     }
+
     private List<COOK> datas;
+    private COOK cook;
     @Override
     public <T> void toEntity(T entity, int type) {
-        COOK cook= (COOK) entity;
-        datas=cook.cookbookInfo;
+        cook = (COOK) entity;
+        datas = cook.cookbookInfo;
         initDats(datas);
     }
 
@@ -173,38 +165,5 @@ public class MenuDetailEditorActivity extends BaseActivity  implements View.OnCl
 
     }
 
-    public void setInfo(COOK cok){
-        tvChines.setText(cok.cnName);
-        tvMoney.setText(cok.price);
-        List<BaseType> recipesClassifyInfos = cok.recipesClassifyInfos;
-        List<BaseType> foodClassifyInfos = cok.foodClassifyInfos;
-        if(recipesClassifyInfos!=null&&recipesClassifyInfos.size()>0){
-            int i=0;
-            String name="";
-            for(BaseType base:recipesClassifyInfos){
-                if(i==0){
-                    name=base.name;
-                }else {
-                    name=name+","+ base.name;;
-                }
-            }
-            tvTaste.setText(name);
-        }  if(foodClassifyInfos!=null&&foodClassifyInfos.size()>0){
-            int i=0;
-            String name="";
-            for(BaseType base:foodClassifyInfos){
-                if(i==0){
-                    name=base.name;
-                }else {
-                    name=name+","+ base.name;;
-                }
-            }
-            tvSauce.setText(name);
-        }
-       if(cok.state==0){
-           tvStaus.setText("在售");
-       }else {
-           tvStaus.setText("售空");
-       }
-    }
+
 }

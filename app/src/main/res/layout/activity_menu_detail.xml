@@ -160,14 +160,18 @@
                     android:layout_height="wrap_content"
                     android:text=":"
                     android:textColor="@color/slow_black" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <EditText
+                    android:id="@+id/et_sort"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="13dp"
-                    android:layout_weight="1"
-                    android:text="例如01"
-                    android:textColor="@color/color9" />
+                    android:background="@null"
+                    android:hint="例如01"
+                    android:text=""
+                    android:inputType="number"
+                    android:textColor="@color/slow_black"
+                    android:textColorHint="@color/color9"
+                    android:textSize="15sp" />
 
 
             </LinearLayout>

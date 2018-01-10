@@ -83,130 +83,12 @@
 
     </RelativeLayout>
 
-    <com.canplay.repast_pad.view.scrollView.StickyScrollView
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/viewpager"
-        android:layout_marginBottom="50dp">
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="275dp"/>
-            <TextView
-                android:layout_marginTop="17dp"
-                android:id="@+id/tv_chines"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="秘制烤鸭"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
-            <View
-                android:layout_marginTop="3dp"
-                android:layout_width="55dp"
-                android:background="@color/blue"
-                android:layout_height="1dp"/>
-            <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:id="@+id/tv_english"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:gravity="center"
-                android:text="SECRET ROAST DCUK"
-                android:textColor="@color/color6"
-                android:textSize="14sp" />
-            <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="17dp"
-                android:id="@+id/tv_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:gravity="center"
-                android:text="￥  120"
-                android:textColor="#ffc618"
-                android:textSize="18sp" />
-            <TextView
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:gravity="center"
-                android:text="规格："
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="12dp"
-                android:id="@+id/tv_specif"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:gravity="center"
-                android:text="S蔬菜基地，仅需套餐酱料不要"
-                android:textColor="@color/color6"
-                android:textSize="14sp" />
-            <TextView
-                android:layout_marginTop="12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:gravity="center"
-                android:text="口味："
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="12dp"
-                android:id="@+id/tv_taste"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:gravity="center"
-                android:text="S蔬菜基地，仅需套餐酱料不要"
-                android:textColor="@color/color6"
-                android:textSize="14sp" />
-            <TextView
-                android:layout_marginTop="12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:gravity="center"
-                android:text="酱料："
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_marginBottom="25dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="12dp"
-                android:id="@+id/tv_sauce"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="S蔬菜基地，仅需套餐酱料不要"
-                android:textColor="@color/color6"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </com.canplay.repast_pad.view.scrollView.StickyScrollView>
 
         <android.support.v4.view.ViewPager
             android:layout_marginTop="15dp"
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="match_parent"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingEnd="38dp"
@@ -216,22 +98,6 @@
             android:layout_below="@+id/relativeLayout"
             android:layout_alignParentStart="true" />
 
-    <View
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="48dp"
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@color/linecolor"/>
-    <TextView
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="12dp"
-        android:id="@+id/tv_staus"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:text="售空"
-        android:textColor="@color/blue"
-        android:textSize="16sp" />
+
+
 </RelativeLayout>

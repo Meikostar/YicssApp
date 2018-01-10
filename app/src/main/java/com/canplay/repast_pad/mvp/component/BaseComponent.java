@@ -8,6 +8,7 @@ import com.canplay.repast_pad.mvp.ActivityScope;
 import com.canplay.repast_pad.mvp.activity.AddDishCategoryActivity;
 import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
 import com.canplay.repast_pad.mvp.activity.AddMenueCategoryActivity;
+import com.canplay.repast_pad.mvp.activity.ChooseFoodActivity;
 import com.canplay.repast_pad.mvp.activity.LoginActivity;
 import com.canplay.repast_pad.mvp.activity.MainActivity;
 import com.canplay.repast_pad.mvp.activity.MenuDetailEditorActivity;
@@ -29,5 +30,6 @@ public interface BaseComponent{
     void inject(AddDishCategoryActivity binderActivity);
     void inject(AddDishesActivity binderActivity);
     void inject(MenuDetailEditorActivity binderActivity);
+    void inject(ChooseFoodActivity binderActivity);
 
 }

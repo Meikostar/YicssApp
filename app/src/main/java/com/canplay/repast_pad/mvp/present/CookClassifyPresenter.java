@@ -81,6 +81,33 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
         });
 
     }
+
+    public void createOrEditMenu(String menuId ,String templateId ,String classifyId ,String cookbookIds ,String sort  ) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("merchantId", SpUtil.getInstance().getUserId());
+
+        params.put("menuId",menuId+"");
+        params.put("templateId", templateId+"");
+        params.put("classifyId", classifyId+"");
+        params.put("cookbookIds", cookbookIds+"");
+        params.put("sort", sort+"");
+
+        subscription = ApiManager.setSubscribe(contactApi.createOrEditMenu(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(String entity){
+                mView.toEntity(entity,1);
+
+            }
+        });
+
+    }
+
     @Override
     public void getFoodClassifyList() {
         Map<String, String> params = new TreeMap<>();

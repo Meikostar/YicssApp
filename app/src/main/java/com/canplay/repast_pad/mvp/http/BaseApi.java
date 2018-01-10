@@ -140,7 +140,12 @@ public interface BaseApi {
     Observable<COOK> getMenuInfo(@QueryMap Map<String, String> options);
 
 
-
+    /**
+     * POST
+     * @return
+     */
+    @POST("merchant/createOrEditMenu")
+    Observable<String> createOrEditMenu(@QueryMap Map<String, String> options);
 
 
 }

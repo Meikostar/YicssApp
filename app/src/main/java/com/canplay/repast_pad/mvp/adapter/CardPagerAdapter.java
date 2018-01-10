@@ -7,14 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.canplay.repast_pad.R;
-import com.canplay.repast_pad.mvp.adapter.viewholder.CardItem;
+import com.canplay.repast_pad.bean.COOK;
+import com.canplay.repast_pad.mvp.model.BaseType;
+import com.canplay.repast_pad.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Meiko on 2018/1/7.
@@ -23,17 +29,19 @@ import java.util.List;
 
 public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
+
     private List<CardView> mViews;
-    private List<String> mData;
+    private List<COOK> mData;
     private float mBaseElevation;
     private Context context;
+
     public CardPagerAdapter(Context context) {
-        this.context=context;
+        this.context = context;
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
     }
 
-    public void addCardItem(String item) {
+    public void addCardItem(COOK item) {
         mViews.add(null);
         mData.add(item);
     }
@@ -59,15 +67,65 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+
         View view = LayoutInflater.from(container.getContext())
                 .inflate(R.layout.adapter, container, false);
+        ButterKnife.bind(this, view);
         container.addView(view);
-
+        COOK cok=mData.get(position);
         CardView cardView = (CardView) view.findViewById(R.id.cardView);
         ImageView imgview = (ImageView) view.findViewById(R.id.iv_menu_imgs);
         TextView tv_number = (TextView) view.findViewById(R.id.tv_number);
-        tv_number.setText("0"+position);
-        Glide.with(context).load(mData.get(position)).placeholder(R.drawable.blue_regle).into(imgview);
+        TextView tv_chines = (TextView) view.findViewById(R.id.tv_chines);
+        TextView tv_english = (TextView) view.findViewById(R.id.tv_english);
+        TextView tv_money = (TextView) view.findViewById(R.id.tv_money);
+        TextView tv_specif = (TextView) view.findViewById(R.id.tv_specif);
+        TextView tv_taste = (TextView) view.findViewById(R.id.tv_taste);
+        TextView tv_sauce = (TextView) view.findViewById(R.id.tv_sauce);
+        TextView tv_staus = (TextView) view.findViewById(R.id.tv_staus);
+
+        tv_chines.setText(cok.cnName);
+        tv_money.setText(cok.price);
+        if(TextUtil.isNotEmpty(cok.enName)){
+            tv_english.setText(cok.enName);
+        }
+        if(position<10){
+            tv_number.setText("0"+(position+1));
+        }else {
+            tv_number.setText(""+(position+1));
+        }
+
+        List<BaseType> recipesClassifyInfos = cok.recipesClassifyInfos;
+        List<BaseType> foodClassifyInfos = cok.foodClassifyInfos;
+        if(recipesClassifyInfos!=null&&recipesClassifyInfos.size()>0){
+            int i=0;
+            String name="";
+            for(BaseType base:recipesClassifyInfos){
+                if(i==0){
+                    name=base.name;
+                }else {
+                    name=name+","+ base.name;;
+                }
+            }
+            tv_taste.setText(name);
+        }  if(foodClassifyInfos!=null&&foodClassifyInfos.size()>0){
+            int i=0;
+            String name="";
+            for(BaseType base:foodClassifyInfos){
+                if(i==0){
+                    name=base.name;
+                }else {
+                    name=name+","+ base.name;;
+                }
+            }
+            tv_sauce.setText(name);
+        }
+        if(cok.state==0){
+            tv_staus.setText("在售");
+        }else {
+            tv_staus.setText("售空");
+        }
+        Glide.with(context).load(mData.get(position).imgUrl).placeholder(R.drawable.blue_regle).into(imgview);
         if (mBaseElevation == 0) {
             mBaseElevation = cardView.getCardElevation();
         }
@@ -78,11 +136,15 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         return view;
     }
 
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
         mViews.set(position, null);
     }
+
+
+
 
 
 

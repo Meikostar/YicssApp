@@ -1,12 +1,12 @@
-package com.canplay.repast_pad.fragment;
+package com.canplay.repast_pad.mvp.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,20 +14,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.base.BaseApplication;
-import com.canplay.repast_pad.base.BaseFragment;
 import com.canplay.repast_pad.base.RxBus;
 import com.canplay.repast_pad.base.SubscriptionBean;
 import com.canplay.repast_pad.bean.COOK;
-import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
 import com.canplay.repast_pad.mvp.adapter.recycle.DishesRecycleAdapter;
 import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_pad.mvp.model.BaseType;
 import com.canplay.repast_pad.mvp.present.CookClassifyContract;
 import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
-import com.canplay.repast_pad.mvp.present.LoginPresenter;
 import com.canplay.repast_pad.view.DivItemDecoration;
-import com.canplay.repast_pad.view.PopView_NavigationBar;
 import com.canplay.repast_pad.view.PopView_NavigationBars;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -43,13 +40,7 @@ import butterknife.Unbinder;
 import rx.Subscription;
 import rx.functions.Action1;
 
-import static com.antfortune.freeline.FreelineCore.getApplication;
-
-
-/**
- * Created by mykar on 17/4/10.
- */
-public class DishManageFragment extends BaseFragment implements View.OnClickListener ,CookClassifyContract.View{
+public class ChooseFoodActivity extends BaseActivity implements View.OnClickListener,CookClassifyContract.View{
 
     @Inject
     CookClassifyPresenter presenter;
@@ -68,23 +59,38 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     private final int TYPE_PULL_MORE = 2;
     private int currpage = 0;//第几页
     private Subscription mSubscription;
+    private String id;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initViews() {
+        setContentView(R.layout.activity_choose_food);
+        ButterKnife.bind(this);
+        DaggerBaseComponent.builder().appComponent(((BaseApplication) getApplication()).getAppComponent()).build().inject(this);
+        presenter.attachView(this);
+        classifyId= getIntent().getStringExtra("id");
+        presenter.getCookClassifyList();
+        initView();
+        reflash();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_dishes_manage, null);
-        DaggerBaseComponent.builder().appComponent(((BaseApplication) getActivity().getApplication()).getAppComponent()).build().inject(this);
-        presenter.attachView(this);
-        ButterKnife.bind(this, view);
-        presenter.getCookClassifyList();
-        initView();
-        initListener();
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+    public void bindEvents() {
+        ivChoose.setOnClickListener(this);
+        tvNew.setOnClickListener(this);
+        adapter.setItemCikcListener(new DishesRecycleAdapter.ItemClikcListener() {
+            @Override
+            public void itemClick(COOK data) {
+                Intent intent = new Intent();
+                intent.putExtra("id",data);
+               setResult(RESULT_OK,intent);
     }
+});
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
 
     @Override
     public void onResume() {
@@ -92,70 +98,31 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
 
     }
     private boolean isFirst=true;
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if(isFirst){
-                reflash();
-                isFirst=false;
-            }
-//            initData();
-            //相当于Fragment的onResume
 
-        }
-    }
-    private void initListener() {
 
-        ivChoose.setOnClickListener(this);
-        tvNew.setOnClickListener(this);
-        adapter.setItemCikcListener(new DishesRecycleAdapter.ItemClikcListener() {
-            @Override
-            public void itemClick(COOK data) {
-                Intent intent = new Intent(getActivity(), AddDishesActivity.class);
-                intent.putExtra("id",data);
-                startActivity(intent);
-            }
-        });
-    }
     private String classifyId;
     private void initView() {
 
-        layoutManager = new GridLayoutManager(this.getActivity(), 2);
+        layoutManager = new GridLayoutManager(this, 2);
         mSuperRecyclerView.setLayoutManager(layoutManager);
         mSuperRecyclerView.addItemDecoration(new DivItemDecoration(2, true));
 
         mSuperRecyclerView.getMoreProgressView().getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
 
-        adapter = new DishesRecycleAdapter(getActivity());
+        adapter = new DishesRecycleAdapter(this);
         mSuperRecyclerView.setAdapter(adapter);
         refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
             public void onRefresh() {
                 //  mSuperRecyclerView.showMoreProgress();
-                 presenter.getCookbookList(classifyId,1,TYPE_PULL_REFRESH);
+                presenter.getCookbookList(classifyId,1,TYPE_PULL_REFRESH);
 
             }
         };
 
         mSuperRecyclerView.setRefreshListener(refreshListener);
-        mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
-            @Override
-            public void call(SubscriptionBean.RxBusSendBean bean) {
-                if (bean == null) return;
-                datas.clear();
-                if(bean.type==SubscriptionBean.MENU_REFASH){
-                reflash();
-                }
 
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                throwable.printStackTrace();
-            }
-        });
-        RxBus.getInstance().addSubscription(mSubscription);
     }
     private void reflash(){
         if(mSuperRecyclerView!=null) {
@@ -169,21 +136,16 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
             });
         }
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
 
-    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_new://新建
-                startActivity(new Intent(getActivity(), AddDishesActivity.class));
+//                startActivity(new Intent(getActivity(), AddDishesActivity.class));
                 break;
             case R.id.iv_choose://赛选
-                popView_navigationBar.showPopView();
+//                popView_navigationBar.showPopView();
                 break;
 
         }
@@ -192,7 +154,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     private PopView_NavigationBars popView_navigationBar;
     private void initPopView() {
 
-        popView_navigationBar = new PopView_NavigationBars(getActivity(),1);
+        popView_navigationBar = new PopView_NavigationBars(this,1);
 
         popView_navigationBar.showData(datas);
         popView_navigationBar.setClickListener(new PopView_NavigationBars.ItemCliskListeners() {
@@ -206,7 +168,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     }
 
 
-   private List<COOK> cooks=new ArrayList<>();
+    private List<COOK> cooks=new ArrayList<>();
     public void onDataLoaded(int loadType, final boolean haveNext, List<COOK> list) {
 
         if (loadType == TYPE_PULL_REFRESH) {
@@ -221,8 +183,8 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
             }
         }
 
-            adapter.setDatas(cooks);
-            adapter.notifyDataSetChanged();
+        adapter.setDatas(cooks);
+        adapter.notifyDataSetChanged();
 
 
         mSuperRecyclerView.hideMoreProgress();
@@ -239,7 +201,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
                         public void run() {
                             if (haveNext)
                                 mSuperRecyclerView.hideMoreProgress();
-                         presenter.getCookbookList(classifyId,currpage,TYPE_PULL_MORE);
+                            presenter.getCookbookList(classifyId,currpage,TYPE_PULL_MORE);
 
                         }
                     }, 2000);
@@ -278,6 +240,9 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mSubscription.unsubscribe();
+
     }
+
+
+
 }

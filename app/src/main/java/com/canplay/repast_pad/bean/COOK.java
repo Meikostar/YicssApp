@@ -2,12 +2,13 @@ package com.canplay.repast_pad.bean;
 
 import com.canplay.repast_pad.mvp.model.BaseType;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by mykar on 17/4/26.
  */
-public class COOK {
+public class COOK implements Serializable {
 //  "menuId": 2,
 //          "merchantId": 1,
 //          "classifyId": 1,
@@ -27,7 +28,7 @@ public class COOK {
     public String enName;
 
     public int state;
-    public int sort;
+    public String sort;
     public int hasNext;
     public String price;
     public String classifyName;
@@ -36,6 +37,7 @@ public class COOK {
     public String merchantId;
     public String resourceKey;
     public String classifyId;
+    public String templateId;
     public String cookbookId;
     public String name;
     public List<COOK> cookbookInfos;

@@ -27,7 +27,9 @@ public class CountAdapter extends BaseAdapter {
 
         this.mContext = mContext;
     }
-
+    public List<BaseType> getDatas(){
+        return list;
+    }
     public interface ItemCliks {
         void getItem(BaseType baseType, int poistioin);
     }

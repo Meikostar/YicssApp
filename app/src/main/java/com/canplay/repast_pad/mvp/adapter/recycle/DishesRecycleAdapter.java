@@ -43,12 +43,12 @@ public class DishesRecycleAdapter extends BaseRecycleViewAdapter {
         holders.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.itemClick(data.cookbookId);
+                listener.itemClick(data);
             }
         });
     }
     public interface  ItemClikcListener{
-        void itemClick(String classifyId);
+        void itemClick(COOK data);
     }
     public ItemClikcListener listener;
     public void setItemCikcListener (ItemClikcListener listener){

@@ -87,5 +87,9 @@ public class CookClassifyContract {
          */
         void getMenuInfo(String menuId);
 
+        /**
+         *  新增修改菜单
+         */
+        void createOrEditMenu(String menuId ,String templateId ,String classifyId ,String cookbookIds ,String sort  );
     }
 }
