@@ -45,7 +45,13 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         mViews.add(null);
         mData.add(item);
     }
-
+    public interface  ItemClickListener{
+        void  ItemClick();
+    }
+    private ItemClickListener listener;
+    public void setClickListener(ItemClickListener listener){
+        this.listener=listener;
+    }
     public float getBaseElevation() {
         return mBaseElevation;
     }
@@ -83,7 +89,12 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         TextView tv_taste = (TextView) view.findViewById(R.id.tv_taste);
         TextView tv_sauce = (TextView) view.findViewById(R.id.tv_sauce);
         TextView tv_staus = (TextView) view.findViewById(R.id.tv_staus);
-
+        tv_staus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.ItemClick();
+            }
+        });
         tv_chines.setText(cok.cnName);
         tv_money.setText(cok.price);
         if(TextUtil.isNotEmpty(cok.enName)){

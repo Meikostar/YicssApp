@@ -104,6 +104,7 @@ public class BaseTeatDialog {
     }
 
     public void show() {
+        editText.setText("");
      if(mPopupWindow!=null){
          if (mPopupWindow.isShowing()) {
              mPopupWindow.dismiss();

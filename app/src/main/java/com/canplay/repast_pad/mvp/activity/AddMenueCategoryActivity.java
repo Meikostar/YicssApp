@@ -159,6 +159,7 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
                            }
 
                         }else if(types==3){
+                            BaseApplication.getInstance().mVibrator.vibrate(new long[]{0,100}, 1);
                             for (int j = 0; j < tags.size(); j++) {
                                 if(position==j){
                                     tags.get(j).status=1;

@@ -1,7 +1,9 @@
 package com.canplay.repast_pad.base;
 
 import android.app.Application;
+import android.app.Service;
 import android.content.Context;
+import android.os.Vibrator;
 import android.support.multidex.MultiDex;
 
 import com.canplay.repast_pad.base.manager.AppManager;
@@ -32,6 +34,7 @@ public class BaseApplication extends Application{
         }
         return (BaseApplication) cplayApplication;
     }
+    public  Vibrator mVibrator;
     @Override
     public void onCreate(){
         // TODO Auto-generated method stub
@@ -40,6 +43,8 @@ public class BaseApplication extends Application{
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         mAppComponent.inject(this);
         ApplicationConfig.setAppInfo(this);
+        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+
         //全局异常处理
         initImageLoader(this);
         new ExceptionHandler().init(this);

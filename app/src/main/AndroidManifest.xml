@@ -78,7 +78,7 @@
 
         <activity
             android:name=".mvp.activity.MainActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".mvp.activity.AddMenueCategoryActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />

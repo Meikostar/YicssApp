@@ -39,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <EditText
+                    android:inputType="phone"
                     android:id="@+id/et_money"
                     android:paddingLeft="15dp"
                     android:background="@null"

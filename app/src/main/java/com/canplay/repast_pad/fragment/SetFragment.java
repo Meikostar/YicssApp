@@ -92,7 +92,7 @@ public class SetFragment extends BaseFragment implements View.OnClickListener ,C
         mWindowAddPhoto.setSureListener(new PhotoPopupWindow.ClickListener() {
             @Override
             public void clickListener() {
-
+                   getActivity().finish();
             }
         });
         dialog.setBindClickListener(new BaseTeatDialog.BindClickListener() {

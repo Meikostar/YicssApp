@@ -92,7 +92,7 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
         viewPager.setOffscreenPageLimit(3);
         viewPager.setCurrentItem(0);
 
-        mCardShadowTransformer = new ShadowTransformer(viewPager, mCardAdapter);
+//        mCardShadowTransformer = new ShadowTransformer(viewPager, mCardAdapter);
     }
     private int poistions;
     @Override
