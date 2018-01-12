@@ -16,6 +16,7 @@
         android:text="名称" />
 
     <TextView
+
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textColor="@color/blue"
         android:text="地址" />
 
     <TextView

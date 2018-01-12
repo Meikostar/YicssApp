@@ -7,6 +7,7 @@ import com.canplay.repast_pad.base.manager.ApiManager;
 import com.canplay.repast_pad.bean.BASEBEAN;
 import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.bean.MENU;
+import com.canplay.repast_pad.bean.ORDER;
 import com.canplay.repast_pad.bean.USER;
 import com.canplay.repast_pad.mvp.http.BaseApi;
 import com.canplay.repast_pad.mvp.model.BaseType;
@@ -170,7 +171,25 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
         });
 
     }
+    @Override
+    public void getOrderInfoList(String orderNo) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("orderNo", orderNo);
+        subscription = ApiManager.setSubscribe(contactApi.getOrderInfoList(ApiManager.getParameters(params, true)), new MySubscriber<ORDER>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
 
+            @Override
+            public void onNext(ORDER entity){
+                mView.toEntity(entity,1);
+
+            }
+        });
+
+    }
 
 
     @Override

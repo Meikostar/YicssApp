@@ -41,6 +41,7 @@ public class PrintSetActivity extends BaseActivity {
         //初始化
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         chechBluetooth();
+        addViewListener();
     }
 
     @Override

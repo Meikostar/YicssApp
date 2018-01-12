@@ -100,11 +100,22 @@ public class CookClassifyContract {
         void delMenuInfo(String menuId);
 
 
-
+        /**
+         *  编辑茶位fei
+         */
         void editSurcharge(String surcharge);
-
+        /**
+         *  查询茶位费
+         */
         void getSurcharge();
-
+        /**
+         *  估清
+         */
         void  editCookbookState(String cookbookId,String state);
+
+        /**
+         *  获取订单详情
+         */
+        void getOrderInfoList(String orderNo);
     }
 }

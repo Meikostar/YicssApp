@@ -97,7 +97,7 @@ class PrintAdapter extends BaseAdapter {
         final PrintBean dataBean = mBluetoothDevicesDatas.get(position);
         icon.setBackgroundResource(dataBean.getTypeIcon());
         name.setText(dataBean.name);
-        address.setText(dataBean.isConnect ? "已连接" : "未连接");
+        address.setText(dataBean.isConnect ? "已配对" : "未连接");
         start.setText(dataBean.getDeviceType(start));
 
         //点击连接与打印

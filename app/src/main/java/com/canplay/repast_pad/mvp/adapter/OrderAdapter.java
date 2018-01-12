@@ -5,14 +5,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.bean.ORDER;
 import com.canplay.repast_pad.mvp.model.CONTURY;
 import com.canplay.repast_pad.mvp.model.PROVINCE;
+import com.canplay.repast_pad.util.TextUtil;
+import com.canplay.repast_pad.util.TimeUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +27,7 @@ import butterknife.ButterKnife;
 
 public class OrderAdapter extends BaseAdapter {
     private Context mContext;
-    private List<CONTURY> list;
+    private List<ORDER> list;
 
     public OrderAdapter(Context mContext) {
 
@@ -30,8 +37,8 @@ public class OrderAdapter extends BaseAdapter {
     public interface ItemCliks {
         void getItem(int poistion, String name, int id);
     }
-
-    public void setData(List<PROVINCE> list) {
+    private Map<Integer,Integer> map=new HashMap<>();
+    public void setData(List<ORDER> list) {
         notifyDataSetChanged();
     }
 
@@ -52,20 +59,95 @@ public class OrderAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
-        ResultViewHolder holder;
+        final ViewHolder holder;
         if (view == null) {
-            holder = new ResultViewHolder();
+
             view = LayoutInflater.from(mContext).inflate(R.layout.order_detail_item, parent, false);
+            holder = new ViewHolder(view);
             view.setTag(holder);
         } else {
-            holder = (ResultViewHolder) view.getTag();
+            holder = (ViewHolder) view.getTag();
+        }
+        if(position==0){
+            holder.tv_time.setVisibility(View.VISIBLE);
+            holder.tv_time.setText(TimeUtil.formatTime(list.get(position).createTime));
+            if(position==list.size()){
+             holder.tv_remark.setVisibility(View.VISIBLE);
+            }else {
+                if(list.get(position).status==list.get(position+1).status){
+                    holder.tv_remark.setVisibility(View.GONE);
+                }else {
+                    holder.tv_remark.setVisibility(View.VISIBLE);
+                }
+            }
+        }else {
+            if(position==list.size()){
+                holder.tv_remark.setVisibility(View.VISIBLE);
+            }else {
+                if(list.get(position).status==list.get(position+1).status){
+                    holder.tv_remark.setVisibility(View.GONE);
+                }else {
+                    holder.tv_remark.setVisibility(View.VISIBLE);
+                }
+            }
+            if(list.get(position).status==list.get(position-1).status){
+                holder.tv_time.setVisibility(View.GONE);
+            }else {
+                holder.tv_time.setVisibility(View.VISIBLE);
+            }
+        }
+        Glide.with(mContext).load(list.get(position).imgUrl).asBitmap().placeholder(R.drawable.moren).into(holder.img);
+        if(TextUtil.isNotEmpty(list.get(position).cnName)){
+            holder.tvName.setText(list.get(position).cnName);
+        }
+        if(TextUtil.isNotEmpty(list.get(position).foodClassifyName)){
+            holder.tvDetail.setText(list.get(position).foodClassifyName+list.get(position).recipesClassifyName==null?"":","+list.get(position).recipesClassifyName);
+        }else {
+            holder.tvDetail.setText(list.get(position).recipesClassifyName==null?"":","+list.get(position).recipesClassifyName);
+
+        }
+        if(TextUtil.isNotEmpty(list.get(position).price)){
+            holder.tvPrice.setText("￥ "+list.get(position).price);
         }
 
+        if(list.get(position).state==0){
+            holder.llEditor.setVisibility(View.VISIBLE);
+        }else if(list.get(position).state==1){
+            holder.llEditor.setVisibility(View.GONE);
+        }else if(list.get(position).state==2){
+            holder.llEditor.setVisibility(View.GONE);
+        }else if(list.get(position).state==3){
+            holder.llEditor.setVisibility(View.GONE);
+        }
+        holder.tvCount.setText(list.get(position).count+"");
+
+        holder.tvAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                list.get(position).count=list.get(position).count+1;
+                holder.tvCount.setText(list.get(position).count+"");
+
+            }
+        });
+        holder.tvLess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(list.get(position).count==0){
+                    list.get(position).count=0;
+
+                }else {
+                    list.get(position).count=list.get(position).count-1;
+                    holder.tvCount.setText(list.get(position).count-1+"");
+                }
+
+            }
+        });
         return view;
 
 
     }
-
+//0待接单，1待结账 2已完成，4已撤销
     public class ResultViewHolder {
 
         TextView name;
@@ -88,6 +170,8 @@ public class OrderAdapter extends BaseAdapter {
         TextView tv_time;
         @BindView(R.id.tv_detail)
         TextView tvDetail;
+        @BindView(R.id.iv_img)
+        ImageView img;
         @BindView(R.id.tv_price)
         TextView tvPrice;
         @BindView(R.id.tv_less)

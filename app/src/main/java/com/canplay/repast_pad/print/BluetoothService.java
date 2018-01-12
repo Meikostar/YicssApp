@@ -82,8 +82,8 @@ public class BluetoothService {
             data.add(map);// 把item项的数据加到data中  
         }  
         String[] from = { "deviceName" };  
-        int[] to = { R.id.device_name };  
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this.context, data,  
+        int[] to = { R.id.device_name };
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this.context, data,
                 R.layout.unbonddevice_item, from, to);  
   
         // 把适配器装载到listView中  

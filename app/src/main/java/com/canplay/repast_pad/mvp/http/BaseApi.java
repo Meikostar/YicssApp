@@ -3,6 +3,7 @@ package com.canplay.repast_pad.mvp.http;
 import com.canplay.repast_pad.bean.BASEBEAN;
 import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.bean.MENU;
+import com.canplay.repast_pad.bean.ORDER;
 import com.canplay.repast_pad.bean.USER;
 import com.canplay.repast_pad.mvp.model.ApkUrl;
 import com.canplay.repast_pad.mvp.model.BaseType;
@@ -175,5 +176,15 @@ public interface BaseApi {
      */
     @POST("merchant/editSurcharge")
     Observable<String> editSurcharge(@QueryMap Map<String, String> options);
+
+
+
+    /**
+     * POST
+     * @return
+     */
+    @POST("pad/getOrderInfoList")
+    Observable<ORDER> getOrderInfoList(@QueryMap Map<String, String> options);
+
 
 }

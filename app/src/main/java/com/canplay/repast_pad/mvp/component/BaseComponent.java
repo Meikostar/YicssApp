@@ -14,6 +14,7 @@ import com.canplay.repast_pad.mvp.activity.LoginActivity;
 import com.canplay.repast_pad.mvp.activity.MainActivity;
 import com.canplay.repast_pad.mvp.activity.MenuDetailActivity;
 import com.canplay.repast_pad.mvp.activity.MenuDetailEditorActivity;
+import com.canplay.repast_pad.mvp.activity.OrderDetailActivity;
 
 import dagger.Component;
 
@@ -35,5 +36,6 @@ public interface BaseComponent{
     void inject(ChooseFoodActivity binderActivity);
     void inject(MenuDetailActivity binderActivity);
     void inject(SetFragment binderActivity);
+    void inject(OrderDetailActivity binderActivity);
 
 }
