@@ -14,9 +14,11 @@ import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.BaseFragment;
 import com.canplay.repast_pad.mvp.activity.AddDishesActivity;
 import com.canplay.repast_pad.mvp.activity.AddMenueCategoryActivity;
+import com.canplay.repast_pad.mvp.activity.PrintSetActivity;
 import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_pad.mvp.present.CookClassifyContract;
 import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
+import com.canplay.repast_pad.print.BluetoothActivity;
 import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.view.BaseTeatDialog;
 import com.canplay.repast_pad.view.PhotoPopupWindow;
@@ -140,6 +142,11 @@ public class SetFragment extends BaseFragment implements View.OnClickListener ,C
 
                 break;
             case R.id.ll_print://打印
+                Intent intent6 = new Intent(getActivity(), BluetoothActivity.class);
+//                intent5.putExtra("type",4);
+//                intent5.putExtra("name","配菜分类");
+                startActivity(intent6);
+
                 break;
             case R.id.ll_exit://退出
                 mWindowAddPhoto.showAsDropDown(llDishe);

@@ -352,6 +352,7 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                 tvEnglish.setText(cook.enName);
             }if(!TextUtil.isEmpty(cook.classifyName)){
                 tvType.setText(cook.classifyName);
+                tvType.setTextColor(getResources().getColor(R.color.slow_black));
             }
             ivImg.setVisibility(View.VISIBLE);
             rlImg.setVisibility(View.GONE);

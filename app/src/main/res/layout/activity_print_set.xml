@@ -12,9 +12,35 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:navigationTitle="打印设置"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="蓝牙开关"
+            android:textColor="#ff000000"
+            android:textSize="14sp" />
+
+
+        <Switch xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/txt_blue"
+            android:textSize="16sp" />
+    </LinearLayout>
   <ImageView
+      android:src="@drawable/dayins"
       android:id="@+id/iv_star"
-      android:layout_marginTop="60dp"
+      android:layout_marginTop="40dp"
       android:layout_width="80dp"
       android:layout_height="65dp"
       />

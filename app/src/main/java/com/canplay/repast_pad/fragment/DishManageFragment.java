@@ -112,7 +112,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
             @Override
             public void itemClick(COOK data) {
                 Intent intent = new Intent(getActivity(), AddDishesActivity.class);
-                intent.putExtra("id",data);
+                intent.putExtra("id",data.cookbookId);
                 startActivity(intent);
             }
         });

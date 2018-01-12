@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.canplay.repast_pad">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -15,7 +17,8 @@
     <!-- 允许程序访问Wi-Fi网络状态信息 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <!-- 极光 -->
     <!-- Required -->
     <permission
@@ -93,7 +96,11 @@
         <activity android:name=".mvp.activity.AddMenuActivity" />
         <activity android:name=".mvp.activity.MenuDetailActivity" />
         <activity android:name=".mvp.activity.MenuDetailEditorActivity" />
+        <activity android:name=".print.BluetoothActivity" />
         <activity android:name=".mvp.activity.ChooseFoodActivity"></activity>
+        <activity
+            android:name=".print.PrintDataActivity">
+        </activity>
     </application>
 
 </manifest>
