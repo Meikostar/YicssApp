@@ -50,6 +50,8 @@ public class ChooseFoodActivity extends BaseActivity implements View.OnClickList
     TextView tvNew;
     @BindView(R.id.iv_choose)
     ImageView ivChoose;
+    @BindView(R.id.top_view_back)
+    ImageView top_view_back;
     private GridLayoutManager layoutManager;
 
     private SwipeRefreshLayout.OnRefreshListener refreshListener;
@@ -74,14 +76,21 @@ public class ChooseFoodActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void bindEvents() {
+        top_view_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         ivChoose.setOnClickListener(this);
         tvNew.setOnClickListener(this);
         adapter.setItemCikcListener(new DishesRecycleAdapter.ItemClikcListener() {
             @Override
             public void itemClick(COOK data) {
                 Intent intent = new Intent();
-                intent.putExtra("id",data);
-               setResult(RESULT_OK,intent);
+                intent.putExtra("cook",data);
+                setResult(RESULT_OK,intent);
+                finish();
     }
 });
     }

@@ -135,16 +135,16 @@ public class MainActivity extends BaseActivity {
             RxBus.getInstance().unSub(mSubscription);
         }
     }
-
-    //屏蔽返回键的代码:
-    public boolean onKeyDown(int keyCode,KeyEvent event)
-    {
-        switch(keyCode)
-        {
-            case KeyEvent.KEYCODE_BACK:return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//
+//    //屏蔽返回键的代码:
+//    public boolean onKeyDown(int keyCode,KeyEvent event)
+//    {
+//        switch(keyCode)
+//        {
+//            case KeyEvent.KEYCODE_BACK:return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
 
 }

@@ -22,7 +22,9 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
         viewPager.addOnPageChangeListener(this);
         mAdapter = adapter;
     }
-
+    public void setmAdapter(CardAdapter adapter){
+        mAdapter = adapter;
+    }
     public void enableScaling(boolean enable) {
         if (mScalingEnabled && !enable) {
             // shrink main card

@@ -45,8 +45,11 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         mViews.add(null);
         mData.add(item);
     }
+    public void setDatas(List<COOK> list){
+        mData=list;
+    }
     public interface  ItemClickListener{
-        void  ItemClick();
+        void  ItemClick(String id,int state,int poistion);
     }
     private ItemClickListener listener;
     public void setClickListener(ItemClickListener listener){
@@ -72,13 +75,13 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
 
         View view = LayoutInflater.from(container.getContext())
                 .inflate(R.layout.adapter, container, false);
         ButterKnife.bind(this, view);
         container.addView(view);
-        COOK cok=mData.get(position);
+        final COOK cok=mData.get(position);
         CardView cardView = (CardView) view.findViewById(R.id.cardView);
         ImageView imgview = (ImageView) view.findViewById(R.id.iv_menu_imgs);
         TextView tv_number = (TextView) view.findViewById(R.id.tv_number);
@@ -92,11 +95,11 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         tv_staus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.ItemClick();
+                listener.ItemClick(cok.cookbookId,cok.state,position);
             }
         });
         tv_chines.setText(cok.cnName);
-        tv_money.setText(cok.price);
+        tv_money.setText("￥ "+cok.price);
         if(TextUtil.isNotEmpty(cok.enName)){
             tv_english.setText(cok.enName);
         }else {

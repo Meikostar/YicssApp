@@ -30,7 +30,7 @@ import static com.canplay.repast_pad.bean.PrintBean.PRINT_TYPE;
  * 类说明:蓝牙设备的适配器
  * 阳（360621904@qq.com）  2017/4/27  19:58
  */
-class PrintAdapter extends BaseAdapter {
+public class PrintAdapter extends BaseAdapter {
     private ArrayList<PrintBean> mBluetoothDevicesDatas;
     private Context mContext;
     //蓝牙适配器

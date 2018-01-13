@@ -68,7 +68,7 @@
             android:layout_height="16dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
-            android:layout_marginRight="13dp" />
+            android:layout_marginRight="16dp" />
     </LinearLayout>
 
 

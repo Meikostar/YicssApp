@@ -86,8 +86,10 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
     public void createOrEditMenu(String menuId ,String templateId ,String classifyId ,String cookbookIds ,String sort  ) {
         Map<String, String> params = new TreeMap<>();
         params.put("merchantId", SpUtil.getInstance().getUserId());
+       if(TextUtil.isNotEmpty(menuId)){
+           params.put("menuId",menuId+"");
+       }
 
-        params.put("menuId",menuId+"");
         params.put("templateId", templateId+"");
         params.put("classifyId", classifyId+"");
         params.put("cookbookIds", cookbookIds+"");
@@ -124,7 +126,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
 
             @Override
             public void onNext(String entity){
-                mView.toEntity(entity,2);
+                mView.toEntity(entity,-1);
 
             }
         });
@@ -465,7 +467,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
     public void createOrEditCookbook(String cookbookId,String resourceKey,String cnName,String enName,String classifyId,
                                      String price,String foodIds,String recipesIds) {
         Map<String, String> params = new TreeMap<>();
-        params.put("cookbookId", "0");
+        params.put("cookbookId", cookbookId);
         params.put("resourceKey", resourceKey);
         params.put("cnName", cnName);
         if(TextUtil.isNotEmpty(enName)){

@@ -108,6 +108,7 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
             public void getItem(MENU menu) {
                 Intent intent = new Intent(getActivity(), MenuDetailEditorActivity.class);
                 intent.putExtra("id",menu.menuId);
+                intent.putExtra("sort",menu.sort);
                 startActivity(intent);
             }
         });

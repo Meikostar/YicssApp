@@ -1,24 +1,31 @@
 package com.canplay.repast_pad.mvp.activity;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.bean.PrintBean;
+import com.canplay.repast_pad.mvp.adapter.PrintAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+import static  com.canplay.repast_pad.bean.PrintBean.PRINT_TYPE;
 public class PrintSetActivity extends BaseActivity {
 
     @BindView(R.id.iv_star)
@@ -31,22 +38,39 @@ public class PrintSetActivity extends BaseActivity {
     LinearLayout llContact;
     @BindView(R.id.switch1)
     Switch mSwitch;
+    @BindView(R.id.list_view)
+    ListView listView;
+
+
     public static final int REQUEST_ENABLE_BT = 1;
     //蓝牙适配器
     private BluetoothAdapter mBluetoothAdapter;
+    private PrintAdapter adapter;
     @Override
     public void initViews() {
         setContentView(R.layout.activity_print_set);
         ButterKnife.bind(this);
         //初始化
+        //广播注册
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothDevicesDatas = new ArrayList<>();
+        adapter = new PrintAdapter(this, mBluetoothDevicesDatas,"");
+        listView.setAdapter(adapter);
         chechBluetooth();
         addViewListener();
     }
 
     @Override
     public void bindEvents() {
-
+    tvContact.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            searchDevices();
+        }
+    });
     }
 
     @Override
@@ -96,7 +120,7 @@ public class PrintSetActivity extends BaseActivity {
      */
     public void searchDevices() {
         mBluetoothDevicesDatas.clear();
-//        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
         //开始搜索蓝牙设备
         mBluetoothAdapter.startDiscovery();
     }
@@ -141,6 +165,47 @@ public class PrintSetActivity extends BaseActivity {
 
     }
 
+    /**
+     * 通过广播搜索蓝牙设备
+     */
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            // 把搜索的设置添加到集合中
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                //已经匹配的设备
+                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+                    addBluetoothDevice(device);
+
+                    //没有匹配的设备
+                } else {
+                    addBluetoothDevice(device);
+                }
+                adapter.notifyDataSetChanged();
+                //搜索完成
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                setViewStatus(false);
+            }
+        }
+
+        /**
+         * 添加数据
+         * @param device 蓝牙设置对象
+         */
+        private void addBluetoothDevice(BluetoothDevice device) {
+            for (int i = 0; i < mBluetoothDevicesDatas.size(); i++) {
+                if (device.getAddress().equals(mBluetoothDevicesDatas.get(i).getAddress())) {
+                    mBluetoothDevicesDatas.remove(i);
+                }
+            }
+            if (device.getBondState() == BluetoothDevice.BOND_BONDED && device.getBluetoothClass().getDeviceClass() == PRINT_TYPE) {
+                mBluetoothDevicesDatas.add(0, new PrintBean(device));
+            } else {
+                mBluetoothDevicesDatas.add(new PrintBean(device));
+            }
+        }
+    };
     /**
      * 关闭蓝牙
      */

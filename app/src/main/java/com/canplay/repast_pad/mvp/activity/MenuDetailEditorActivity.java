@@ -61,6 +61,8 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
     private BaseSelectDialog dialog;
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+    private int poistion;
+    private int state;
     @Override
     public void initViews() {
         setContentView(R.layout.activity_menu_detail_editor);
@@ -71,6 +73,7 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
 
 
         menuId = getIntent().getStringExtra("id");
+        sort = getIntent().getStringExtra("sort");
 
         if (TextUtil.isNotEmpty(menuId)) {
             presenter.getMenuInfo(menuId);
@@ -78,7 +81,22 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
         dialog = new BaseSelectDialog(this, line);
 
         mCardAdapter = new CardPagerAdapter(this);
+        mCardAdapter.setClickListener(new CardPagerAdapter.ItemClickListener() {
+            @Override
+            public void ItemClick(String id,int states,int poistions) {
+                poistion=poistions;
 
+                String st="";
+                if(states==1){
+                    st="0";
+                    state=0;
+                }else {
+                    st="1";
+                    state=1;
+                }
+            presenter.editCookbookState(id,st);
+            }
+        });
 
     }
 
@@ -144,6 +162,7 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
             case R.id.tv_new:
                 Intent intent = new Intent(MenuDetailEditorActivity.this, MenuDetailActivity.class);
                 intent.putExtra("cook",cook);
+                intent.putExtra("sort",sort);
                 startActivityForResult(intent,1);
                 break;
 
@@ -158,12 +177,23 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
     private List<COOK> datas;
     private COOK cook;
     private String menuId;
+    private String sort;
     @Override
     public <T> void toEntity(T entity, int type) {
         if(type==8){
             showToasts("删除成功");
             finish();
-        }else {
+        }else if(type==-1) {
+            showToasts("设置成功");
+            datas.get(poistion).state=state;
+            mCardAdapter.setDatas(datas);
+            mCardAdapter.notifyDataSetChanged();
+            viewPager.removeAllViews();
+            mCardShadowTransformer.setmAdapter(mCardAdapter);
+            viewPager.setAdapter(mCardAdapter);
+            viewPager.setPageTransformer(false, mCardShadowTransformer);
+
+        }else{
             cook = (COOK) entity;
             datas = cook.cookbookInfo;
 

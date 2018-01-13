@@ -132,6 +132,7 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
         tvAdd2.setOnClickListener(this);
         llType.setOnClickListener(this);
         rlImg.setOnClickListener(this);
+        ivImg.setOnClickListener(this);
         mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
             @Override
             public void call(SubscriptionBean.RxBusSendBean bean) {
@@ -259,6 +260,14 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                                 Manifest.permission.READ_EXTERNAL_STORAGE)
                         .request();
                 break;
+            case R.id.iv_img:
+                Picker.from(this)
+                        .count(1)
+                        .enableCamera(true)
+                        .setEngine(new ImageLoaderEngine())
+                        .setAdd_watermark(false)
+                        .forResult(4);
+                break;
 
         }
     }
@@ -352,12 +361,17 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                 tvEnglish.setText(cook.enName);
             }if(!TextUtil.isEmpty(cook.classifyName)){
                 tvType.setText(cook.classifyName);
+                classifyId=cook.classifyId;
                 tvType.setTextColor(getResources().getColor(R.color.slow_black));
             }
+            if(!TextUtil.isEmpty(cook.imgUrl)){
+                resourceKey=cook.imgUrl;
+            }
+
             ivImg.setVisibility(View.VISIBLE);
             rlImg.setVisibility(View.GONE);
             Glide.with(this).load(cook.imgUrl).asBitmap().placeholder(R.drawable.moren).into(ivImg);
-            resourceKey="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C3%2C1000%2C660%3Bc0%3Dbaike116%2C5%2C5%2C116%2C38/sign=06593452ba1c8701c2f9e8a61a4fb21c/d01373f082025aaf8c25f47df2edab64034f1a74.jpg";
+//            resourceKey="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C3%2C1000%2C660%3Bc0%3Dbaike116%2C5%2C5%2C116%2C38/sign=06593452ba1c8701c2f9e8a61a4fb21c/d01373f082025aaf8c25f47df2edab64034f1a74.jpg";
 
         }
 
@@ -366,6 +380,6 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void showTomast(String msg) {
-
+       dimessProgress();
     }
 }

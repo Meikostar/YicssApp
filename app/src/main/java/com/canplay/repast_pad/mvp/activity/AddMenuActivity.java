@@ -40,16 +40,17 @@ public class AddMenuActivity extends BaseActivity  {
     private Subscription mSubscription;
 
     private LinearLayoutManager mLinearLayoutManager;
+    private int type;
     @Override
     public void initViews() {
         setContentView(R.layout.activity_add_menu);
         ButterKnife.bind(this);
-
+        type=getIntent().getIntExtra("type",0);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mSuperRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSuperRecyclerView.addItemDecoration(new DivItemDecoration(2, true));
         mSuperRecyclerView.getMoreProgressView().getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-
+        navigationbar.setNavigationBarListener(this);
         adapter=new MenuRecycleAdapter(this);
         mSuperRecyclerView.setAdapter(adapter);
         mSuperRecyclerView.setRefreshing(false);
@@ -77,9 +78,18 @@ public class AddMenuActivity extends BaseActivity  {
         adapter.setItemCikcListener(new MenuRecycleAdapter.ItemClikcListener() {
             @Override
             public void itemClick(int poistioin) {
-                Intent intent = new Intent(AddMenuActivity.this, MenuDetailActivity.class);
-                intent.putExtra("type", poistioin+1);
-                startActivity(intent);
+                if(type==1){
+                    Intent intent = new Intent();
+                    intent.putExtra("type", poistioin+1);
+                    setResult(RESULT_OK,intent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(AddMenuActivity.this, MenuDetailActivity.class);
+                    intent.putExtra("type", poistioin+1);
+                    startActivity(intent);
+
+                }
+
             }
         });
 

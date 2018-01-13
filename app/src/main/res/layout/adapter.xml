@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,7 +18,7 @@
             android:gravity="center_horizontal">
             <View
                 android:layout_width="match_parent"
-                android:layout_height="265dp"/>
+                android:layout_height="235dp"/>
             <TextView
                 android:layout_marginTop="17dp"
                 android:id="@+id/tv_chines"
@@ -125,6 +125,8 @@
         </LinearLayout>
     </com.canplay.repast_pad.view.scrollView.StickyScrollView>
     <android.support.v7.widget.CardView
+        app:cardCornerRadius="6dp"
+        app:cardElevation="0dp"
         android:id="@+id/cardView"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
@@ -133,7 +135,7 @@
         >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp">
+            android:layout_height="210dp">
             <ImageView
                 android:scaleType="fitXY"
                 android:layout_width="match_parent"
@@ -144,7 +146,7 @@
                 android:textSize="12sp"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:background="@drawable/caidanxuhao"
+                android:background="@drawable/fen_regle"
                 android:layout_width="28dp"
                 android:layout_height="28dp" />
         </RelativeLayout>

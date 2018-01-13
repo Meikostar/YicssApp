@@ -76,6 +76,7 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
         adapter = new CountAdapter(this);
         rlMenu.setAdapter(adapter);
         cook = (COOK) getIntent().getSerializableExtra("cook");
+        sort =  getIntent().getStringExtra("sort");
         mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
             @Override
             public void call(SubscriptionBean.RxBusSendBean bean) {
@@ -99,18 +100,32 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
     }
 
     private int CHOOSE = 1;
+    private int TYPES = 2;
     private int poistion = 0;
     private String cookbookIds;
     private String sort;
     @Override
     public void bindEvents() {
+        llStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuDetailActivity.this, AddMenuActivity.class);
+                intent.putExtra("type", 1);
+                startActivityForResult(intent, TYPES);
+            }
+        });
         adapter.setClickListener(new CountAdapter.ItemCliks() {
             @Override
             public void getItem(BaseType baseType, int poistioin) {
                 poistion = poistioin;
-                Intent intent = new Intent(MenuDetailActivity.this, ChooseFoodActivity.class);
-                intent.putExtra("id", baseType.classifyId);
-                startActivityForResult(intent, CHOOSE);
+                if(TextUtil.isNotEmpty(classifyId)){
+                    Intent intent = new Intent(MenuDetailActivity.this, ChooseFoodActivity.class);
+                    intent.putExtra("id", classifyId);
+                    startActivityForResult(intent, CHOOSE);
+                }else {
+                    showToasts("请先选菜单类型");
+                }
+
             }
         });
         llType.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +141,7 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
             public void onClick(View v) {
                 List<BaseType> datas = adapter.getDatas();
                 if(TextUtil.isEmpty(classifyId)){
-                    showToasts("请选择菜单类型");
+                    showToasts("请选择菜品类型");
                     return;
                 }
                 int i=0;
@@ -165,14 +180,19 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(TextUtil.isNotEmpty(s.toString())){
-                    String sort = BaseApplication.map.get(s.toString());
 
-                    if(TextUtil.isNotEmpty(sort)){
-                        if(!tvHint.getText().toString().trim().equals(sort)){
+                    String sorts = BaseApplication.map.get(s.toString());
+                    if(TextUtil.isNotEmpty(sorts)){
+                        if(TextUtil.isNotEmpty(sort)){
+                            if(!sort.equals(sorts)){
+                                tvHint.setVisibility(View.VISIBLE);
+                                tvHint.setText("提示: 序号"+sort+"菜单已经存在，请重新输入菜单序列号。");
+                            }
+                        }else {
                             tvHint.setVisibility(View.VISIBLE);
                             tvHint.setText("提示: 序号"+sort+"菜单已经存在，请重新输入菜单序列号。");
-
                         }
+
                    }else {
                         tvHint.setVisibility(View.GONE);
                         tvHint.setText("");
@@ -235,6 +255,15 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
                 baseType.cookbookId = ck.cookbookId;
                 baseType.classifyId = ck.classifyId;
                 adapter.setData(datas);
+            }else {
+                cout = data.getIntExtra("type", 0);
+                for (int i = 0; i < cout; i++) {
+                    BaseType baseType = new BaseType();
+                    datas.add(baseType);
+                    templateId=cout+"";
+                    tvStyle.setText("一屏" + cout + "道菜");
+                    adapter.setData(datas);
+                }
             }
         }
     }
@@ -261,6 +290,7 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
            showToasts("添加成功");
        }
         RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASHS,""));
+        RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.FINISH,""));
        finish();
 
     }
