@@ -7,7 +7,11 @@
     android:orientation="vertical"
     android:background="@color/content_bg"
     tools:context="com.canplay.repast_pad.mvp.activity.DishesManageActivity">
-<RelativeLayout
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.05dp"
+        android:id="@+id/line"/>
+    <RelativeLayout
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="50dp"

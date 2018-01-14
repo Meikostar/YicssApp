@@ -3,6 +3,7 @@ package com.canplay.repast_pad.mvp.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -224,7 +225,11 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
         Custom_TagBtn view = (Custom_TagBtn) LayoutInflater.from(this).inflate(R.layout.dish_item, null);
         view.setBg(R.drawable.hui_regle);
         view.setColors(R.color.slow_black);
-        view.setSize(55,30,13);
+        String name = content.name;
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(15);
+        int  with = (int) textPaint.measureText(name);
+        view.setSize(with,30,13,0);
         view.setLayoutParams(lp);
         view.setCustomText(content.name);
 
@@ -344,6 +349,7 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                 }
                 i++;
             }
+            datas.clear();
             datas.addAll(cook.foodClassifyInfos);
             setTagAdapter(fblGarnish);
             int a=0;

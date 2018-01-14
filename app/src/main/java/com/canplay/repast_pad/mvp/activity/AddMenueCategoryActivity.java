@@ -1,9 +1,12 @@
 package com.canplay.repast_pad.mvp.activity;
 
 import android.content.Intent;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
@@ -21,6 +24,7 @@ import com.canplay.repast_pad.view.Custom_TagBtn;
 import com.canplay.repast_pad.view.Custom_TagBtn_del;
 import com.canplay.repast_pad.view.FlexboxLayout;
 import com.canplay.repast_pad.view.NavigationBar;
+import com.canplay.repast_pad.view.SoftKeyBoardListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +48,8 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
     private List<BaseType> tags = new ArrayList<>();//标签数据
     private AddmenuDialog dialog;
     private String title;
+    private int sh;
+    private int layoutH;
     private int status;//0表示列表1表示添加2表示删除
     @Override
     public void initViews() {
@@ -51,6 +57,7 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
         ButterKnife.bind(this);
         DaggerBaseComponent.builder().appComponent(((BaseApplication) getApplication()).getAppComponent()).build().inject(this);
         presenter.attachView(this);
+
         navigationbar.setNavigationBarListener(this);
         type=getIntent().getIntExtra("type",1);
         title=getIntent().getStringExtra("name");
@@ -74,6 +81,36 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
 
 
         dialog = new AddmenuDialog(this,line);
+
+
+        //当键盘弹起的时候用屏幕的高度减去布局的高度，同时获取到键盘的高度，用键盘的高度和剩余的高度做对比
+        SoftKeyBoardListener.setListener(AddMenueCategoryActivity.this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+
+            @Override
+            public void keyBoardShow(int height) {
+                //键盘弹起回调
+                    if(dialog!=null){
+                        View views = dialog.getView();
+                        views.setScrollY(DensityUtil.dip2px(85));
+                    }
+
+
+            }
+
+            @Override
+            public void keyBoardHide(int height) {
+                //键盘隐藏回调
+
+                    if(dialog!=null){
+                        View views = dialog.getView();
+                        views.setScrollY(0);
+                    }
+
+
+            }
+        });
+
+
     }
 
    private String content;
@@ -113,6 +150,7 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
         dialog.show();
 
     }
+    private boolean isShow;
     private int del;
     /**
      * 初始化标签适配器
@@ -201,7 +239,11 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
             view.show();
         }
         int width=(int) DensityUtil.getWidth(this)/3;
-        view.setSize(DensityUtil.px2dip(this, width)-14,60,15);
+        String name = content.name;
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(15);
+        int  with = (int) textPaint.measureText(name);
+        view.setSize(with+30,60,15);
         view.setLayoutParams(lp);
         view.setCustomText(content.name);
 
@@ -228,6 +270,7 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
         }else if(status==2){
             del=0;
             tags.remove(poistion);
+            setTagAdapter();
         }
 
     }
@@ -236,4 +279,5 @@ public class AddMenueCategoryActivity extends BaseActivity  implements CookClass
     public void showTomast(String msg) {
 
     }
+
 }

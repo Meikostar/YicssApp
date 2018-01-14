@@ -4,6 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.001dp"
+        android:id="@+id/line"/>
 <com.canplay.repast_pad.view.NavigationBar
     app:navigationTitle="菜单管理"
     app:navigationRight_type="img"

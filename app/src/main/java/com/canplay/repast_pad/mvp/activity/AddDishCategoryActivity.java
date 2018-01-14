@@ -2,6 +2,7 @@ package com.canplay.repast_pad.mvp.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -206,7 +207,11 @@ public class AddDishCategoryActivity extends BaseActivity implements CookClassif
             view.setColors(R.color.slow_black);
         }
         int width=(int) DensityUtil.getWidth(this)/3;
-        view.setSize(DensityUtil.px2dip(this, width)-20,60,15);
+        String name = content.name;
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(15);
+        int  with = (int) textPaint.measureText(name);
+        view.setSize(with+30,60,15,1);
         view.setLayoutParams(lp);
         view.setCustomText(content.name);
 

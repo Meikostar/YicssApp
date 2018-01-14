@@ -192,7 +192,28 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
         });
 
     }
+    @Override
+    public void getAppOrderList(String merchantId,int page,int state,final int loadtype) {
 
+        Map<String, String> params = new TreeMap<>();
+        params.put("merchantId", SpUtil.getInstance().getUserId());
+        params.put("page", page+"");
+        params.put("state", state+"");
+        subscription = ApiManager.setSubscribe(contactApi.getAppOrderList(ApiManager.getParameters(params, true)), new MySubscriber<ORDER>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(ORDER entity){
+                mView.toEntity(entity,loadtype);
+
+            }
+        });
+
+    }
 
     @Override
     public void getFoodClassifyList() {

@@ -52,6 +52,8 @@ public class ChooseFoodActivity extends BaseActivity implements View.OnClickList
     ImageView ivChoose;
     @BindView(R.id.top_view_back)
     ImageView top_view_back;
+    @BindView(R.id.line)
+    View line;
     private GridLayoutManager layoutManager;
 
     private SwipeRefreshLayout.OnRefreshListener refreshListener;
@@ -166,6 +168,7 @@ public class ChooseFoodActivity extends BaseActivity implements View.OnClickList
         popView_navigationBar = new PopView_NavigationBars(this,1);
 
         popView_navigationBar.showData(datas);
+        popView_navigationBar.setView(line);
         popView_navigationBar.setClickListener(new PopView_NavigationBars.ItemCliskListeners() {
             @Override
             public void clickListener(String id) {

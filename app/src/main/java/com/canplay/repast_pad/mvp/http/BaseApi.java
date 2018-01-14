@@ -186,5 +186,20 @@ public interface BaseApi {
     @POST("pad/getOrderInfoList")
     Observable<ORDER> getOrderInfoList(@QueryMap Map<String, String> options);
 
+    /**
+     * POST
+     * @return
+     */
+    @POST("pad/getAppOrderInfo")
+    Observable<ORDER> getAppOrderInfo(@QueryMap Map<String, String> options);
+
+
+
+    /**
+     * POST
+     * @return
+     */
+    @POST("pad/getAppOrderList")
+    Observable<ORDER> getAppOrderList(@QueryMap Map<String, String> options);
 
 }

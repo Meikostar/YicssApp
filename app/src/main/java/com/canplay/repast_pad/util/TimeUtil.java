@@ -40,8 +40,8 @@ public class TimeUtil {
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss");
         return format.format(new Date(time*1000));
     }
-    public static String formatToFileNames(long time){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+    public static String formatTimes(long time){
+        SimpleDateFormat format = new SimpleDateFormat("MM.dd  HH:mm");
         return format.format(new Date(time*1000));
     }
     public static String formatToMs(long time){

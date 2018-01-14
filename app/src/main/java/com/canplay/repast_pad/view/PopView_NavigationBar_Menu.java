@@ -68,4 +68,8 @@ public class PopView_NavigationBar_Menu extends BasePopView {
         }
 
     }
+    public void setView(View view){
+        line=view;
+    }
+
 }

@@ -49,6 +49,8 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
     NavigationBar navigationBar;
     @BindView(R.id.rl_menu)
     RegularListView rlMenu;
+    @BindView(R.id.line)
+    View line;
     Unbinder unbinder;
      private MenuAdapter adapter;
     @Override
@@ -145,7 +147,7 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
     private void initPopView() {
 //        mWindowAddPhoto = new PhotoPopupWindow(getActivity());
         popView_navigationBar = new PopView_NavigationBar_Menu(getActivity(),1);
-
+        popView_navigationBar.setView(line);
 
         popView_navigationBar.setClickListener(new PopView_NavigationBar_Menu.ItemCliskListeners() {
             @Override

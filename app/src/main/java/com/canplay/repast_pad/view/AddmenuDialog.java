@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -63,7 +64,9 @@ public class AddmenuDialog {
         but_title.setVisibility(View.VISIBLE);
         but_title.setText(name);
     }
-
+    public View getView(){
+        return mView;
+    }
     private void initView() {
         mView = View.inflate(mContext, R.layout.add_menu_dailog, null);
         mButtonCancel = (TextView) mView.findViewById(R.id.but_tsw_cancel);
@@ -103,11 +106,12 @@ public class AddmenuDialog {
             but_title.setText(title);
         }
     }
-
     public void show() {
      if(mPopupWindow!=null){
          editText.setText("");
          if (mPopupWindow.isShowing()) {
+//             mPopupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+//             mPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
              mPopupWindow.dismiss();
          } else {
              mPopupWindow.showAtLocation(parentView, Gravity.CENTER, 0, 0);

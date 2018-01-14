@@ -155,13 +155,10 @@
 
     <declare-styleable name="FlexboxLayout_Layout">
         <attr name="layout_order" format="integer" />
-
         <!-- Negative numbers are invalid. -->
         <attr name="layout_flexGrow" format="float" />
-
         <!-- Negative numbers are invalid. -->
         <attr name="layout_flexShrink" format="float" />
-
         <!--
             The initial length in a percentage format relative to its parent. This is similar to the
             flex-basis property in the original CSS specification.
@@ -177,7 +174,6 @@
             layout_width (or layout_height) for simplicity.
         -->
         <attr name="layout_flexBasisPercent" format="fraction" />
-
         <!--
             Omitting flex property since it's a shorthand for layout_flexGrow and layout_flexShrink
             and layout_percentInParent (flex-basis in the original CSS spec).

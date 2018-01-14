@@ -156,6 +156,7 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
                     }else {
                         cookbookIds=cookbookIds+","+base.cookbookId;
                     }
+                    i++;
                 }
                sort= etSort.getText().toString().trim();
                 if(TextUtil.isEmpty(sort)){
@@ -207,6 +208,7 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
         });
     }
     private String menuId;
+
     @Override
     public void initData() {
         for (int i = 0; i < cout; i++) {

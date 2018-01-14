@@ -52,7 +52,14 @@ public class ORDER {
 //                "desc": " 中辣",
 //                "count": 4
 //        }
-//                ]
+//                ]	"hasNext": 0,
+//		"list": [{
+//        "tableNo": "测试桌号",
+//                "cookbookName": "测试菜、烧鸡",
+//                "state": 0,
+//                "createTime": 1515684532066,
+//                "totalPrice": 72.0,
+//                "detailNo": "1062875775121752066"
 //    }
 //        ]
 //}
@@ -60,10 +67,12 @@ public class ORDER {
     public String tableNo;
     public int state;
     public int count;
+    public int hasNext;
     public int status;
 
     public long createTime;
     public String totalPrice;
+    public String cookbookName;
     public String detailNo;
     public String detailId;
     public String cookbookId;
@@ -75,6 +84,8 @@ public class ORDER {
     public String desc;
     public List<ORDER> orderRelations;
     public List<ORDER> detailInfoResps;
+    public List<ORDER> cookbookInfos;
+    public List<ORDER> list;
 
 
 

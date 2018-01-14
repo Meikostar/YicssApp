@@ -10,7 +10,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.bean.ORDER;
 import com.canplay.repast_pad.mvp.adapter.viewholder.OrderMangerViewHolder;
+import com.canplay.repast_pad.util.TextUtil;
+import com.canplay.repast_pad.util.TimeUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,22 +36,51 @@ public class OrderMangerRecycleAdapter extends BaseRecycleViewAdapter {
 
         return new OrderMangerViewHolder(view);
     }
-
+//0待接单，1待结账 2已完成，4已撤销
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         OrderMangerViewHolder holders = (OrderMangerViewHolder) holder;
+      ORDER data= (ORDER) datas.get(position);
         holders.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.clickListener(position,"");
             }
         });
+          if(TextUtil.isNotEmpty(data.cookbookName)){
+              holders.tvName.setText(data.cookbookName);
+          } if(TextUtil.isNotEmpty(data.totalPrice)){
+            holders.tvMoney.setText("￥ "+data.totalPrice);
+        }
+          if(data.createTime!=0){
+              holders.tvTime.setText(TimeUtil.formatTimes(data.createTime));
+          }
+          if(position<9){
+              holders.tv_number.setText("00"+(position+1));
+          }else if(position>9&&position<99){
+              holders.tv_number.setText("0"+(position+1));
+          }else {
+              holders.tv_number.setText(""+(position+1));
+          }
+        if(data.state==0){
+            holders.tvMoney.setTextColor(context.getResources().getColor(R.color.yellows));
+            holders.flBg.setBackgroundResource(R.drawable.yuan_y);
+        }else if(data.state==1){
+            holders.tvMoney.setTextColor(context.getResources().getColor(R.color.color9));
+            holders.flBg.setBackgroundResource(R.drawable.yuan_b);
+        }else if(data.state==2){
+            holders.tvMoney.setTextColor(context.getResources().getColor(R.color.color9));
+            holders.flBg.setBackgroundResource(R.drawable.yuan_g);
+        }else if(data.state==4){
+            holders.tvMoney.setTextColor(context.getResources().getColor(R.color.color9));
+            holders.flBg.setBackgroundResource(R.drawable.yuan_f);
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        int count = 8;
+        int count = 0;
 
         if (datas != null && datas.size() > 0) {
             count = datas.size();

@@ -96,10 +96,15 @@ public class Custom_TagBtn extends RelativeLayout {
 
 
     }
-    public void setSize(int with,int height,int size){
+    public void setSize(int with,int height,int size,int type){
 
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) txt_content.getLayoutParams();
-        lp.width = DensityUtil.dip2px(context, with);
+         if(type==1){
+             lp.width = DensityUtil.dip2px(context, with<=105?105:with);
+         }else {
+             lp.width = DensityUtil.dip2px(context, with<=55?55:with);
+         }
+
         lp.height=DensityUtil.dip2px(context, height);
         txt_content.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
         txt_content.setLayoutParams(lp);

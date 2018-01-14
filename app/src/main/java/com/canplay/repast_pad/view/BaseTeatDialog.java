@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -52,7 +53,9 @@ public class BaseTeatDialog {
         return this;
     }
 
-
+    public View getView(){
+        return mView;
+    }
 
 
     public interface BindClickListener {
@@ -109,6 +112,8 @@ public class BaseTeatDialog {
          if (mPopupWindow.isShowing()) {
              mPopupWindow.dismiss();
          } else {
+//             mPopupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+//             mPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
              mPopupWindow.showAtLocation(parentView, Gravity.CENTER, 0, 0);
          }
      }

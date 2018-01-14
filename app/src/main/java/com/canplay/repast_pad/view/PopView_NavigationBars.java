@@ -76,4 +76,8 @@ public class PopView_NavigationBars extends BasePopView {
            adapter.setData(list);
        }
    }
+
+    public void setView(View view){
+        line=view;
+    }
 }

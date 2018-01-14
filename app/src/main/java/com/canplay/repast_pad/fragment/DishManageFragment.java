@@ -59,6 +59,8 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     TextView tvNew;
     @BindView(R.id.iv_choose)
     ImageView ivChoose;
+    @BindView(R.id.line)
+    View line;
     private GridLayoutManager layoutManager;
 
     private SwipeRefreshLayout.OnRefreshListener refreshListener;
@@ -187,7 +189,18 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
                     presenter.getCookClassifyList();
                     show=1;
                 }else {
-                    popView_navigationBar.showPopView();
+                    if(datas!=null&&datas.size()==0){
+                        presenter.getCookClassifyList();
+                        show=1;
+
+                    }else if(datas==null){
+                        presenter.getCookClassifyList();
+                        show=1;
+
+                    }else{
+                        popView_navigationBar.showPopView();
+                    }
+
                 }
                 break;
 
@@ -196,10 +209,12 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
     public List<String> list=new ArrayList<>();
     private PopView_NavigationBars popView_navigationBar;
     private void initPopView() {
+       if(popView_navigationBar==null){
+           popView_navigationBar = new PopView_NavigationBars(getActivity(),1);
 
-        popView_navigationBar = new PopView_NavigationBars(getActivity(),1);
-
+       }
         popView_navigationBar.showData(datas);
+        popView_navigationBar.setView(line);
         popView_navigationBar.setClickListener(new PopView_NavigationBars.ItemCliskListeners() {
             @Override
             public void clickListener(String id) {

@@ -19,9 +19,11 @@ import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_pad.mvp.present.CookClassifyContract;
 import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
 import com.canplay.repast_pad.print.BluetoothActivity;
+import com.canplay.repast_pad.util.DensityUtil;
 import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.view.BaseTeatDialog;
 import com.canplay.repast_pad.view.PhotoPopupWindow;
+import com.canplay.repast_pad.view.SoftKeyBoardListener;
 
 import java.util.List;
 
@@ -102,6 +104,33 @@ public class SetFragment extends BaseFragment implements View.OnClickListener ,C
             public void teaMoney(String moneys) {
                 money=moneys;
                 presenter.editSurcharge(moneys);
+            }
+        });
+
+        //当键盘弹起的时候用屏幕的高度减去布局的高度，同时获取到键盘的高度，用键盘的高度和剩余的高度做对比
+        SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+
+            @Override
+            public void keyBoardShow(int height) {
+                //键盘弹起回调
+                if(dialog!=null){
+                    View views = dialog.getView();
+                    views.setScrollY(DensityUtil.dip2px(85));
+                }
+
+
+            }
+
+            @Override
+            public void keyBoardHide(int height) {
+                //键盘隐藏回调
+
+                if(dialog!=null){
+                    View views = dialog.getView();
+                    views.setScrollY(0);
+                }
+
+
             }
         });
     }
