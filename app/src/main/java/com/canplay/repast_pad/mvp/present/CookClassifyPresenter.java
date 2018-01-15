@@ -173,6 +173,28 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
         });
 
     }
+
+
+
+    @Override
+    public void getAppOrderInfo(String detailNo) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("detailNo", detailNo);
+        subscription = ApiManager.setSubscribe(contactApi.getAppOrderInfo(ApiManager.getParameters(params, true)), new MySubscriber<ORDER>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(ORDER entity){
+                mView.toEntity(entity,1);
+
+            }
+        });
+
+    }
     @Override
     public void getOrderInfoList(String orderNo) {
         Map<String, String> params = new TreeMap<>();

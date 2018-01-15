@@ -69,6 +69,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                     showToasts(getString(R.string.mimanull));
                     return;
                 }
+                showProgress("登录中...");
                 presenter.goLogin(user,StringUtil.md5(password));
             }
         });
@@ -85,10 +86,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public <T> void toEntity(T entity) {
         startActivity(new Intent(this,MainActivity.class));
         finish();
+        dimessProgress();
     }
 
     @Override
     public void showTomast(String msg) {
-      showToasts(msg);
+        showToasts(msg);
+        dimessProgress();
     }
 }

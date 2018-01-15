@@ -72,6 +72,8 @@ public class ORDER {
 
     public long createTime;
     public String totalPrice;
+    public String detailPrice;
+    public String remark;
     public String cookbookName;
     public String detailNo;
     public String detailId;

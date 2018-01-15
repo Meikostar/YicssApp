@@ -135,6 +135,7 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
             @Override
             public void clickListener(int poiston, String id) {
                 Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+                intent.putExtra("order",id);
                 startActivity(intent);
             }
         });

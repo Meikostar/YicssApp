@@ -40,11 +40,11 @@ public class OrderMangerRecycleAdapter extends BaseRecycleViewAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         OrderMangerViewHolder holders = (OrderMangerViewHolder) holder;
-      ORDER data= (ORDER) datas.get(position);
+      final ORDER data= (ORDER) datas.get(position);
         holders.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.clickListener(position,"");
+                listener.clickListener(position,data.orderNo);
             }
         });
           if(TextUtil.isNotEmpty(data.cookbookName)){

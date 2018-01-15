@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.base.BaseApplication;
+import com.canplay.repast_pad.base.RxBus;
+import com.canplay.repast_pad.base.SubscriptionBean;
 import com.canplay.repast_pad.bean.COOK;
 import com.canplay.repast_pad.mvp.adapter.CardPagerAdapter;
 import com.canplay.repast_pad.mvp.adapter.recycle.ShadowTransformer;
@@ -181,6 +183,7 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
     @Override
     public <T> void toEntity(T entity, int type) {
         if(type==8){
+            RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASHS,""));
             showToasts("删除成功");
             finish();
         }else if(type==-1) {
@@ -192,7 +195,7 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
             mCardShadowTransformer.setmAdapter(mCardAdapter);
             viewPager.setAdapter(mCardAdapter);
             viewPager.setPageTransformer(false, mCardShadowTransformer);
-
+            viewPager.setCurrentItem(poistion);
         }else{
             cook = (COOK) entity;
             datas = cook.cookbookInfo;

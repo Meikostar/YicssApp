@@ -123,6 +123,13 @@ public class CookClassifyContract {
          *  订单管理列表
          */
         void getAppOrderList(String merchantId,int page,int state,int loadtype);
+
+
+
+        /**
+         *  获取订单详情2
+         */
+        void getAppOrderInfo(String detailNo);
     }
 
 

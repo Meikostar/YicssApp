@@ -72,22 +72,27 @@ public class OrderAdapter extends BaseAdapter {
             holder.tv_time.setVisibility(View.VISIBLE);
             holder.tv_time.setText(TimeUtil.formatTime(list.get(position).createTime));
             if(position==list.size()){
-             holder.tv_remark.setVisibility(View.VISIBLE);
+             holder.ll_remark.setVisibility(View.VISIBLE);
             }else {
                 if(list.get(position).status==list.get(position+1).status){
-                    holder.tv_remark.setVisibility(View.GONE);
+                    holder.ll_remark.setVisibility(View.GONE);
+                    holder.ll_total.setVisibility(View.GONE);
                 }else {
-                    holder.tv_remark.setVisibility(View.VISIBLE);
+                    holder.ll_total.setVisibility(View.VISIBLE);
+                    holder.ll_remark.setVisibility(View.VISIBLE);
                 }
             }
         }else {
             if(position==list.size()){
-                holder.tv_remark.setVisibility(View.VISIBLE);
+                holder.ll_remark.setVisibility(View.VISIBLE);
+                holder.ll_total.setVisibility(View.VISIBLE);
             }else {
                 if(list.get(position).status==list.get(position+1).status){
-                    holder.tv_remark.setVisibility(View.GONE);
+                    holder.ll_remark.setVisibility(View.GONE);
+                    holder.ll_total.setVisibility(View.GONE);
                 }else {
-                    holder.tv_remark.setVisibility(View.VISIBLE);
+                    holder.ll_remark.setVisibility(View.VISIBLE);
+                    holder.ll_total.setVisibility(View.VISIBLE);
                 }
             }
             if(list.get(position).status==list.get(position-1).status){
@@ -182,6 +187,12 @@ public class OrderAdapter extends BaseAdapter {
         TextView tvAdd;
         @BindView(R.id.ll_editor)
         LinearLayout llEditor;
+        @BindView(R.id.ll_remark)
+        LinearLayout ll_remark;
+        @BindView(R.id.ll_total)
+        LinearLayout ll_total;
+        @BindView(R.id.line)
+        View line;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
