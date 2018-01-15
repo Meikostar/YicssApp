@@ -44,7 +44,7 @@ public class OrderMangerRecycleAdapter extends BaseRecycleViewAdapter {
         holders.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.clickListener(position,data.orderNo);
+                listener.clickListener(position,data.detailNo);
             }
         });
           if(TextUtil.isNotEmpty(data.cookbookName)){

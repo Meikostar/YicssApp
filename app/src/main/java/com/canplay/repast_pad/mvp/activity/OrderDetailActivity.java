@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.base.BaseApplication;
+import com.canplay.repast_pad.bean.BEAN;
 import com.canplay.repast_pad.bean.ORDER;
 import com.canplay.repast_pad.mvp.adapter.OrderAdapter;
 import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
@@ -19,6 +20,8 @@ import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.util.TimeUtil;
 import com.canplay.repast_pad.view.NavigationBar;
 import com.canplay.repast_pad.view.RegularListView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +67,8 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
     LinearLayout llRemark;
     @BindView(R.id.ll_total)
     LinearLayout llTotal;
+    @BindView(R.id.ll_sure)
+    LinearLayout ll_sure;
 
     private OrderAdapter adapter;
     private String orderNo;
@@ -77,6 +82,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
         presenter.attachView(this);
         orderNo = getIntent().getStringExtra("order");
         presenter.getAppOrderInfo(orderNo);
+        showProgress("加载中...");
         adapter = new OrderAdapter(this);
         regularListView.setAdapter(adapter);
         navigationBar.setNavigationBarListener(this);
@@ -87,14 +93,34 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
             }
         });
     }
-
+   private List<BEAN> data=new ArrayList<>();
     @Override
     public void bindEvents() {
+
+        ll_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<ORDER> datas = adapter.getData();
+                datas.clear();
+                for(ORDER order:datas){
+                    BEAN be = new BEAN();
+                    be.count=order.count;
+                    be.detaiId=order.detailId;
+                    data.add(be);
+                }
+                //我们就需要用到这个属性，以及下面的代码
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.excludeFieldsWithoutExposeAnnotation();// 不转换没有 @Expose 注解的字段
+                Gson gson1 = gsonBuilder.create();
+                String strUser2 = gson1.toJson(data);
+                presenter.updateDetailCount(strUser2);
+            }
+        });
         rlGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OrderDetailActivity.this, OrderDetailActivity.class);
-                intent.putExtra("order", order.detailNo);
+                Intent intent = new Intent(OrderDetailActivity.this, OrderDetailfatherActivity.class);
+                intent.putExtra("order", order.orderNo);
                 startActivity(intent);
             }
         });
@@ -130,35 +156,35 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
 
     @Override
     public <T> void toEntity(T entity, int type) {
-        order = (ORDER) entity;
-        datas.clear();
-        adapter.setData(order.cookbookInfos);
-        if (TextUtil.isNotEmpty(order.orderNo)) {
-            tvOrderNumber.setText("订单号: " + order.orderNo);
-            tvOrderno.setText(order.orderNo);
+        dimessProgress();
+        if(type==6){
+             showToasts("");
+            finish();
+        }else {
+            order = (ORDER) entity;
+            datas.clear();
+            adapter.setData(order.cookbookInfos,0);
+            if (TextUtil.isNotEmpty(order.orderNo)) {
+                tvOrderNumber.setText("订单号: " + order.orderNo);
+                tvOrderno.setText(order.orderNo);
+            }
+            if (TextUtil.isNotEmpty(order.remark)) {
+                tv_remark.setText(order.remark);
+            }
+            tvPayState.setText("￥ " + order.totalPrice);
+            tvMoney.setText("￥ " + order.detailPrice);
+            tvTime.setText(TimeUtil.formatTime(order.createTime));
         }
-        if (TextUtil.isNotEmpty(order.remark)) {
-            tv_remark.setText(order.remark);
 
-        }
-        tvMoney.setText("￥ " + order.totalPrice);
-        tvPayState.setText("￥ " + order.detailPrice);
-
-        tvTime.setText(TimeUtil.formatTime(order.createTime));
 
 
     }
 
     @Override
     public void showTomast(String msg) {
-
+        dimessProgress();
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

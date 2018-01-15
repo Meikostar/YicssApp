@@ -38,11 +38,11 @@ public class TimeUtil {
     }
     public static String formatTime(long time){
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss");
-        return format.format(new Date(time*1000));
+        return format.format(new Date(time));
     }
     public static String formatTimes(long time){
         SimpleDateFormat format = new SimpleDateFormat("MM.dd  HH:mm");
-        return format.format(new Date(time*1000));
+        return format.format(new Date(time));
     }
     public static String formatToMs(long time){
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");

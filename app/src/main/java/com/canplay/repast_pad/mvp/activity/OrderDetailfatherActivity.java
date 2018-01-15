@@ -70,7 +70,7 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
         DaggerBaseComponent.builder().appComponent(((BaseApplication) getApplication()).getAppComponent()).build().inject(this);
-
+        showProgress("加载中...");
         presenter.attachView(this);
         orderNo = getIntent().getStringExtra("order");
         presenter.getOrderInfoList(orderNo);
@@ -123,30 +123,28 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     @Override
     public <T> void toEntity(T entity, int type) {
         order = (ORDER) entity;
+        dimessProgress();
         datas.clear();
-        int i = 0;
+        int i=0;
         for (ORDER der : order.orderRelations) {
             for (ORDER dr : der.detailInfoResps) {
                 dr.createTime = der.createTime;
                 dr.detailNo = der.detailNo;
                 dr.state = der.state;
+                dr.remark = der.remark;
                 dr.status = i;
                 datas.add(dr);
             }
             i++;
+            adapter.setData(datas,1);
         }
-        adapter.setData(datas);
+
     }
 
     @Override
     public void showTomast(String msg) {
-
+         dimessProgress();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

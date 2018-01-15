@@ -187,11 +187,11 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
                         if(TextUtil.isNotEmpty(sort)){
                             if(!sort.equals(sorts)){
                                 tvHint.setVisibility(View.VISIBLE);
-                                tvHint.setText("提示: 序号"+sort+"菜单已经存在，请重新输入菜单序列号。");
+                                tvHint.setText("提示: 序号"+sorts+"菜单已经存在，请重新输入菜单序列号。");
                             }
                         }else {
                             tvHint.setVisibility(View.VISIBLE);
-                            tvHint.setText("提示: 序号"+sort+"菜单已经存在，请重新输入菜单序列号。");
+                            tvHint.setText("提示: 序号"+sorts+"菜单已经存在，请重新输入菜单序列号。");
                         }
 
                    }else {

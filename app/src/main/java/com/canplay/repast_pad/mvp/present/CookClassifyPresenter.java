@@ -111,6 +111,48 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
 
     }
 
+
+    public void updateOrderState(String detaiNo,String state) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("detaiNo",detaiNo);
+        params.put("state", state);
+
+        subscription = ApiManager.setSubscribe(contactApi.updateOrderState(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(String entity){
+                mView.toEntity(entity,-1);
+
+            }
+        });
+
+    }
+    public void updateDetailCount(String cbCountInfo) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("cbCountInfo",cbCountInfo);
+
+        subscription = ApiManager.setSubscribe(contactApi.updateOrderState(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+            @Override
+            public void onError(Throwable e){
+                super.onError(e);
+                mView.showTomast(e.toString());
+            }
+
+            @Override
+            public void onNext(String entity){
+                mView.toEntity(entity,6);
+
+            }
+        });
+
+    }
+
+
     @Override
     public void editCookbookState(String cookbookId,String state) {
         Map<String, String> params = new TreeMap<>();
@@ -510,7 +552,13 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
     public void createOrEditCookbook(String cookbookId,String resourceKey,String cnName,String enName,String classifyId,
                                      String price,String foodIds,String recipesIds) {
         Map<String, String> params = new TreeMap<>();
-        params.put("cookbookId", cookbookId);
+        if(TextUtil.isNotEmpty(cookbookId)){
+            params.put("cookbookId", cookbookId);
+
+        }else {
+            params.put("cookbookId", "0");
+
+        }
         params.put("resourceKey", resourceKey);
         params.put("cnName", cnName);
         if(TextUtil.isNotEmpty(enName)){

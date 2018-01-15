@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.bean.ORDER;
-import com.canplay.repast_pad.mvp.model.CONTURY;
-import com.canplay.repast_pad.mvp.model.PROVINCE;
 import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.util.TimeUtil;
 
@@ -37,8 +35,14 @@ public class OrderAdapter extends BaseAdapter {
     public interface ItemCliks {
         void getItem(int poistion, String name, int id);
     }
-    private Map<Integer,Integer> map=new HashMap<>();
-    public void setData(List<ORDER> list) {
+    public List<ORDER> getData(){
+        return list;
+    }
+    private Map<Integer, Integer> map = new HashMap<>();
+    private int type;
+    public void setData(List<ORDER> list,int type) {
+        this.list = list;
+        this.type = type;
         notifyDataSetChanged();
     }
 
@@ -68,82 +72,94 @@ public class OrderAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        if(position==0){
-            holder.tv_time.setVisibility(View.VISIBLE);
-            holder.tv_time.setText(TimeUtil.formatTime(list.get(position).createTime));
-            if(position==list.size()){
-             holder.ll_remark.setVisibility(View.VISIBLE);
-            }else {
-                if(list.get(position).status==list.get(position+1).status){
-                    holder.ll_remark.setVisibility(View.GONE);
-                    holder.ll_total.setVisibility(View.GONE);
-                }else {
-                    holder.ll_total.setVisibility(View.VISIBLE);
-                    holder.ll_remark.setVisibility(View.VISIBLE);
+        if(type!=0){
+
+            if (position == 0) {
+
+                holder.ll_order.setVisibility(View.VISIBLE);
+                holder.tvTime.setText(TimeUtil.formatTime(list.get(position).createTime));
+
+
+
+                if (position == list.size()) {
+                    holder.llRemark.setVisibility(View.VISIBLE);
+                } else {
+                    if (list.get(position).status == list.get(position + 1).status) {
+                        holder.llRemark.setVisibility(View.GONE);
+                        holder.llTotal.setVisibility(View.GONE);
+                    } else {
+                        holder.llTotal.setVisibility(View.VISIBLE);
+                        holder.llRemark.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
-        }else {
-            if(position==list.size()){
-                holder.ll_remark.setVisibility(View.VISIBLE);
-                holder.ll_total.setVisibility(View.VISIBLE);
-            }else {
-                if(list.get(position).status==list.get(position+1).status){
-                    holder.ll_remark.setVisibility(View.GONE);
-                    holder.ll_total.setVisibility(View.GONE);
-                }else {
-                    holder.ll_remark.setVisibility(View.VISIBLE);
-                    holder.ll_total.setVisibility(View.VISIBLE);
+            } else {
+                if (position+1 == list.size()) {
+                    holder.llRemark.setVisibility(View.VISIBLE);
+                    holder.llTotal.setVisibility(View.VISIBLE);
+                } else {
+                    if (list.get(position).status == list.get(position + 1).status) {
+                        holder.llRemark.setVisibility(View.GONE);
+                        holder.llTotal.setVisibility(View.GONE);
+                    } else {
+                        holder.llRemark.setVisibility(View.VISIBLE);
+
+                        holder.llTotal.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
-            if(list.get(position).status==list.get(position-1).status){
-                holder.tv_time.setVisibility(View.GONE);
-            }else {
-                holder.tv_time.setVisibility(View.VISIBLE);
+                if (list.get(position).status == list.get(position - 1).status) {
+                    holder.ll_order.setVisibility(View.GONE);
+                } else {
+                    holder.ll_order.setVisibility(View.VISIBLE);
+                }
             }
         }
-        Glide.with(mContext).load(list.get(position).imgUrl).asBitmap().placeholder(R.drawable.moren).into(holder.img);
-        if(TextUtil.isNotEmpty(list.get(position).cnName)){
+        Glide.with(mContext).load(list.get(position).imgUrl).asBitmap().placeholder(R.drawable.moren).into(holder.ivImg);
+        if (TextUtil.isNotEmpty(list.get(position).cnName)) {
             holder.tvName.setText(list.get(position).cnName);
         }
-        if(TextUtil.isNotEmpty(list.get(position).foodClassifyName)){
-            holder.tvDetail.setText(list.get(position).foodClassifyName+list.get(position).recipesClassifyName==null?"":","+list.get(position).recipesClassifyName);
-        }else {
-            holder.tvDetail.setText(list.get(position).recipesClassifyName==null?"":","+list.get(position).recipesClassifyName);
+        if (TextUtil.isNotEmpty(list.get(position).remark)) {
+            holder.tvRemark.setText(list.get(position).remark);
+        }
+        if (TextUtil.isNotEmpty(list.get(position).detailNo)) {
+            holder.tv_orderno.setText(list.get(position).detailNo);
+        }
+        if (TextUtil.isNotEmpty(list.get(position).foodClassifyName)) {
+            holder.tvDetail.setText(list.get(position).foodClassifyName + list.get(position).recipesClassifyName == null ? "" : "," + list.get(position).recipesClassifyName);
+        } else {
+            holder.tvDetail.setText(list.get(position).recipesClassifyName == null ? "" : "," + list.get(position).recipesClassifyName);
 
         }
-        if(TextUtil.isNotEmpty(list.get(position).price)){
-            holder.tvPrice.setText("￥ "+list.get(position).price);
+        if (TextUtil.isNotEmpty(list.get(position).price)) {
+            holder.tvPrice.setText("￥ " + list.get(position).price);
         }
-
-        if(list.get(position).state==0){
+        if (list.get(position).state == 0) {
             holder.llEditor.setVisibility(View.VISIBLE);
-        }else if(list.get(position).state==1){
+        } else if (list.get(position).state == 1) {
             holder.llEditor.setVisibility(View.GONE);
-        }else if(list.get(position).state==2){
+        } else if (list.get(position).state == 2) {
             holder.llEditor.setVisibility(View.GONE);
-        }else if(list.get(position).state==3){
+        } else if (list.get(position).state == 3) {
             holder.llEditor.setVisibility(View.GONE);
         }
-        holder.tvCount.setText(list.get(position).count+"");
+        holder.tvCount.setText(list.get(position).count + "");
 
         holder.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                list.get(position).count=list.get(position).count+1;
-                holder.tvCount.setText(list.get(position).count+"");
+                list.get(position).count = list.get(position).count + 1;
+                holder.tvCount.setText(list.get(position).count + "");
 
             }
         });
         holder.tvLess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(list.get(position).count==0){
-                    list.get(position).count=0;
-
-                }else {
-                    list.get(position).count=list.get(position).count-1;
-                    holder.tvCount.setText(list.get(position).count-1+"");
+                if (list.get(position).count == 0) {
+                    list.get(position).count = 0;
+                } else {
+                    list.get(position).count = list.get(position).count - 1;
+                    holder.tvCount.setText(list.get(position).count + "");
                 }
 
             }
@@ -152,48 +168,60 @@ public class OrderAdapter extends BaseAdapter {
 
 
     }
-//0待接单，1待结账 2已完成，4已撤销
+
+    //0待接单，1待结账 2已完成，4已撤销
     public class ResultViewHolder {
 
         TextView name;
         TextView tv_count;
 
     }
-    public void setClickListener(ClickListener listener){
-        this.listener=listener;
+
+    public void setClickListener(ClickListener listener) {
+        this.listener = listener;
     }
+
     private ClickListener listener;
-    public interface ClickListener{
-        void clickListener(int type,String id);
+
+    public interface ClickListener {
+        void clickListener(int type, String id);
     }
-    static class ViewHolder {
+
+
+
+  static   class ViewHolder {
+        @BindView(R.id.tv_time)
+        TextView tvTime;
+        @BindView(R.id.iv_img)
+        ImageView ivImg;
         @BindView(R.id.tv_name)
         TextView tvName;
-        @BindView(R.id.tv_remark)
-        TextView tv_remark;
-        @BindView(R.id.tv_time)
-        TextView tv_time;
         @BindView(R.id.tv_detail)
         TextView tvDetail;
-        @BindView(R.id.iv_img)
-        ImageView img;
         @BindView(R.id.tv_price)
         TextView tvPrice;
         @BindView(R.id.tv_less)
-        TextView tvLess;
+        ImageView tvLess;
         @BindView(R.id.tv_count)
         TextView tvCount;
         @BindView(R.id.tv_add)
-        TextView tvAdd;
+        ImageView tvAdd;
         @BindView(R.id.ll_editor)
         LinearLayout llEditor;
+        @BindView(R.id.tv_remark)
+        TextView tvRemark;
         @BindView(R.id.ll_remark)
-        LinearLayout ll_remark;
-        @BindView(R.id.ll_total)
-        LinearLayout ll_total;
+        LinearLayout llRemark;
         @BindView(R.id.line)
         View line;
-
+       @BindView(R.id.tv_orderno)
+       TextView tv_orderno;
+        @BindView(R.id.tv_money)
+        TextView tvMoney;
+        @BindView(R.id.ll_total)
+        LinearLayout llTotal;
+      @BindView(R.id.ll_order)
+      LinearLayout ll_order;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

@@ -321,9 +321,12 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
     public <T> void toEntity(T entity, int type) {
         if(type==2){
             token= (String) entity;
+            showProgress("上传中...");
             QiniuUtils.getInstance().upFile(path, token, new QiniuUtils.CompleteListener() {
                 @Override
                 public void completeListener(String url) {
+                    showTomast("上传成功");
+                    dimessProgress();
                     resourceKey=url;
                 }
             });

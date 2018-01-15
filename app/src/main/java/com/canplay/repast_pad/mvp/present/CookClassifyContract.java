@@ -130,6 +130,16 @@ public class CookClassifyContract {
          *  获取订单详情2
          */
         void getAppOrderInfo(String detailNo);
+
+
+
+
+        void updateOrderState(String detaiNo,String state);
+
+
+
+
+        void updateDetailCount(String cbCountInfo);
     }
 
 

@@ -96,6 +96,7 @@
         <activity android:name=".mvp.activity.AddMenuActivity" />
         <activity android:name=".mvp.activity.MenuDetailActivity" />
         <activity android:name=".mvp.activity.MenuDetailEditorActivity" />
+        <activity android:name=".mvp.activity.OrderDetailfatherActivity" />
         <activity android:name=".print.BluetoothActivity" />
         <activity android:name=".mvp.activity.ChooseFoodActivity"></activity>
         <activity
