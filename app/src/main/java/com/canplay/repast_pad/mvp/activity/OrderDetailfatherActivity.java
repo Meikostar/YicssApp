@@ -58,12 +58,16 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     LinearLayout llRemark;
     @BindView(R.id.ll_total)
     LinearLayout llTotal;
+    @BindView(R.id.ll_all)
+    LinearLayout ll_all;
     @BindView(R.id.tv_pay_cancel)
     TextView tvPayCancel;
     @BindView(R.id.line)
     View line;
     @BindView(R.id.lines)
     View lines;
+    @BindView(R.id.liness)
+    View liness;
     @BindView(R.id.iv_arrow)
     ImageView iv_arrow;
 
@@ -92,6 +96,8 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         llRemark.setVisibility(View.GONE);
         lines.setVisibility(View.GONE);
         iv_arrow.setVisibility(View.GONE);
+        ll_all.setVisibility(View.GONE);
+        liness.setVisibility(View.GONE);
     }
 
     @Override

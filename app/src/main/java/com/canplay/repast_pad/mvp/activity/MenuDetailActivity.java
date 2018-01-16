@@ -258,6 +258,7 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
                 baseType.classifyId = ck.classifyId;
                 adapter.setData(datas);
             }else {
+                datas.clear();
                 cout = data.getIntExtra("type", 0);
                 for (int i = 0; i < cout; i++) {
                     BaseType baseType = new BaseType();

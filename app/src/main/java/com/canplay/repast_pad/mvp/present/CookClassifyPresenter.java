@@ -126,7 +126,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
 
             @Override
             public void onNext(String entity){
-                mView.toEntity(entity,-1);
+                mView.toEntity(entity,-2);
 
             }
         });
@@ -136,7 +136,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
         Map<String, String> params = new TreeMap<>();
         params.put("cbCountInfo",cbCountInfo);
 
-        subscription = ApiManager.setSubscribe(contactApi.updateOrderState(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+        subscription = ApiManager.setSubscribe(contactApi.updateDetailCount(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
             @Override
             public void onError(Throwable e){
                 super.onError(e);

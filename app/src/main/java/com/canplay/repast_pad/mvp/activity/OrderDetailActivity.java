@@ -60,7 +60,8 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
     TextView tvPayCancel;
     @BindView(R.id.line)
     View line;
-
+    @BindView(R.id.liness)
+    View lines;
     @BindView(R.id.tv_remark)
     TextView tv_remark;
     @BindView(R.id.ll_remark)
@@ -69,7 +70,8 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
     LinearLayout llTotal;
     @BindView(R.id.ll_sure)
     LinearLayout ll_sure;
-
+    @BindView(R.id.ll_all)
+    LinearLayout ll_all;
     private OrderAdapter adapter;
     private String orderNo;
 
@@ -93,6 +95,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
             }
         });
     }
+    private int state;
    private List<BEAN> data=new ArrayList<>();
     @Override
     public void bindEvents() {
@@ -114,6 +117,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
                 Gson gson1 = gsonBuilder.create();
                 String strUser2 = gson1.toJson(data);
                 presenter.updateDetailCount(strUser2);
+                presenter.updateOrderState(order.orderNo,order.state+"");
             }
         });
         rlGo.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +164,15 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
         if(type==6){
              showToasts("");
             finish();
+        }else if(type==-2){
+            if(order.state==1){
+                ll_all.setVisibility(View.GONE);
+                lines.setVisibility(View.GONE);
+            }else if(order.state==0){
+                tvPaySure.setText("确认付款");
+
+            }
+            adapter.setType(0);
         }else {
             order = (ORDER) entity;
             datas.clear();

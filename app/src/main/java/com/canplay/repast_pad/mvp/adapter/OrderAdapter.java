@@ -45,7 +45,10 @@ public class OrderAdapter extends BaseAdapter {
         this.type = type;
         notifyDataSetChanged();
     }
-
+    public void setType(int type) {
+        this.type = type;
+        notifyDataSetChanged();
+    }
     @Override
     public int getCount() {
         return list != null ? list.size() : 0;
@@ -116,8 +119,10 @@ public class OrderAdapter extends BaseAdapter {
                 }
             }
         }else {
-
+            holder.tvCounts.setVisibility(View.GONE);
         }
+
+
         Glide.with(mContext).load(list.get(position).imgUrl).asBitmap().placeholder(R.drawable.moren).into(holder.ivImg);
         if (TextUtil.isNotEmpty(list.get(position).cnName)) {
             holder.tvName.setText(list.get(position).cnName);
@@ -138,15 +143,26 @@ public class OrderAdapter extends BaseAdapter {
             holder.tvPrice.setText("￥ " + list.get(position).price);
         }
         if (list.get(position).state == 0) {
-            holder.llEditor.setVisibility(View.VISIBLE);
+            if(type!=0){
+                holder.llEditor.setVisibility(View.GONE);
+            }else {
+                holder.llEditor.setVisibility(View.VISIBLE);
+            }
+
         } else if (list.get(position).state == 1) {
             holder.llEditor.setVisibility(View.GONE);
+            holder.tvCounts.setVisibility(View.VISIBLE);
+
         } else if (list.get(position).state == 2) {
             holder.llEditor.setVisibility(View.GONE);
+            holder.tvCounts.setVisibility(View.VISIBLE);
+
         } else if (list.get(position).state == 3) {
+            holder.tvCounts.setVisibility(View.VISIBLE);
             holder.llEditor.setVisibility(View.GONE);
         }
         holder.tvCount.setText(list.get(position).count + "");
+        holder.tvCounts.setText("x"+list.get(position).count + "");
 
         holder.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override

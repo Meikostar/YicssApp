@@ -18,6 +18,7 @@
     <com.canplay.repast_pad.view.scrollView.StickyScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="45dp"
         android:layout_below="@+id/navigationBar"
        >
         <LinearLayout
@@ -204,12 +205,14 @@
         </LinearLayout>
     </com.canplay.repast_pad.view.scrollView.StickyScrollView>
     <View
+        android:id="@+id/liness"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="45dp"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/content_bg"/>
     <LinearLayout
+        android:id="@+id/ll_all"
         android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
