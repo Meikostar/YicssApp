@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
+    <View
+        android:id="@+id/lines"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/content_bg"/>
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/ll_order"
@@ -97,9 +101,21 @@
 
 
         </LinearLayout>
-
+        <TextView
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/tv_counts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x1"
+            android:textColor="@color/color9"
+            android:textSize="17sp"
+            />
         <LinearLayout
-
+            android:visibility="gone"
             android:id="@+id/ll_editor"
             android:gravity="center_vertical"
             android:layout_alignParentRight="true"

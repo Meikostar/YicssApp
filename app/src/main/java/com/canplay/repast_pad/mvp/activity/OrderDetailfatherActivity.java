@@ -2,6 +2,7 @@ package com.canplay.repast_pad.mvp.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.canplay.repast_pad.mvp.adapter.OrderAdapter;
 import com.canplay.repast_pad.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_pad.mvp.present.CookClassifyContract;
 import com.canplay.repast_pad.mvp.present.CookClassifyPresenter;
+import com.canplay.repast_pad.util.TextUtil;
 import com.canplay.repast_pad.view.NavigationBar;
 import com.canplay.repast_pad.view.RegularListView;
 
@@ -62,6 +64,9 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     View line;
     @BindView(R.id.lines)
     View lines;
+    @BindView(R.id.iv_arrow)
+    ImageView iv_arrow;
+
     private OrderAdapter adapter;
     private String orderNo;
 
@@ -86,6 +91,7 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         llTotal.setVisibility(View.GONE);
         llRemark.setVisibility(View.GONE);
         lines.setVisibility(View.GONE);
+        iv_arrow.setVisibility(View.GONE);
     }
 
     @Override
@@ -126,6 +132,12 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         dimessProgress();
         datas.clear();
         int i=0;
+        if (TextUtil.isNotEmpty(order.orderNo)) {
+            tvOrderNumber.setText("订单号: " + order.orderNo);
+            tvOrderno.setText(order.orderNo);
+        }
+
+        tvPayState.setText("￥ " + order.totalPrice);
         for (ORDER der : order.orderRelations) {
             for (ORDER dr : der.detailInfoResps) {
                 dr.createTime = der.createTime;

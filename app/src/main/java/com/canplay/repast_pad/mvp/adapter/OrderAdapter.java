@@ -77,6 +77,7 @@ public class OrderAdapter extends BaseAdapter {
             if (position == 0) {
 
                 holder.ll_order.setVisibility(View.VISIBLE);
+                holder.lines.setVisibility(View.VISIBLE);
                 holder.tvTime.setText(TimeUtil.formatTime(list.get(position).createTime));
 
 
@@ -108,10 +109,14 @@ public class OrderAdapter extends BaseAdapter {
                 }
                 if (list.get(position).status == list.get(position - 1).status) {
                     holder.ll_order.setVisibility(View.GONE);
+                    holder.lines.setVisibility(View.GONE);
                 } else {
                     holder.ll_order.setVisibility(View.VISIBLE);
+                    holder.lines.setVisibility(View.VISIBLE);
                 }
             }
+        }else {
+
         }
         Glide.with(mContext).load(list.get(position).imgUrl).asBitmap().placeholder(R.drawable.moren).into(holder.ivImg);
         if (TextUtil.isNotEmpty(list.get(position).cnName)) {
@@ -204,6 +209,8 @@ public class OrderAdapter extends BaseAdapter {
         ImageView tvLess;
         @BindView(R.id.tv_count)
         TextView tvCount;
+      @BindView(R.id.tv_counts)
+      TextView tvCounts;
         @BindView(R.id.tv_add)
         ImageView tvAdd;
         @BindView(R.id.ll_editor)
@@ -214,6 +221,8 @@ public class OrderAdapter extends BaseAdapter {
         LinearLayout llRemark;
         @BindView(R.id.line)
         View line;
+       @BindView(R.id.lines)
+        View lines;
        @BindView(R.id.tv_orderno)
        TextView tv_orderno;
         @BindView(R.id.tv_money)
