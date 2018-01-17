@@ -40,6 +40,10 @@ public class TimeUtil {
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss");
         return format.format(new Date(time));
     }
+    public static String formatTims(long time){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+        return format.format(new Date(time));
+    }
     public static String formatTimes(long time){
         SimpleDateFormat format = new SimpleDateFormat("MM.dd  HH:mm");
         return format.format(new Date(time));

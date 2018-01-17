@@ -114,7 +114,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
 
     public void updateOrderState(String detaiNo,String state) {
         Map<String, String> params = new TreeMap<>();
-        params.put("detaiNo",detaiNo);
+        params.put("detailNo",detaiNo);
         params.put("state", state);
 
         subscription = ApiManager.setSubscribe(contactApi.updateOrderState(ApiManager.getParameters(params, true)), new MySubscriber<String>(){

@@ -37,13 +37,14 @@
         android:text="菜品管理"/>
 
     <ImageView
+        android:padding="12dp"
         android:id="@+id/iv_choose"
         android:src="@drawable/caipin_saixuan"
-        android:layout_width="30dp"
-        android:layout_height="25dp"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="12dp"/>
+      />
 </RelativeLayout>
     <com.malinskiy.superrecyclerview.SuperRecyclerView
         android:layout_marginTop="8dp"

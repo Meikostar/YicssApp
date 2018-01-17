@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +17,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.canplay.repast_pad.R;
+import com.canplay.repast_pad.bean.ORDER;
 import com.canplay.repast_pad.bean.PrintBean;
+import com.canplay.repast_pad.util.Pos;
+import com.canplay.repast_pad.util.TimeUtil;
+
+import org.simpleframework.xml.Order;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -44,7 +51,7 @@ public class PrintAdapter extends BaseAdapter {
     ProgressDialog progressDialog = null;
     private final int exceptionCod = 100;
     //打印的内容
-    private String mPrintContent;
+    private ORDER order;
     //在打印异常时更新ui
     Handler handler = new Handler() {
         @Override
@@ -64,13 +71,15 @@ public class PrintAdapter extends BaseAdapter {
      * @param mBluetoothDevicesDatas 设备列表
      * @param printContent           打印的内容
      */
-    public PrintAdapter(Context context, ArrayList<PrintBean> mBluetoothDevicesDatas, String printContent) {
+    public PrintAdapter(Context context, ArrayList<PrintBean> mBluetoothDevicesDatas, ORDER printContent,int type) {
         this.mBluetoothDevicesDatas = mBluetoothDevicesDatas;
         mContext = context;
+        this.type=type;
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mPrintContent = printContent;
+        order = printContent;
         uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     }
+    private int type;
 
     public int getCount() {
         return mBluetoothDevicesDatas.size();
@@ -104,28 +113,32 @@ public class PrintAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    //如果已经连接并且是打印机
-                    if (dataBean.isConnect && dataBean.getType() == PRINT_TYPE) {
-                        if (mBluetoothAdapter.isEnabled()) {
-                            new ConnectThread(mBluetoothAdapter.getRemoteDevice(dataBean.address)).start();
-                            progressDialog = ProgressDialog.show(mContext, "提示", "正在打印...", true);
-                        } else {
-                            Toast.makeText(mContext, "蓝牙没有打开", Toast.LENGTH_SHORT).show();
-                        }
-                        //没有连接
-                    } else {
-                        //是打印机
-                        if (dataBean.getType() == PRINT_TYPE) {
-                            setConnect(mBluetoothAdapter.getRemoteDevice(dataBean.address), position);
-                            //不是打印机
-                        } else {
-                            Toast.makeText(mContext, "该设备不是打印机", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+              if(order!=null){
+                  try {
+                      //如果已经连接并且是打印机
+                      if (dataBean.isConnect && dataBean.getType() == PRINT_TYPE) {
+                          if (mBluetoothAdapter.isEnabled()) {
+                              new ConnectThread(mBluetoothAdapter.getRemoteDevice(dataBean.address)).start();
+                              progressDialog = ProgressDialog.show(mContext, "提示", "正在打印...", false);
+                          } else {
+                              Toast.makeText(mContext, "蓝牙没有打开", Toast.LENGTH_SHORT).show();
+                          }
+                          //没有连接
+                      } else {
+                          //是打印机
+                          if (dataBean.getType() == PRINT_TYPE) {
+                              setConnect(mBluetoothAdapter.getRemoteDevice(dataBean.address), position);
+                              //不是打印机
+                          } else {
+                              Toast.makeText(mContext, "该设备不是打印机", Toast.LENGTH_SHORT).show();
+                          }
+                      }
+                  } catch (Exception e) {
+                      e.printStackTrace();
+                  }
+              }else {
+                  Toast.makeText(mContext, "没有打印内容", Toast.LENGTH_SHORT).show();
+              }
             }
         });
 
@@ -164,7 +177,13 @@ public class PrintAdapter extends BaseAdapter {
 
         }
     }
-
+   public void setListener(PrintListener listener){
+       this.listener=listener;
+   }
+   private PrintListener listener;
+   public interface PrintListener{
+       void printListener(int type);
+   }
 
     /**
      * 连接为客户端
@@ -187,8 +206,14 @@ public class PrintAdapter extends BaseAdapter {
                 //连接成功获取输出流
                 outputStream = mmSocket.getOutputStream();
 
+//                listener.printListener(0);
+                if(type==1){
+                    pos(mmSocket);
+                }else {
+                    pos2(mmSocket);
+                }
 
-                send(mPrintContent);
+//                send(mPrintContent);
             } catch (Exception connectException) {
                 Log.e("test", "连接失败");
                 connectException.printStackTrace();
@@ -207,4 +232,157 @@ public class PrintAdapter extends BaseAdapter {
             }
         }
     }
+    private Pos pos;
+    private void pos(final BluetoothSocket socket) {
+        // 开启一个子线程
+
+                try {
+                    //初始化打印机
+                    pos = new Pos(socket.getOutputStream(),"GBK");
+//                    if (!TextUtils.isEmpty(objBean.getHead_img())){
+//                        pos.printLocation(1);
+//                        head_bitmap = pos.compressPic(returnBitMap(objBean.getHead_img()));
+//                        pos.draw2PxPoint(head_bitmap);
+//                    }
+                    pos.printLocation(1);
+                    pos.bold(true);
+                    pos.printTabSpace(2);
+                    pos.printWordSpace(1);
+                    pos.printTextNewLine("     "+order.businessName==null?"Meiko Or LXM":order.businessName);
+                    pos.printLine(2);
+                    pos.printLocation(0);
+
+                    pos.bold(false);
+                    pos.printTextNewLine("桌号："+order.tableNo);
+                    pos.printTextNewLine("下单时间："+ TimeUtil.formatTims(order.createTime));
+                    pos.printTextNewLine("订单编号："+order.detailNo);
+//                    pos.printTextNewLine("门店编号："+"LXM");
+                    pos.printLine(1);
+                    pos.printTextNewLine("—————————————————");
+                    pos.printText("菜名       单价     数量    小计");
+                    pos.printLocation(20, 1);
+                    pos.printTextNewLine("—————————————————");
+                    pos.printLine(1);
+                    pos.printTextNewLine("就餐人数"+"  "+5.00+"     "+2+"   "+10.00);
+                    int i=0;
+                    for (ORDER order1:order.cookbookInfos) {
+                        if(i!=0){
+                            pos.printTextNewLine("- - - - - - - - - - - - - - - - - -");
+                        }
+                        pos.printTextNewLine(order1.cnName+"       "+order1.price+"     "+order1.count+"   "+(order1.price*order1.count));
+                        pos.printLocation(20, 1);
+                        if(i+1!=order.cookbookInfos.size()){
+                            pos.printTextNewLine("- - - - - - - - - - - - - - - - - -");
+                        }
+                       i++;
+                    }
+
+                    pos.printTextNewLine("—————————————————");
+                    pos.printLocation(0);
+                    pos.printLine(1);
+                    pos.printTextNewLine("                   总计："+order.detailPrice);
+                    pos.printLine(1);
+                    pos.printTextNewLine(" 备注："+order.remark);
+                    pos.printLine(2);
+                    //打印二维码  -- 如果提供了二维码的地址则用该方法
+//                  pos.qrCode(objBean.getQr_code());
+
+                    //打印二维码的图片 -- 如果提供了二维码的截图则用该方法
+//                    if (!TextUtils.isEmpty(objBean.getQr_code())){
+//                        pos.printLocation(1);
+//                        code_bitmap = pos.compressPic(returnBitMap(objBean.getQr_code()));//returnBitmap方法和上面WiFi的一样
+//                        pos.draw2PxPoint(code_bitmap);
+//                    }
+                    pos.printLine(3);
+                    //切纸
+                    pos.feedAndCut();
+//                  pos.closeIOAndSocket();
+                    pos = null;
+                } catch (UnknownHostException e) {
+                    Log.d("tag", "错误信息1：" + e.toString());
+                } catch (IOException e) {
+                    Log.d("tag", "错误信息2：" + e.toString());
+                }
+            }
+    private void pos2(final BluetoothSocket socket) {
+        // 开启一个子线程
+
+        try {
+            //初始化打印机
+            pos = new Pos(socket.getOutputStream(),"GBK");
+//                    if (!TextUtils.isEmpty(objBean.getHead_img())){
+//                        pos.printLocation(1);
+//                        head_bitmap = pos.compressPic(returnBitMap(objBean.getHead_img()));
+//                        pos.draw2PxPoint(head_bitmap);
+//                    }
+            pos.printLocation(1);
+            pos.bold(true);
+            pos.printTabSpace(2);
+            pos.printWordSpace(1);
+            pos.printTextNewLine("     "+order.businessName==null?"Meiko Or LXM":order.businessName);
+            pos.printLine(2);
+            pos.printLocation(0);
+
+            pos.bold(false);
+            pos.printTextNewLine("桌号："+order.tableNo);
+            int a=0;
+            for (ORDER order1:order.orderRelations) {
+                pos.printTextNewLine("下单时间："+ TimeUtil.formatTims(order.createTime));
+                pos.printTextNewLine("订单编号："+order.detailNo);
+//                    pos.printTextNewLine("门店编号："+"LXM");
+                pos.printLine(1);
+                pos.printTextNewLine("—————————————————");
+                pos.printText("菜名       单价     数量    小计");
+                pos.printLocation(20, 1);
+                pos.printTextNewLine("—————————————————");
+                pos.printLine(1);
+                pos.printTextNewLine("就餐人数"+"  "+5.00+"     "+2+"   "+10.00);
+                int i=0;
+                for (ORDER order2:order.detailInfoResps) {
+                    if(i!=0){
+                        pos.printTextNewLine("- - - - - - - - - - - - - - - - - -");
+                    }
+                    pos.printTextNewLine(order2.cnName+"       "+order2.price+"     "+order2.count+"   "+(order2.price*order2.count));
+                    pos.printLocation(20, 1);
+                    if(i+1!=order.cookbookInfos.size()){
+                        pos.printTextNewLine("- - - - - - - - - - - - - - - - - -");
+                    }
+                    i++;
+                }
+
+                pos.printTextNewLine("—————————————————");
+                pos.printLocation(0);
+                pos.printLine(1);
+                pos.printTextNewLine("                   总计："+order.detailPrice);
+                pos.printLine(1);
+                pos.printTextNewLine(" 备注："+order.remark);
+                if(a+1==order.orderRelations.size()){
+                    pos.printTextNewLine("—————————————————");
+                    pos.printLine(1);
+                }
+                a++;
+            }
+
+            pos.printLine(2);
+            //打印二维码  -- 如果提供了二维码的地址则用该方法
+//                  pos.qrCode(objBean.getQr_code());
+
+            //打印二维码的图片 -- 如果提供了二维码的截图则用该方法
+//                    if (!TextUtils.isEmpty(objBean.getQr_code())){
+//                        pos.printLocation(1);
+//                        code_bitmap = pos.compressPic(returnBitMap(objBean.getQr_code()));//returnBitmap方法和上面WiFi的一样
+//                        pos.draw2PxPoint(code_bitmap);
+//                    }
+            pos.printLine(3);
+            //切纸
+            pos.feedAndCut();
+//                  pos.closeIOAndSocket();
+            pos = null;
+        } catch (UnknownHostException e) {
+            Log.d("tag", "错误信息1：" + e.toString());
+        } catch (IOException e) {
+            Log.d("tag", "错误信息2：" + e.toString());
+        }
+    }
+
 }

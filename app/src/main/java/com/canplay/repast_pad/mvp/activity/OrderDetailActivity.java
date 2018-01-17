@@ -23,6 +23,8 @@ import com.canplay.repast_pad.view.RegularListView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,8 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
     View line;
     @BindView(R.id.liness)
     View lines;
+
+
     @BindView(R.id.tv_remark)
     TextView tv_remark;
     @BindView(R.id.ll_remark)
@@ -72,6 +76,9 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
     LinearLayout ll_sure;
     @BindView(R.id.ll_all)
     LinearLayout ll_all;
+    @BindView(R.id.ll_cancel)
+    LinearLayout ll_cancel;
+
     private OrderAdapter adapter;
     private String orderNo;
 
@@ -80,6 +87,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
         setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
         DaggerBaseComponent.builder().appComponent(((BaseApplication) getApplication()).getAppComponent()).build().inject(this);
+        navigationBar.setNavigationBarListener(this);
 
         presenter.attachView(this);
         orderNo = getIntent().getStringExtra("order");
@@ -95,29 +103,46 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
             }
         });
     }
+
+
+
     private int state;
    private List<BEAN> data=new ArrayList<>();
     @Override
     public void bindEvents() {
-
+        ll_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                status=1;
+                presenter.updateOrderState(order.detailNo,3+"");
+            }
+        });
         ll_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<ORDER> datas = adapter.getData();
-                datas.clear();
-                for(ORDER order:datas){
-                    BEAN be = new BEAN();
-                    be.count=order.count;
-                    be.detaiId=order.detailId;
-                    data.add(be);
+
+                if(order.state==0){
+                    List<ORDER> datas = adapter.getDatas();
+                    data.clear();
+
+                    for(ORDER order:datas){
+                        BEAN be = new BEAN();
+                        be.count=order.count;
+                        be.detailId=order.detailId;
+                        data.add(be);
+                    }
+                    //我们就需要用到这个属性，以及下面的代码
+//                    GsonBuilder gsonBuilder = new GsonBuilder();
+//                    gsonBuilder.excludeFieldsWithoutExposeAnnotation();// 不转换没有 @Expose 注解的字段
+//                    Gson gson1 = gsonBuilder.create();
+//                    String strUser2 = gson1.toJson(data);
+//                    String string = data.toString();
+                    String json = new Gson ().toJson(data);
+                    presenter.updateDetailCount(json);
+                    presenter.updateOrderState(order.detailNo,(order.state+1)+"");
+                }else {
+                    presenter.updateOrderState(order.detailNo,(order.state+1)+"");
                 }
-                //我们就需要用到这个属性，以及下面的代码
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.excludeFieldsWithoutExposeAnnotation();// 不转换没有 @Expose 注解的字段
-                Gson gson1 = gsonBuilder.create();
-                String strUser2 = gson1.toJson(data);
-                presenter.updateDetailCount(strUser2);
-                presenter.updateOrderState(order.orderNo,order.state+"");
             }
         });
         rlGo.setOnClickListener(new View.OnClickListener() {
@@ -137,12 +162,18 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
 
     @Override
     public void navigationRight() {
-
+        Intent intent6 = new Intent(this, PrintSetActivity.class);
+                intent6.putExtra("order",order);
+        intent6.putExtra("type",1);
+        startActivity(intent6);
     }
 
     @Override
     public void navigationimg() {
-
+        Intent intent6 = new Intent(this, PrintSetActivity.class);
+        intent6.putExtra("order",order);
+        intent6.putExtra("type",1);
+        startActivity(intent6);
     }
 
     @Override
@@ -157,26 +188,46 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
 
     private List<ORDER> datas = new ArrayList<>();
     private ORDER order;
-
+    private int status;
     @Override
     public <T> void toEntity(T entity, int type) {
         dimessProgress();
         if(type==6){
-             showToasts("");
-            finish();
+             showToasts("接单成功");
+            order.state=1;
+            presenter.getAppOrderInfo(orderNo);
+
+//            finish();
         }else if(type==-2){
             if(order.state==1){
+                showToasts("已确认付款");
                 ll_all.setVisibility(View.GONE);
                 lines.setVisibility(View.GONE);
             }else if(order.state==0){
                 tvPaySure.setText("确认付款");
 
             }
-            adapter.setType(0);
+            if(status==1){
+                status=0;
+                showToasts("订单撤销成功");
+                finish();
+            }
+//            adapter.setType(0);
         }else {
             order = (ORDER) entity;
             datas.clear();
             adapter.setData(order.cookbookInfos,0);
+            adapter.setState(order.state);
+            if(order.state==1){
+                tvPaySure.setText("确认付款");
+
+            }else if(order.state==0){
+                tvPaySure.setText("确认接单");
+
+            }else {
+                ll_all.setVisibility(View.GONE);
+                lines.setVisibility(View.GONE);
+            }
             if (TextUtil.isNotEmpty(order.orderNo)) {
                 tvOrderNumber.setText("订单号: " + order.orderNo);
                 tvOrderno.setText(order.orderNo);
@@ -184,6 +235,10 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
             if (TextUtil.isNotEmpty(order.remark)) {
                 tv_remark.setText(order.remark);
             }
+            if (TextUtil.isNotEmpty(order.tableNo)) {
+                tvTableCode.setText("桌号："+order.tableNo);
+            }
+
             tvPayState.setText("￥ " + order.totalPrice);
             tvMoney.setText("￥ " + order.detailPrice);
             tvTime.setText(TimeUtil.formatTime(order.createTime));

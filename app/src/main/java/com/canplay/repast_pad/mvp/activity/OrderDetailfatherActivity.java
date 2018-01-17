@@ -1,5 +1,6 @@
 package com.canplay.repast_pad.mvp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -60,6 +61,9 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     LinearLayout llTotal;
     @BindView(R.id.ll_all)
     LinearLayout ll_all;
+    @BindView(R.id.ll_order)
+    LinearLayout ll_order;
+
     @BindView(R.id.tv_pay_cancel)
     TextView tvPayCancel;
     @BindView(R.id.line)
@@ -70,7 +74,22 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     View liness;
     @BindView(R.id.iv_arrow)
     ImageView iv_arrow;
-
+    @BindView(R.id.lis)
+    View lis;
+    @BindView(R.id.liss)
+    View liss;
+    @BindView(R.id.tv_server)
+    TextView tvServer;
+    @BindView(R.id.ll_server)
+    LinearLayout llServer;
+    @BindView(R.id.iv_cancel)
+    ImageView ivCancel;
+    @BindView(R.id.ll_cancel)
+    LinearLayout llCancel;
+    @BindView(R.id.iv_sure)
+    ImageView ivSure;
+    @BindView(R.id.ll_sure)
+    LinearLayout llSure;
     private OrderAdapter adapter;
     private String orderNo;
 
@@ -79,6 +98,7 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
         DaggerBaseComponent.builder().appComponent(((BaseApplication) getApplication()).getAppComponent()).build().inject(this);
+        navigationBar.setNavigationBarListener(this);
         showProgress("加载中...");
         presenter.attachView(this);
         orderNo = getIntent().getStringExtra("order");
@@ -97,7 +117,11 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         lines.setVisibility(View.GONE);
         iv_arrow.setVisibility(View.GONE);
         ll_all.setVisibility(View.GONE);
+        lis.setVisibility(View.GONE);
+        liss.setVisibility(View.VISIBLE);
         liness.setVisibility(View.GONE);
+        ll_order.setVisibility(View.GONE);
+        llServer.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -111,12 +135,18 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
 
     @Override
     public void navigationRight() {
-
+        Intent intent6 = new Intent(this, PrintSetActivity.class);
+        intent6.putExtra("order",order);
+        intent6.putExtra("type",1);
+        startActivity(intent6);
     }
 
     @Override
     public void navigationimg() {
-
+        Intent intent6 = new Intent(this, PrintSetActivity.class);
+        intent6.putExtra("order",order);
+        intent6.putExtra("type",2);
+        startActivity(intent6);
     }
 
     @Override
@@ -137,32 +167,37 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         order = (ORDER) entity;
         dimessProgress();
         datas.clear();
-        int i=0;
+        int i = 0;
         if (TextUtil.isNotEmpty(order.orderNo)) {
             tvOrderNumber.setText("订单号: " + order.orderNo);
             tvOrderno.setText(order.orderNo);
         }
-
+        if (TextUtil.isNotEmpty(order.tableNo)) {
+            tvTableCode.setText("桌号：" + order.tableNo);
+        }
+        tvServer.setText("￥ " +order.serviceCharge);
         tvPayState.setText("￥ " + order.totalPrice);
         for (ORDER der : order.orderRelations) {
             for (ORDER dr : der.detailInfoResps) {
                 dr.createTime = der.createTime;
                 dr.detailNo = der.detailNo;
                 dr.state = der.state;
+                dr.detailPrice = der.detailPrice;
                 dr.remark = der.remark;
                 dr.status = i;
                 datas.add(dr);
             }
             i++;
-            adapter.setData(datas,1);
+            adapter.setData(datas, 1);
         }
 
     }
 
     @Override
     public void showTomast(String msg) {
-         dimessProgress();
+        dimessProgress();
     }
+
 
 
 }

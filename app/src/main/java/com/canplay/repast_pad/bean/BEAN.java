@@ -11,7 +11,32 @@ public class BEAN {
 //            "parent_id": "534",
 //            "type": "city"
 
-    public String detaiId;
+    public String detailId;
     public int count;
 
+    public String getDetaiId() {
+        return detailId;
+    }
+
+    public void setDetaiId(String detaiId) {
+        this.detailId = detaiId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        String id=detailId+"";
+        String cous=count+"";
+        return "{" +
+                "detaiId"+ ":"+ id + '\'' + ","+
+                " count" + ":"+ cous +
+                '}';
+    }
 }

@@ -35,14 +35,19 @@ public class OrderAdapter extends BaseAdapter {
     public interface ItemCliks {
         void getItem(int poistion, String name, int id);
     }
-    public List<ORDER> getData(){
+    public List<ORDER> getDatas(){
         return list;
     }
     private Map<Integer, Integer> map = new HashMap<>();
     private int type;
+    private int state=-1;
     public void setData(List<ORDER> list,int type) {
         this.list = list;
         this.type = type;
+        notifyDataSetChanged();
+    }
+    public void setState(int state) {
+        this.state = state;
         notifyDataSetChanged();
     }
     public void setType(int type) {
@@ -75,26 +80,22 @@ public class OrderAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
+        if(state!=-1){
+            list.get(position).state=state;
+        }
         if(type!=0){
 
             if (position == 0) {
 
                 holder.ll_order.setVisibility(View.VISIBLE);
                 holder.lines.setVisibility(View.VISIBLE);
-                holder.tvTime.setText(TimeUtil.formatTime(list.get(position).createTime));
+                holder.liness.setVisibility(View.VISIBLE);
 
-
-
-                if (position == list.size()) {
+                if (list.size()==0) {
                     holder.llRemark.setVisibility(View.VISIBLE);
-                } else {
-                    if (list.get(position).status == list.get(position + 1).status) {
-                        holder.llRemark.setVisibility(View.GONE);
-                        holder.llTotal.setVisibility(View.GONE);
-                    } else {
-                        holder.llTotal.setVisibility(View.VISIBLE);
-                        holder.llRemark.setVisibility(View.VISIBLE);
-                    }
+                    holder.llTotal.setVisibility(View.VISIBLE);
+                    holder.llRemark.setVisibility(View.VISIBLE);
+
                 }
             } else {
                 if (position+1 == list.size()) {
@@ -116,9 +117,14 @@ public class OrderAdapter extends BaseAdapter {
                 } else {
                     holder.ll_order.setVisibility(View.VISIBLE);
                     holder.lines.setVisibility(View.VISIBLE);
+                    holder.liness.setVisibility(View.VISIBLE);
                 }
             }
         }else {
+            if(position==0){
+                holder.lines.setVisibility(View.GONE);
+                holder.liness.setVisibility(View.VISIBLE);
+            }
             holder.tvCounts.setVisibility(View.GONE);
         }
 
@@ -127,11 +133,15 @@ public class OrderAdapter extends BaseAdapter {
         if (TextUtil.isNotEmpty(list.get(position).cnName)) {
             holder.tvName.setText(list.get(position).cnName);
         }
+        holder.tvTime.setText(TimeUtil.formatTime(list.get(position).createTime));
         if (TextUtil.isNotEmpty(list.get(position).remark)) {
             holder.tvRemark.setText(list.get(position).remark);
         }
         if (TextUtil.isNotEmpty(list.get(position).detailNo)) {
             holder.tv_orderno.setText(list.get(position).detailNo);
+        }
+        if (TextUtil.isNotEmpty(list.get(position).detailPrice)) {
+            holder.tvMoney.setText("￥"+list.get(position).detailPrice);
         }
         if (TextUtil.isNotEmpty(list.get(position).foodClassifyName)) {
             holder.tvDetail.setText(list.get(position).foodClassifyName + list.get(position).recipesClassifyName == null ? "" : "," + list.get(position).recipesClassifyName);
@@ -139,7 +149,7 @@ public class OrderAdapter extends BaseAdapter {
             holder.tvDetail.setText(list.get(position).recipesClassifyName == null ? "" : "," + list.get(position).recipesClassifyName);
 
         }
-        if (TextUtil.isNotEmpty(list.get(position).price)) {
+        if (list.get(position).price!=0) {
             holder.tvPrice.setText("￥ " + list.get(position).price);
         }
         if (list.get(position).state == 0) {
@@ -160,6 +170,9 @@ public class OrderAdapter extends BaseAdapter {
         } else if (list.get(position).state == 3) {
             holder.tvCounts.setVisibility(View.VISIBLE);
             holder.llEditor.setVisibility(View.GONE);
+        }
+        if(type!=0){
+            holder.tvCounts.setVisibility(View.VISIBLE);
         }
         holder.tvCount.setText(list.get(position).count + "");
         holder.tvCounts.setText("x"+list.get(position).count + "");
@@ -225,8 +238,8 @@ public class OrderAdapter extends BaseAdapter {
         ImageView tvLess;
         @BindView(R.id.tv_count)
         TextView tvCount;
-      @BindView(R.id.tv_counts)
-      TextView tvCounts;
+        @BindView(R.id.tv_counts)
+        TextView tvCounts;
         @BindView(R.id.tv_add)
         ImageView tvAdd;
         @BindView(R.id.ll_editor)
@@ -239,14 +252,16 @@ public class OrderAdapter extends BaseAdapter {
         View line;
        @BindView(R.id.lines)
         View lines;
+       @BindView(R.id.liness)
+       View liness;
        @BindView(R.id.tv_orderno)
-       TextView tv_orderno;
+        TextView tv_orderno;
         @BindView(R.id.tv_money)
         TextView tvMoney;
         @BindView(R.id.ll_total)
         LinearLayout llTotal;
-      @BindView(R.id.ll_order)
-      LinearLayout ll_order;
+       @BindView(R.id.ll_order)
+       LinearLayout ll_order;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

@@ -122,6 +122,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                 }else {
                     name=name+","+ base.name;;
                 }
+                i++;
             }
             tv_taste.setText(name);
         }else {
@@ -135,6 +136,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                 }else {
                     name=name+","+ base.name;;
                 }
+                i++;
             }
             tv_sauce.setText(name);
         }else {

@@ -1,11 +1,12 @@
 package com.canplay.repast_pad.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by mykar on 17/4/26.
  */
-public class ORDER {
+public class ORDER implements Serializable{
 // "orderId": 2,
 //         "orderNo": "1062159523076112385",
 //         "tableNo": "测试桌号",
@@ -71,7 +72,9 @@ public class ORDER {
     public int status;
 
     public long createTime;
+    public String businessName;
     public String totalPrice;
+    public String serviceCharge;
     public String detailPrice;
     public String remark;
     public String cookbookName;
@@ -80,7 +83,7 @@ public class ORDER {
     public String cookbookId;
     public String imgUrl;
     public String cnName;
-    public String price;
+    public double price;
     public String foodClassifyName;
     public String recipesClassifyName;
     public String desc;

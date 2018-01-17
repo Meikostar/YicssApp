@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseActivity;
+import com.canplay.repast_pad.bean.ORDER;
 import com.canplay.repast_pad.bean.PrintBean;
 import com.canplay.repast_pad.mvp.adapter.PrintAdapter;
 
@@ -46,18 +47,22 @@ public class PrintSetActivity extends BaseActivity {
     //蓝牙适配器
     private BluetoothAdapter mBluetoothAdapter;
     private PrintAdapter adapter;
+    private ORDER order;
+    private int type;
     @Override
     public void initViews() {
         setContentView(R.layout.activity_print_set);
         ButterKnife.bind(this);
         //初始化
         //广播注册
+        order= (ORDER) getIntent().getSerializableExtra("order");
+        type=getIntent().getIntExtra("type",1);
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBluetoothDevicesDatas = new ArrayList<>();
-        adapter = new PrintAdapter(this, mBluetoothDevicesDatas,"");
+        adapter = new PrintAdapter(this, mBluetoothDevicesDatas,order,type);
         listView.setAdapter(adapter);
         chechBluetooth();
         addViewListener();
@@ -100,11 +105,13 @@ public class PrintSetActivity extends BaseActivity {
     private ArrayList<PrintBean> mBluetoothDevicesDatas;
     /**
      * 搜索状态调整
-     *
      * @param isSearch 是否开始搜索
      */
     private void setViewStatus(boolean isSearch) {
-
+        int count = adapter.getCount();
+        if(count==0){
+            tvContact.setVisibility(View.VISIBLE);
+        }
 //        if (isSearch) {
 //            mFloatingActionButton.setVisibility(View.GONE);
 //            searchHint.setVisibility(View.VISIBLE);
@@ -173,6 +180,7 @@ public class PrintSetActivity extends BaseActivity {
             String action = intent.getAction();
             // 把搜索的设置添加到集合中
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                tvContact.setVisibility(View.GONE);
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 //已经匹配的设备
                 if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
@@ -194,6 +202,7 @@ public class PrintSetActivity extends BaseActivity {
          * @param device 蓝牙设置对象
          */
         private void addBluetoothDevice(BluetoothDevice device) {
+
             for (int i = 0; i < mBluetoothDevicesDatas.size(); i++) {
                 if (device.getAddress().equals(mBluetoothDevicesDatas.get(i).getAddress())) {
                     mBluetoothDevicesDatas.remove(i);
