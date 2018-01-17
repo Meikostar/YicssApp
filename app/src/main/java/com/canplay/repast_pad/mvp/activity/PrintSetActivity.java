@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -21,12 +20,15 @@ import com.canplay.repast_pad.base.BaseActivity;
 import com.canplay.repast_pad.bean.ORDER;
 import com.canplay.repast_pad.bean.PrintBean;
 import com.canplay.repast_pad.mvp.adapter.PrintAdapter;
+import com.canplay.repast_pad.view.NavigationBar;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import static  com.canplay.repast_pad.bean.PrintBean.PRINT_TYPE;
+
+import static com.canplay.repast_pad.bean.PrintBean.PRINT_TYPE;
+
 public class PrintSetActivity extends BaseActivity {
 
     @BindView(R.id.iv_star)
@@ -44,25 +46,29 @@ public class PrintSetActivity extends BaseActivity {
 
 
     public static final int REQUEST_ENABLE_BT = 1;
+    @BindView(R.id.navigationBar)
+    NavigationBar navigationBar;
     //蓝牙适配器
     private BluetoothAdapter mBluetoothAdapter;
     private PrintAdapter adapter;
     private ORDER order;
     private int type;
+
     @Override
     public void initViews() {
         setContentView(R.layout.activity_print_set);
         ButterKnife.bind(this);
+        navigationBar.setNavigationBarListener(this);
         //初始化
         //广播注册
-        order= (ORDER) getIntent().getSerializableExtra("order");
-        type=getIntent().getIntExtra("type",1);
+        order = (ORDER) getIntent().getSerializableExtra("order");
+        type = getIntent().getIntExtra("type", 1);
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBluetoothDevicesDatas = new ArrayList<>();
-        adapter = new PrintAdapter(this, mBluetoothDevicesDatas,order,type);
+        adapter = new PrintAdapter(this, mBluetoothDevicesDatas, order, type);
         listView.setAdapter(adapter);
         chechBluetooth();
         addViewListener();
@@ -70,12 +76,12 @@ public class PrintSetActivity extends BaseActivity {
 
     @Override
     public void bindEvents() {
-    tvContact.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            searchDevices();
-        }
-    });
+        tvContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchDevices();
+            }
+        });
     }
 
     @Override
@@ -102,14 +108,17 @@ public class PrintSetActivity extends BaseActivity {
             }
         }
     }
+
     private ArrayList<PrintBean> mBluetoothDevicesDatas;
+
     /**
      * 搜索状态调整
+     *
      * @param isSearch 是否开始搜索
      */
     private void setViewStatus(boolean isSearch) {
         int count = adapter.getCount();
-        if(count==0){
+        if (count == 0) {
             tvContact.setVisibility(View.VISIBLE);
         }
 //        if (isSearch) {
@@ -122,6 +131,7 @@ public class PrintSetActivity extends BaseActivity {
 //            searchHint.setVisibility(View.GONE);
 //        }
     }
+
     /**
      * 搜索蓝牙设备
      */
@@ -131,6 +141,7 @@ public class PrintSetActivity extends BaseActivity {
         //开始搜索蓝牙设备
         mBluetoothAdapter.startDiscovery();
     }
+
     /**
      * 添加View的监听
      */
@@ -162,6 +173,7 @@ public class PrintSetActivity extends BaseActivity {
 //        });
 
     }
+
     /**
      * 打开蓝牙
      */
@@ -215,10 +227,18 @@ public class PrintSetActivity extends BaseActivity {
             }
         }
     };
+
     /**
      * 关闭蓝牙
      */
     public void closeBluetooth() {
         mBluetoothAdapter.disable();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

@@ -207,11 +207,13 @@ public class PrintAdapter extends BaseAdapter {
                 outputStream = mmSocket.getOutputStream();
 
 //                listener.printListener(0);
-                if(type==1){
-                    pos(mmSocket);
-                }else {
-                    pos2(mmSocket);
-                }
+//                if(type==1){
+//                    pos(mmSocket);
+//                }else {
+//                    pos2(mmSocket);
+//
+//                }
+                pos3(mmSocket);
 
 //                send(mPrintContent);
             } catch (Exception connectException) {
@@ -248,7 +250,7 @@ public class PrintAdapter extends BaseAdapter {
                     pos.bold(true);
                     pos.printTabSpace(2);
                     pos.printWordSpace(1);
-                    pos.printTextNewLine("     "+order.businessName==null?"Meiko Or LXM":order.businessName);
+                    pos.printTextNewLine("    "+(order.businessName==null?"Meiko Or LXM":order.businessName));
                     pos.printLine(2);
                     pos.printLocation(0);
 
@@ -258,29 +260,28 @@ public class PrintAdapter extends BaseAdapter {
                     pos.printTextNewLine("订单编号："+order.detailNo);
 //                    pos.printTextNewLine("门店编号："+"LXM");
                     pos.printLine(1);
-                    pos.printTextNewLine("—————————————————");
-                    pos.printText("菜名       单价     数量    小计");
+                    pos.printTextNewLine("————————————————");
+                    pos.printText("菜名       单价     数量   小计");
                     pos.printLocation(20, 1);
-                    pos.printTextNewLine("—————————————————");
-                    pos.printLine(1);
-                    pos.printTextNewLine("就餐人数"+"  "+5.00+"     "+2+"   "+10.00);
+                    pos.printTextNewLine("————————————————");
+
+                    pos.printTextNewLine("就餐人数"+"    "+5.00+"     "+2+"    "+10.00);
                     int i=0;
                     for (ORDER order1:order.cookbookInfos) {
-                        if(i!=0){
-                            pos.printTextNewLine("- - - - - - - - - - - - - - - - - -");
-                        }
-                        pos.printTextNewLine(order1.cnName+"       "+order1.price+"     "+order1.count+"   "+(order1.price*order1.count));
+
+                        pos.printTextNewLine("- - - - - - - - - - - - - - - - ");
+                        pos.printTextNewLine(order1.cnName+"     "+order1.price+"    "+order1.count+"   "+(order1.price*order1.count));
                         pos.printLocation(20, 1);
-                        if(i+1!=order.cookbookInfos.size()){
-                            pos.printTextNewLine("- - - - - - - - - - - - - - - - - -");
+                        if(i+1==order.cookbookInfos.size()){
+                            pos.printTextNewLine("- - - - - - - - - - - - - - - -");
                         }
                        i++;
                     }
 
-                    pos.printTextNewLine("—————————————————");
+                    pos.printTextNewLine("———————————————");
                     pos.printLocation(0);
                     pos.printLine(1);
-                    pos.printTextNewLine("                   总计："+order.detailPrice);
+                    pos.printTextNewLine("                 总计："+order.detailPrice);
                     pos.printLine(1);
                     pos.printTextNewLine(" 备注："+order.remark);
                     pos.printLine(2);
@@ -298,10 +299,15 @@ public class PrintAdapter extends BaseAdapter {
                     pos.feedAndCut();
 //                  pos.closeIOAndSocket();
                     pos = null;
+                    progressDialog.dismiss();
                 } catch (UnknownHostException e) {
                     Log.d("tag", "错误信息1：" + e.toString());
+                    handler.sendEmptyMessage(exceptionCod); // 向Handler发送消息,更新UI
+
                 } catch (IOException e) {
                     Log.d("tag", "错误信息2：" + e.toString());
+                    handler.sendEmptyMessage(exceptionCod); // 向Handler发送消息,更新UI
+
                 }
             }
     private void pos2(final BluetoothSocket socket) {
@@ -319,7 +325,7 @@ public class PrintAdapter extends BaseAdapter {
             pos.bold(true);
             pos.printTabSpace(2);
             pos.printWordSpace(1);
-            pos.printTextNewLine("     "+order.businessName==null?"Meiko Or LXM":order.businessName);
+            pos.printTextNewLine("     "+(order.businessName==null?"Meiko Or LXM":order.businessName));
             pos.printLine(2);
             pos.printLocation(0);
 
@@ -328,7 +334,7 @@ public class PrintAdapter extends BaseAdapter {
             int a=0;
             for (ORDER order1:order.orderRelations) {
                 pos.printTextNewLine("下单时间："+ TimeUtil.formatTims(order.createTime));
-                pos.printTextNewLine("订单编号："+order.detailNo);
+                pos.printTextNewLine("订单编号："+order.orderNo);
 //                    pos.printTextNewLine("门店编号："+"LXM");
                 pos.printLine(1);
                 pos.printTextNewLine("—————————————————");
@@ -384,5 +390,87 @@ public class PrintAdapter extends BaseAdapter {
             Log.d("tag", "错误信息2：" + e.toString());
         }
     }
+    private void pos3(final BluetoothSocket socket) {
+        // 开启一个子线程
 
+        try {
+            //初始化打印机
+            pos = new Pos(socket.getOutputStream(),"GBK");
+//                    if (!TextUtils.isEmpty(objBean.getHead_img())){
+//                        pos.printLocation(1);
+//                        head_bitmap = pos.compressPic(returnBitMap(objBean.getHead_img()));
+//                        pos.draw2PxPoint(head_bitmap);
+//                    }
+            pos.printLocation(1);
+            pos.bold(true);
+            pos.printTabSpace(2);
+            pos.printWordSpace(1);
+            pos.printTextNewLine("   "+(order.businessName==null?"Meiko Or LXM":order.businessName));
+            pos.printLine(2);
+            pos.printLocation(0);
+
+            pos.bold(false);
+            pos.printTextNewLine("桌号："+9999);
+            int a=0;
+
+                pos.printTextNewLine("下单时间："+ "13.14 5.20");
+                pos.printTextNewLine("订单编号："+9991314);
+//                    pos.printTextNewLine("门店编号："+"LXM");
+                pos.printLine(1);
+                pos.printTextNewLine("————————————————");
+                pos.printText("菜名       单价     数量    小计");
+                pos.printLocation(20, 1);
+                pos.printTextNewLine("————————————————");
+                pos.printLine(1);
+                pos.printTextNewLine("就餐人数"+"    "+5.00+"      "+2+"   "+10.00);
+
+                for (int i=0;i<3;i++) {
+
+                        pos.printTextNewLine("- - - - - - - - - - - - - - -");
+
+                    pos.printTextNewLine("LXM"+"    "+"no price"+"  "+"999"+"  "+"priceless");
+                    pos.printTextNewLine("Meiko"+"  "+"no price"+"  "+"999"+"  "+"priceless");
+                    pos.printLocation(20, 1);
+                    if(i+1==3){
+                        pos.printTextNewLine("- - - - - - - - - - - - - - -");
+                    }
+                    i++;
+                }
+
+                pos.printTextNewLine("———————————————");
+                pos.printLocation(0);
+                pos.printLine(1);
+                pos.printTextNewLine("              总计："+"priceless");
+                pos.printLine(1);
+                pos.printTextNewLine(" 备注："+"I am looking forward to see you again");
+
+
+            //打印二维码  -- 如果提供了二维码的地址则用该方法
+//                  pos.qrCode(objBean.getQr_code());
+
+            //打印二维码的图片 -- 如果提供了二维码的截图则用该方法
+//                    if (!TextUtils.isEmpty(objBean.getQr_code())){
+//                        pos.printLocation(1);
+//                        code_bitmap = pos.compressPic(returnBitMap(objBean.getQr_code()));//returnBitmap方法和上面WiFi的一样
+//                        pos.draw2PxPoint(code_bitmap);
+//                    }
+            pos.printLine(3);
+
+            pos.printTextNewLine("-      -   -        -    -    ");
+            pos.printTextNewLine("-       - -        - -  - - ");
+            pos.printTextNewLine("-        -        -   --   -   ");
+            pos.printTextNewLine("-       - -      -          - ");
+            pos.printTextNewLine("-      -   -    -            - ");
+            pos.printTextNewLine("----- -     -  -              -   ");
+            pos.printLine(3);
+            //切纸
+            pos.feedAndCut();
+//                  pos.closeIOAndSocket();
+            pos = null;
+        } catch (UnknownHostException e) {
+            Log.d("tag", "错误信息1：" + e.toString());
+        } catch (IOException e) {
+            Log.d("tag", "错误信息2：" + e.toString());
+        }
+    }
 }

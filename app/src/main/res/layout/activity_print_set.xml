@@ -9,6 +9,7 @@
     android:gravity="center_horizontal"
     >
 <com.canplay.repast_pad.view.NavigationBar
+    android:id="@+id/navigationBar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:navigationTitle="打印设置"/>

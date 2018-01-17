@@ -375,7 +375,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
 
             @Override
             public void onNext(BaseType entity){
-                mView.toEntity(entity,4);
+                mView.toEntity(entity,1);
 
             }
         });

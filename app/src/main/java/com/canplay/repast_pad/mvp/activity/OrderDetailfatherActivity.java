@@ -129,9 +129,6 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
 
     }
 
-    public void navigationLeft() {
-
-    }
 
     @Override
     public void navigationRight() {

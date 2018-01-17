@@ -156,9 +156,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
 
     }
 
-    public void navigationLeft() {
 
-    }
 
     @Override
     public void navigationRight() {

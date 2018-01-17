@@ -103,7 +103,14 @@ public class SetFragment extends BaseFragment implements View.OnClickListener ,C
             @Override
             public void teaMoney(String moneys) {
                 money=moneys;
-                presenter.editSurcharge(moneys);
+                if (TextUtil.isNotEmpty(moneys)) {
+                    presenter.editSurcharge(moneys);
+                    dialog.dismiss();
+                }else {
+                    showToast("茶位费不允许为空");
+                }
+
+
             }
         });
 

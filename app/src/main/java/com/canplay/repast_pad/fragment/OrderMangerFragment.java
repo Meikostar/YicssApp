@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import com.canplay.repast_pad.R;
 import com.canplay.repast_pad.base.BaseApplication;
 import com.canplay.repast_pad.base.BaseFragment;
+import com.canplay.repast_pad.base.RxBus;
+import com.canplay.repast_pad.base.SubscriptionBean;
 import com.canplay.repast_pad.bean.ORDER;
 import com.canplay.repast_pad.mvp.activity.OrderDetailActivity;
 import com.canplay.repast_pad.mvp.adapter.recycle.OrderMangerRecycleAdapter;
@@ -36,6 +38,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.Subscription;
+import rx.functions.Action1;
 
 
 /**
@@ -82,7 +86,7 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
         super.onResume();
 
     }
-
+    private Subscription mSubscription;
     private void initListener() {
         initPopView();
         flChoose.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +95,23 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
                 popView_navigationBar.showPopView();
             }
         });
+        mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
+            @Override
+            public void call(SubscriptionBean.RxBusSendBean bean) {
+                if (bean == null) return;
+
+                if(bean.type==SubscriptionBean.NOFIFY){
+                    reflash();
+                }
+
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+        RxBus.getInstance().addSubscription(mSubscription);
 
     }
     private void reflash(){
@@ -189,6 +210,9 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if(mSubscription!=null){
+            mSubscription.unsubscribe();
+        }
 
     }
 

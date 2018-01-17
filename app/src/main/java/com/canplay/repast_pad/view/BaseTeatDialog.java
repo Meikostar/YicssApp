@@ -85,7 +85,7 @@ public class BaseTeatDialog {
         mButtonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    dismiss();
+
                     mBindClickListener.teaMoney(editText.getText().toString().trim());
             }
         });
