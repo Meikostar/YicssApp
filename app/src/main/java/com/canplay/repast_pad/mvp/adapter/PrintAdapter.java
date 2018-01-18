@@ -206,14 +206,14 @@ public class PrintAdapter extends BaseAdapter {
                 //连接成功获取输出流
                 outputStream = mmSocket.getOutputStream();
 
-//                listener.printListener(0);
-//                if(type==1){
-//                    pos(mmSocket);
-//                }else {
-//                    pos2(mmSocket);
-//
-//                }
-                pos3(mmSocket);
+                listener.printListener(0);
+                if(type==1){
+                    pos(mmSocket);
+                }else {
+                    pos2(mmSocket);
+
+                }
+//                pos3(mmSocket);
 
 //                send(mPrintContent);
             } catch (Exception connectException) {

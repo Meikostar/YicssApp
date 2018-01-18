@@ -86,7 +86,6 @@ public class OrderAdapter extends BaseAdapter {
         if(type!=0){
 
             if (position == 0) {
-
                 holder.ll_order.setVisibility(View.VISIBLE);
                 holder.lines.setVisibility(View.VISIBLE);
                 holder.liness.setVisibility(View.VISIBLE);
@@ -94,7 +93,10 @@ public class OrderAdapter extends BaseAdapter {
                 if (list.size()==0) {
                     holder.llRemark.setVisibility(View.VISIBLE);
                     holder.llTotal.setVisibility(View.VISIBLE);
-                    holder.llRemark.setVisibility(View.VISIBLE);
+
+                }else {
+                    holder.llRemark.setVisibility(View.GONE);
+                    holder.llTotal.setVisibility(View.GONE);
 
                 }
             } else {
