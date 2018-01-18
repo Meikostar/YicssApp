@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     >
-    <com.canplay.repast_pad.view.NavigationBar
+    <com.canplay.yicss_app.view.NavigationBar
         android:id="@+id/navigationBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationTitle="添加菜单"
        />
-    <com.canplay.repast_pad.view.scrollView.StickyScrollView
+    <com.canplay.yicss_app.view.scrollView.StickyScrollView
         android:layout_below="@+id/navigationBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -121,7 +121,7 @@
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="13dp"
                 android:background="@color/linecolor" />
-            <com.canplay.repast_pad.view.RegularListView
+            <com.canplay.yicss_app.view.RegularListView
                 android:layout_marginTop="3dp"
                 android:divider="#00000000"
                 android:dividerHeight="0dip"
@@ -206,7 +206,7 @@
                 android:text="制成菜单"/>
 
         </LinearLayout>
-    </com.canplay.repast_pad.view.scrollView.StickyScrollView>
+    </com.canplay.yicss_app.view.scrollView.StickyScrollView>
 
 
 

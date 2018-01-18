@@ -8,7 +8,7 @@ android {
         javaMaxHeapSize "4g"
     }
     defaultConfig {
-        applicationId "com.canplay.repast_pad"
+        applicationId "com.canplay.yicss_app"
         minSdkVersion 18
         targetSdkVersion 25
         versionCode 1

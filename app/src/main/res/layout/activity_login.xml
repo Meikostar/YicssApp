@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg"
-    tools:context="com.canplay.repast_pad.mvp.activity.LoginActivity">
+    tools:context="com.canplay.yicss_app.mvp.activity.LoginActivity">
     <ImageView
 
         android:id="@+id/tv_logo"
@@ -35,7 +35,7 @@
                android:layout_marginLeft="19dp"
                android:layout_width="20dp"
                android:layout_height="20dp" />
-           <com.canplay.repast_pad.view.ClearEditText
+           <com.canplay.yicss_app.view.ClearEditText
                android:textSize="14sp"
                android:layout_marginLeft="12dp"
                android:layout_marginRight="12dp"
@@ -63,7 +63,7 @@
                android:layout_marginLeft="19dp"
                android:layout_width="20dp"
                android:layout_height="20dp" />
-           <com.canplay.repast_pad.view.ClearEditText
+           <com.canplay.yicss_app.view.ClearEditText
                android:textSize="14sp"
                android:layout_marginLeft="12dp"
                android:id="@+id/et_pws"

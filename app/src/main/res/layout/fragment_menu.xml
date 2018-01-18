@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.001dp"
         android:id="@+id/line"/>
-<com.canplay.repast_pad.view.NavigationBar
+<com.canplay.yicss_app.view.NavigationBar
     app:navigationTitle="菜单管理"
     app:navigationRight_type="img"
     app:navigationLeft_type="gone"
@@ -16,7 +16,7 @@
     app:right_img="@drawable/caipin_add"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
-    <com.canplay.repast_pad.view.RegularListView
+    <com.canplay.yicss_app.view.RegularListView
         android:layout_marginTop="3dp"
         android:divider="#00000000"
         android:dividerHeight="0dip"

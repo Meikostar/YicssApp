@@ -43,7 +43,7 @@
         android:gravity="center"
         android:background="@drawable/green_cycle" />
 
-    <com.canplay.repast_pad.view.CircleImageView
+    <com.canplay.yicss_app.view.CircleImageView
         android:id="@+id/tab_user"
         android:layout_width="40dp"
         android:layout_height="40dp"
