@@ -19,6 +19,7 @@ import com.canplay.repast_wear.R;
 import com.canplay.repast_wear.bean.ORDER;
 import com.canplay.repast_wear.bean.PrintBean;
 import com.canplay.repast_wear.util.Pos;
+import com.canplay.repast_wear.util.TextUtil;
 import com.canplay.repast_wear.util.TimeUtil;
 
 import java.io.IOException;
@@ -204,13 +205,13 @@ public class PrintAdapter extends BaseAdapter {
                 outputStream = mmSocket.getOutputStream();
 
 //                listener.printListener(0);
-//                if(type==1){
-//                    pos(mmSocket);
-//                }else {
-//                    pos2(mmSocket);
-//
-//                }
-                pos3(mmSocket);
+                if(type==1){
+                    pos(mmSocket);
+                }else {
+                    pos2(mmSocket);
+
+                }
+//                pos3(mmSocket);
 
 //                send(mPrintContent);
             } catch (Exception connectException) {
@@ -382,43 +383,99 @@ public class PrintAdapter extends BaseAdapter {
             pos.bold(true);
             pos.printTabSpace(2);
             pos.printWordSpace(1);
-            pos.printTextNewLine("     "+(order.businessName==null?"Meiko Or LXM":order.businessName));
+            pos.printTextNewLine("    "+(order.businessName==null?"Meiko Or LXM":order.businessName));
             pos.printLine(2);
             pos.printLocation(0);
 
             pos.bold(false);
+
             pos.printTextNewLine("桌号："+order.tableNo);
             int a=0;
             for (ORDER order1:order.orderRelations) {
-                pos.printTextNewLine("下单时间："+ TimeUtil.formatTims(order.createTime));
-                pos.printTextNewLine("订单编号："+order.orderNo);
+                pos.printTextNewLine("下单时间："+ TimeUtil.formatTims(order1.createTime));
+                pos.printTextNewLine("订单编号："+ (TextUtil.isNotEmpty(order1.detailNo)?order1.detailNo:"Lxm"));
 //                    pos.printTextNewLine("门店编号："+"LXM");
                 pos.printLine(1);
-                pos.printTextNewLine("—————————————————");
+                pos.printTextNewLine("———————————————");
                 pos.printText("菜名       单价     数量    小计");
-                pos.printLocation(20, 1);
-                pos.printTextNewLine("—————————————————");
+
+                pos.printTextNewLine("———————————————");
                 pos.printLine(1);
                 pos.printTextNewLine("就餐人数"+"  "+5.00+"     "+2+"   "+10.00);
                 int i=0;
-                for (ORDER order2:order.detailInfoResps) {
-                    if(i!=0){
-                        pos.printTextNewLine("- - - - - - - - - - - - - - - - - -");
+                for (ORDER order2:order1.detailInfoResps) {
+                    pos.printTextNewLine("- - - - - - - - - - - - - - - - ");
+
+                    pos.printText(order2.cnName);
+                    switch (order2.cnName.length()){
+                        case  1:
+                            pos.printWordSpace(8);
+                            break;
+                        case  2:
+                            pos.printWordSpace(7);
+                            break;
+                        case  3:
+                            pos.printWordSpace(6);
+                            break;
+                        case  4:
+                            pos.printWordSpace(5);
+                            break;
+                        case  5:
+                            pos.printWordSpace(4);
+                            break;
+                        case  6:
+                            pos.printWordSpace(3);
+                            break;
+                        default:
+                            pos.printWordSpace(2);
+                            break;
                     }
-                    pos.printTextNewLine(order2.cnName+"       "+order2.price+"     "+order2.count+"   "+(order2.price*order2.count));
-                    pos.printLocation(20, 1);
-                    if(i+1!=order.cookbookInfos.size()){
-                        pos.printTextNewLine("- - - - - - - - - - - - - - - - - -");
+
+                    pos.printText(order2.price+"");
+                    switch ((order2.price+"").length()){
+                        case  1:
+                            pos.printWordSpace(6);
+                            break;
+                        case  2:
+                            pos.printWordSpace(5);
+                            break;
+                        case  3:
+                            pos.printWordSpace(5);
+                            break;
+                        case  4:
+                            pos.printWordSpace(5);
+                            break;
+                        default:
+                            pos.printWordSpace(3);
+                            break;
                     }
+                    pos.printText(""+order2.count);
+                    switch ((order2.count+"").length()){
+                        case  1:
+                            pos.printWordSpace(4);
+                            break;
+                        case  2:
+                            pos.printWordSpace(3);
+                            break;
+                        case  3:
+                            pos.printWordSpace(3);
+                            break;
+
+                        default:
+                            pos.printWordSpace(3);
+                            break;
+                    }
+                    pos.printText(""+(order2.price*order2.count));
+
                     i++;
                 }
 
-                pos.printTextNewLine("—————————————————");
+                pos.printTextNewLine("———————————————");
                 pos.printLocation(0);
                 pos.printLine(1);
-                pos.printTextNewLine("                   总计："+order.detailPrice);
+                pos.printTextNewLine("                   总计："+order1.detailPrice);
                 pos.printLine(1);
-                pos.printTextNewLine(" 备注："+order.remark);
+                pos.printTextNewLine(" 备注："+order1.remark);
                 if(a+1==order.orderRelations.size()){
                     pos.printTextNewLine("—————————————————");
                     pos.printLine(1);

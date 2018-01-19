@@ -2,20 +2,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'com.antfortune.freeline'
 android {
-    signingConfigs {
-        debug {
-            keyAlias 'yicss_app'
-            keyPassword 'yicss123'
-            storeFile file('./keystore/yicss_app.jks')
-            storePassword 'yicss123'
-        }
-        release {
-            keyAlias 'yicss_app'
-            keyPassword 'yicss123'
-            storeFile file('./keystore/yicss_app.jks')
-            storePassword 'yicss123'
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            keyAlias 'yicss_app'
+//            keyPassword 'yicss123'
+//            storeFile file('./keystore/yicss_app.jks')
+//            storePassword 'yicss123'
+//        }
+//        release {
+//            keyAlias 'yicss_app'
+//            keyPassword 'yicss123'
+//            storeFile file('./keystore/yicss_app.jks')
+//            storePassword 'yicss123'
+//        }
+//    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     dexOptions {

@@ -176,7 +176,7 @@ public class SetFragment extends BaseFragment implements View.OnClickListener ,C
                 break;
             case R.id.ll_print://打印
                 Intent intent6 = new Intent(getActivity(), PrintSetActivity.class);
-//                intent5.putExtra("type",4);
+                intent6.putExtra("type",3);
 //                intent5.putExtra("name","配菜分类");
                 startActivity(intent6);
 
