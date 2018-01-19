@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/content_bg"
-    tools:context="com.canplay.yicss_app.mvp.activity.DishesManageActivity">
+    tools:context="com.canplay.repast_wear.mvp.activity.DishesManageActivity">
     <View
         android:layout_width="match_parent"
         android:layout_height="0.05dp"

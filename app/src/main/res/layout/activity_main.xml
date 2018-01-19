@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
 
     >
-    <com.canplay.yicss_app.view.NoScrollViewPager
+    <com.canplay.repast_wear.view.NoScrollViewPager
         android:layout_above="@+id/bnb_home"
         android:id="@+id/viewpager_main"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-    <com.canplay.yicss_app.view.BottonNevgBar
+    <com.canplay.repast_wear.view.BottonNevgBar
         android:focusable="false"
 
         android:layout_alignParentBottom="true"

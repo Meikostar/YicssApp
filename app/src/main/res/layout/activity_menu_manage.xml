@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.canplay.yicss_app.mvp.activity.MenuManageActivity">
+    tools:context="com.canplay.repast_wear.mvp.activity.MenuManageActivity">
  <ListView
      android:id="@+id/list_view"
      style="@style/lv_content"

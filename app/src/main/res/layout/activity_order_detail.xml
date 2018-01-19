@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     >
- <com.canplay.yicss_app.view.NavigationBar
+ <com.canplay.repast_wear.view.NavigationBar
      android:id="@+id/navigationBar"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
      app:navigationRight_type="img"
      app:navigationRight_img="@drawable/dayin_od"
      />
-    <com.canplay.yicss_app.view.scrollView.StickyScrollView
+    <com.canplay.repast_wear.view.scrollView.StickyScrollView
         android:background="@color/content_bg"
         android:layout_above="@+id/ll_all"
         android:layout_width="match_parent"
@@ -135,7 +135,7 @@
                 android:background="@color/line_color"/>
 
 
-            <com.canplay.yicss_app.view.RegularListView
+            <com.canplay.repast_wear.view.RegularListView
                 android:divider="#00000000"
                 android:dividerHeight="0dip"
                 android:listSelector="@android:color/transparent"
@@ -236,7 +236,7 @@
 
             </LinearLayout>
         </LinearLayout>
-    </com.canplay.yicss_app.view.scrollView.StickyScrollView>
+    </com.canplay.repast_wear.view.scrollView.StickyScrollView>
     <View
         android:id="@+id/liness"
         android:layout_alignParentBottom="true"
