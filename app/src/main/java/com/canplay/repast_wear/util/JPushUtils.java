@@ -4,7 +4,6 @@ package com.canplay.repast_wear.util;
 import android.os.Handler;
 import android.util.Log;
 
-
 import com.canplay.repast_wear.base.BaseApplication;
 
 import java.util.HashSet;
@@ -29,7 +28,7 @@ public class JPushUtils {
         return instance;
     }
     // 这是来自 JPush Example 的设置别名的 Activity 里的代码。一般 App 的设置的调用入口，在任何方便的地方调用都可以。
-    public void  setAlias(String alias,int flag) {
+    public void  setAlias(String alias, int flag) {
 
         // 调用 Handler 来异步设置别名
         switch (flag){
@@ -86,10 +85,13 @@ public class JPushUtils {
                 case MSG_SET_ALIAS:
                     Log.d(TAG, "Set alias in handler.");
                     // 调用 JPush 接口来设置别名。
+
+                    // 调用 JPush 接口来设置别名。
                     JPushInterface.setAliasAndTags(BaseApplication.getInstance(),
                             (String) msg.obj,
                             null,
                             mAliasCallback);
+
                     break;
                 default:
                     Log.i(TAG, "Unhandled msg - " + msg.what);
