@@ -120,6 +120,9 @@ public class OrderAdapter extends BaseAdapter {
                     holder.ll_order.setVisibility(View.VISIBLE);
                     holder.lines.setVisibility(View.VISIBLE);
                     holder.liness.setVisibility(View.VISIBLE);
+                    holder.llRemark.setVisibility(View.VISIBLE);
+
+                    holder.llTotal.setVisibility(View.VISIBLE);
                 }
             }
         }else {

@@ -104,7 +104,7 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         presenter.getOrderInfoList(orderNo);
         adapter = new OrderAdapter(this);
         regularListView.setAdapter(adapter);
-        navigationBar.setNavigationBarListener(this);
+
         adapter.setClickListener(new OrderAdapter.ClickListener() {
             @Override
             public void clickListener(int type, String id) {
@@ -133,7 +133,7 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     public void navigationRight() {
         Intent intent6 = new Intent(this, PrintSetActivity.class);
         intent6.putExtra("order",order);
-        intent6.putExtra("type",1);
+        intent6.putExtra("type",2);
         startActivity(intent6);
     }
 

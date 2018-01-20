@@ -92,7 +92,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
         showProgress("加载中...");
         adapter = new OrderAdapter(this);
         regularListView.setAdapter(adapter);
-        navigationBar.setNavigationBarListener(this);
+
         adapter.setClickListener(new OrderAdapter.ClickListener() {
             @Override
             public void clickListener(int type, String id) {
