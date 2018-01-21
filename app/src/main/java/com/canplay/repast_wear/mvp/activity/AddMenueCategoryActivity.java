@@ -255,7 +255,7 @@ public class AddMenueCategoryActivity extends BaseActivity implements CookClassi
         TextPaint textPaint = new TextPaint();
         textPaint.setTextSize(15);
         int with = (int) textPaint.measureText(name);
-        view.setSize(with + 30, 60, 15);
+        view.setSize(with + 22, 60, 15);
         view.setLayoutParams(lp);
         view.setCustomText(content.name);
 

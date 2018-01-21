@@ -49,14 +49,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:lines="1"
                 android:id="@+id/tv_name"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:textSize="16sp"
+                android:maxLength="26"
                 android:textColor="@color/slow_black"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="秘制烤鸭"/>
+                android:text=""/>
             <LinearLayout
                 android:layout_marginBottom="16dp"
                 android:layout_alignParentBottom="true"
@@ -66,13 +68,12 @@
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/tv_status"
-                    android:layout_marginLeft="8dp"
-
+                    android:layout_marginLeft="3dp"
                     android:textSize="16sp"
                     android:textColor="@color/slow_black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="秘制烤鸭"/>
+                    android:text=""/>
                 <TextView
                     android:id="@+id/tv_time"
                     android:layout_marginLeft="12dp"

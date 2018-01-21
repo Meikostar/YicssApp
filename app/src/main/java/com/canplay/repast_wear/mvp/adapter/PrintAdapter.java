@@ -205,13 +205,13 @@ public class PrintAdapter extends BaseAdapter {
                 outputStream = mmSocket.getOutputStream();
 
 //                listener.printListener(0);
-                if(type==1){
-                    pos(mmSocket);
-                }else {
-                    pos2(mmSocket);
-
-                }
-//                pos3(mmSocket);
+//                if(type==1){
+//                    pos(mmSocket);
+//                }else {
+//                    pos2(mmSocket);
+//
+//                }
+                pos3(mmSocket);
 
 //                send(mPrintContent);
             } catch (Exception connectException) {
@@ -515,48 +515,48 @@ public class PrintAdapter extends BaseAdapter {
 //                        head_bitmap = pos.compressPic(returnBitMap(objBean.getHead_img()));
 //                        pos.draw2PxPoint(head_bitmap);
 //                    }
-            pos.printLocation(1);
-            pos.bold(true);
-            pos.printTabSpace(2);
-            pos.printWordSpace(1);
-            pos.printTextNewLine("   "+(order.businessName==null?"Meiko Or LXM":order.businessName));
-            pos.printLine(2);
-            pos.printLocation(0);
-
-            pos.bold(false);
-            pos.printTextNewLine("桌号："+9999);
-            int a=0;
-
-                pos.printTextNewLine("下单时间："+ "13.14 5.20");
-                pos.printTextNewLine("订单编号："+9991314);
-//                    pos.printTextNewLine("门店编号："+"LXM");
-                pos.printLine(1);
-                pos.printTextNewLine("————————————————");
-                pos.printText("菜名       单价     数量    小计");
-                pos.printLocation(20, 1);
-                pos.printTextNewLine("————————————————");
-                pos.printLine(1);
-                pos.printTextNewLine("就餐人数"+"    "+5.00+"      "+2+"   "+10.00);
-
-                for (int i=0;i<3;i++) {
-
-                        pos.printTextNewLine("- - - - - - - - - - - - - - -");
-
-                    pos.printTextNewLine("LXM"+"    "+"no price"+"  "+"999"+"  "+"priceless");
-                    pos.printTextNewLine("Meiko"+"  "+"no price"+"  "+"999"+"  "+"priceless");
-                    pos.printLocation(20, 1);
-                    if(i+1==3){
-                        pos.printTextNewLine("- - - - - - - - - - - - - - -");
-                    }
-                    i++;
-                }
-
-                pos.printTextNewLine("———————————————");
-                pos.printLocation(0);
-                pos.printLine(1);
-                pos.printTextNewLine("              总计："+"priceless");
-                pos.printLine(1);
-                pos.printTextNewLine(" 备注："+"I am looking forward to see you again");
+//            pos.printLocation(1);
+//            pos.bold(true);
+//            pos.printTabSpace(2);
+//            pos.printWordSpace(1);
+//            pos.printTextNewLine("   "+(order.businessName==null?"Meiko Or LXM":order.businessName));
+//            pos.printLine(2);
+//            pos.printLocation(0);
+//
+//            pos.bold(false);
+//            pos.printTextNewLine("桌号："+9999);
+//            int a=0;
+//
+//                pos.printTextNewLine("下单时间："+ "13.14 5.20");
+//                pos.printTextNewLine("订单编号："+9991314);
+////                    pos.printTextNewLine("门店编号："+"LXM");
+//                pos.printLine(1);
+//                pos.printTextNewLine("————————————————");
+//                pos.printText("菜名       单价     数量    小计");
+//                pos.printLocation(20, 1);
+//                pos.printTextNewLine("————————————————");
+//                pos.printLine(1);
+//                pos.printTextNewLine("就餐人数"+"    "+5.00+"      "+2+"   "+10.00);
+//
+//                for (int i=0;i<3;i++) {
+//
+//                        pos.printTextNewLine("- - - - - - - - - - - - - - -");
+//
+//                    pos.printTextNewLine("LXM"+"    "+"no price"+"  "+"999"+"  "+"priceless");
+//                    pos.printTextNewLine("Meiko"+"  "+"no price"+"  "+"999"+"  "+"priceless");
+//                    pos.printLocation(20, 1);
+//                    if(i+1==3){
+//                        pos.printTextNewLine("- - - - - - - - - - - - - - -");
+//                    }
+//                    i++;
+//                }
+//
+//                pos.printTextNewLine("———————————————");
+//                pos.printLocation(0);
+//                pos.printLine(1);
+//                pos.printTextNewLine("              总计："+"priceless");
+//                pos.printLine(1);
+//                pos.printTextNewLine(" 备注："+"I am looking forward to see you again");
 
 
             //打印二维码  -- 如果提供了二维码的地址则用该方法
@@ -570,22 +570,18 @@ public class PrintAdapter extends BaseAdapter {
 //                    }
             pos.printLine(3);
 
-            pos.printTextNewLine("-      -   -        -    -    ");
-            pos.printTextNewLine("-       - -        - -  - - ");
-            pos.printTextNewLine("-        -        -   --   -   ");
-            pos.printTextNewLine("-       - -      -          - ");
-            pos.printTextNewLine("-      -   -    -            - ");
-            pos.printTextNewLine("----- -     -  -              -   ");
 
             pos.printLine(1);
             pos.setSizes();
             pos.bold(true);
-            pos.printTextNewLine("      好  梦  ");
+            pos.printTextNewLine(" Descansa temprano");
+            pos.printLine(1);
+            pos.printTextNewLine(" Buenas noches");
 
-            pos.printTextNewLine("     晚    安  !");
+
             pos.printLine(1);
             pos.bold(false);
-            pos.printTextNewLine("Do not dream of me at night");
+
             pos.printLine(3);
             //切纸
             pos.feedAndCut();

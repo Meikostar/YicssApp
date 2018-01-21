@@ -249,6 +249,7 @@ public class OrderMangerFragment extends BaseFragment implements View.OnClickLis
 
                 }
                 popView_navigationBar.dismiss();
+                reflash();
             }
 
         });

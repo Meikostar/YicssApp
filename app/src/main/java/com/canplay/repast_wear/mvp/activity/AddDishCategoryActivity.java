@@ -220,7 +220,7 @@ public class AddDishCategoryActivity extends BaseActivity implements CookClassif
         TextPaint textPaint = new TextPaint();
         textPaint.setTextSize(15);
         int with = (int) textPaint.measureText(name);
-        view.setSize(with + 30, 60, 15, 1);
+        view.setSize(with + 22, 60, 15, 1);
         view.setLayoutParams(lp);
         view.setCustomText(content.name);
 

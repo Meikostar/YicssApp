@@ -116,7 +116,7 @@ public class Custom_TagBtn_del extends RelativeLayout {
     public void setSize(int with,int height,int size){
 
         ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) rl_bg.getLayoutParams();
-        lp.width = DensityUtil.dip2px(context, with<=105?105:with);
+        lp.width = DensityUtil.dip2px(context, with<=98?98:with);
 
         lp.height=DensityUtil.dip2px(context, height);
         txt_content.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
