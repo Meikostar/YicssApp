@@ -98,7 +98,7 @@
 
         <activity
             android:name="com.canplay.repast_wear.mvp.activity.MainActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.canplay.repast_wear.mvp.activity.AddMenueCategoryActivity"
@@ -107,6 +107,7 @@
         <activity android:name="com.canplay.repast_wear.mvp.activity.MenuManageActivity" />
         <activity android:name="com.canplay.repast_wear.mvp.activity.DishesManageActivity" />
         <activity android:name="com.canplay.repast_wear.mvp.activity.PrintSetActivity"
+            android:launchMode="singleTop"
             />
         <activity android:name="com.canplay.repast_wear.mvp.activity.OrderDetailActivity" />
         <activity

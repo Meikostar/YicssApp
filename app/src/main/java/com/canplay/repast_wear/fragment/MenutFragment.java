@@ -97,7 +97,8 @@ public class MenutFragment extends BaseFragment implements View.OnClickListener 
          public void navigationLeft() {}
          @Override
          public void navigationRight() {
-             popView_navigationBar.showPopView();
+             startActivity(new Intent(getActivity(),AddMenuActivity.class));
+//             popView_navigationBar.showPopView();
          }
          @Override
          public void navigationimg() {}

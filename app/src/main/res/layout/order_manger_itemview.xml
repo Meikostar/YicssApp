@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:stateListAnimator="@drawable/lift_on_touch"
-        android:layout_marginLeft="@dimen/dp_8"
-        android:layout_marginRight="@dimen/dp_8"
+
         android:layout_marginBottom="@dimen/dp_8"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"

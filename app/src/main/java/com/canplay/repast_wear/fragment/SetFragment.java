@@ -18,6 +18,7 @@ import com.canplay.repast_wear.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_wear.mvp.present.CookClassifyContract;
 import com.canplay.repast_wear.mvp.present.CookClassifyPresenter;
 import com.canplay.repast_wear.util.DensityUtil;
+import com.canplay.repast_wear.util.SpUtil;
 import com.canplay.repast_wear.util.TextUtil;
 import com.canplay.repast_wear.view.BaseTeatDialog;
 import com.canplay.repast_wear.view.PhotoPopupWindow;
@@ -93,6 +94,7 @@ public class SetFragment extends BaseFragment implements View.OnClickListener ,C
         mWindowAddPhoto.setSureListener(new PhotoPopupWindow.ClickListener() {
             @Override
             public void clickListener() {
+                SpUtil.getInstance().putString(SpUtil.USER_ID,"");
                    getActivity().finish();
             }
         });

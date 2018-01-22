@@ -62,7 +62,7 @@ public class OrderMangerRecycleAdapter extends BaseRecycleViewAdapter {
               holders.tv_number.setText(""+(position+1));
           }
         if(data.state==0){
-            holders.tvStatus.setText("待结单");
+            holders.tvStatus.setText("待接单");
             holders.tvMoney.setTextColor(context.getResources().getColor(R.color.yellows));
             holders.flBg.setBackgroundResource(R.drawable.yuan_y);
         }else if(data.state==1){

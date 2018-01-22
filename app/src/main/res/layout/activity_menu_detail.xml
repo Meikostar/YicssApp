@@ -7,6 +7,10 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     >
+    <View
+        android:layout_width="@dimen/l_gridItemImageHeight"
+        android:layout_height="00.01dp"
+        android:id="@+id/line"/>
     <com.canplay.repast_wear.view.NavigationBar
         android:id="@+id/navigationBar"
         android:layout_width="match_parent"

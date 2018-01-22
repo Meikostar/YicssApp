@@ -1,5 +1,6 @@
 package com.canplay.repast_wear.mvp.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import com.canplay.repast_wear.mvp.model.BaseType;
 import com.canplay.repast_wear.mvp.present.CookClassifyContract;
 import com.canplay.repast_wear.mvp.present.CookClassifyPresenter;
 import com.canplay.repast_wear.util.TextUtil;
+import com.canplay.repast_wear.view.BaseSelectDialog;
 import com.canplay.repast_wear.view.NavigationBar;
 import com.canplay.repast_wear.view.RegularListView;
 
@@ -56,6 +58,8 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
     TextView tvHint;
     @BindView(R.id.et_sort)
     EditText etSort;
+    @BindView(R.id.line)
+    View line;
     private CountAdapter adapter;
     public int cout;
     private List<BaseType> datas = new ArrayList<>();
@@ -63,6 +67,7 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
     private String classifyId;
     private String templateId;
     private Subscription mSubscription;
+    private BaseSelectDialog dialog;
     @Override
     public void initViews() {
         setContentView(R.layout.activity_menu_detail);
@@ -76,6 +81,8 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
         rlMenu.setAdapter(adapter);
         cook = (COOK) getIntent().getSerializableExtra("cook");
         sort =  getIntent().getStringExtra("sort");
+        dialog = new BaseSelectDialog(this, line);
+
         mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
             @Override
             public void call(SubscriptionBean.RxBusSendBean bean) {
@@ -284,11 +291,15 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
     @Override
     public <T> void toEntity(T entity, int type) {
        if(cook!=null){
+//           dialog.setTitles("提示","序号"+sort+"菜单已重新编辑，是否立即预览?");
+//           dialog.show();
            showToasts("编辑成功");
            Intent intent = new Intent();
            setResult(RESULT_OK,intent);
 
        }else {
+//           dialog.setTitles("提示","序号"+sort+"菜单已经制成，是否立即预览?");
+//           dialog.show();
            showToasts("添加成功");
        }
         RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASHS,""));

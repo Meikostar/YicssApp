@@ -97,7 +97,7 @@ public class Custom_TagBtn extends RelativeLayout {
 
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) txt_content.getLayoutParams();
          if(type==1){
-             lp.width = DensityUtil.dip2px(context, with<=105?105:with);
+             lp.width = DensityUtil.dip2px(context, with<=95?95:with);
          }else {
              lp.width = DensityUtil.dip2px(context, with<=55?55:with);
          }

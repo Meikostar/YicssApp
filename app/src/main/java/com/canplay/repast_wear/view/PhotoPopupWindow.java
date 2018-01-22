@@ -34,6 +34,7 @@ public class PhotoPopupWindow extends PopupWindow{
         tv_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 listener.clickListener();
                 dismiss();
             }

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 
 import com.canplay.repast_wear.R;
 import com.canplay.repast_wear.base.BaseActivity;
+import com.canplay.repast_wear.base.RxBus;
+import com.canplay.repast_wear.base.SubscriptionBean;
 import com.canplay.repast_wear.bean.ORDER;
 import com.canplay.repast_wear.bean.PrintBean;
 import com.canplay.repast_wear.mvp.adapter.PrintAdapter;
@@ -26,6 +29,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Subscription;
+import rx.functions.Action1;
 
 import static com.canplay.repast_wear.bean.PrintBean.PRINT_TYPE;
 
@@ -53,7 +58,7 @@ public class PrintSetActivity extends BaseActivity {
     private PrintAdapter adapter;
     private ORDER order;
     private int type;
-
+    private Subscription mSubscription;
     @Override
     public void initViews() {
         setContentView(R.layout.activity_print_set);
@@ -72,6 +77,20 @@ public class PrintSetActivity extends BaseActivity {
         listView.setAdapter(adapter);
         chechBluetooth();
         addViewListener();
+        mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
+            @Override
+            public void call(SubscriptionBean.RxBusSendBean bean) {
+                if (bean == null) return;
+
+
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+        RxBus.getInstance().addSubscription(mSubscription);
     }
 
     @Override
@@ -236,9 +255,28 @@ public class PrintSetActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    protected void onDestroy() {
+        super.onDestroy();
+        mSubscription.unsubscribe();
     }
+
+//        //屏蔽返回键的代码:
+//    public boolean onKeyDown(int keyCode,KeyEvent event)
+//    {
+//        switch(keyCode)
+//        {
+//            case KeyEvent.KEYCODE_BACK :
+//
+//                if(type==1){
+//                    startActivity(new Intent(this,OrderDetailActivity.class));
+//                }else if(type==2){
+//                    startActivity(new Intent(this,OrderDetailfatherActivity.class));
+//                }else {
+//                    Intent intent = new Intent(this, MainActivity.class);
+//                    startActivity(intent);
+//                }
+//                    return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

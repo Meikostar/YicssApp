@@ -340,7 +340,11 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
             finish();
         }else {
             cook= (COOK) entity;
-            datas.addAll(cook.recipesClassifyInfos);
+
+            if(cook.recipesClassifyInfos!=null&&cook.recipesClassifyInfos.size()>0){
+                datas.addAll(cook.recipesClassifyInfos);
+            }
+
             setTagAdapter(fblPractice);
             int i=0;
             for(BaseType base:cook.recipesClassifyInfos){
@@ -352,8 +356,11 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                 i++;
             }
             datas.clear();
-            datas.addAll(cook.foodClassifyInfos);
-            setTagAdapter(fblGarnish);
+            if(cook.foodClassifyInfos!=null&&cook.foodClassifyInfos.size()>0){
+                datas.addAll(cook.foodClassifyInfos);
+                setTagAdapter(fblGarnish);
+            }
+
             int a=0;
             for(BaseType base:cook.foodClassifyInfos){
                 if(a==0){

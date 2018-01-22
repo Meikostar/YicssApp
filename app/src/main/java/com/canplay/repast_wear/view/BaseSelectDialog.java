@@ -59,9 +59,11 @@ public class BaseSelectDialog {
         void tasteNum();
     }
 
-    public void setTitles(String name) {
+    public void setTitles(String name,String content) {
         but_title.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
         but_title.setText(name);
+        tv_content.setText(content);
     }
 
     private void initView() {
