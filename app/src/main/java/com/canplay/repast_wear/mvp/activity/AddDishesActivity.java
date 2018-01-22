@@ -343,33 +343,35 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
 
             if(cook.recipesClassifyInfos!=null&&cook.recipesClassifyInfos.size()>0){
                 datas.addAll(cook.recipesClassifyInfos);
+                setTagAdapter(fblPractice);
+                int i=0;
+                for(BaseType base:cook.recipesClassifyInfos){
+                    if(i==0){
+                        recipesIds=base.classifyId;
+                    }else {
+                        recipesIds=recipesIds+","+base.classifyId;
+                    }
+                    i++;
+                }
             }
 
-            setTagAdapter(fblPractice);
-            int i=0;
-            for(BaseType base:cook.recipesClassifyInfos){
-                if(i==0){
-                    recipesIds=base.classifyId;
-                }else {
-                    recipesIds=recipesIds+","+base.classifyId;
-                }
-                i++;
-            }
+
             datas.clear();
             if(cook.foodClassifyInfos!=null&&cook.foodClassifyInfos.size()>0){
                 datas.addAll(cook.foodClassifyInfos);
                 setTagAdapter(fblGarnish);
+                int a=0;
+                for(BaseType base:cook.foodClassifyInfos){
+                    if(a==0){
+                        foodIds=base.classifyId;
+                    }else {
+                        foodIds=foodIds+","+base.classifyId;
+                    }
+                    a++;
+                }
             }
 
-            int a=0;
-            for(BaseType base:cook.foodClassifyInfos){
-                if(a==0){
-                    foodIds=base.classifyId;
-                }else {
-                    foodIds=foodIds+","+base.classifyId;
-                }
-                i++;
-            }
+
             et_price.setText(cook.price);
             tvChines.setText(cook.cnName);
             if(!TextUtil.isEmpty(cook.enName)){

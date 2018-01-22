@@ -10,6 +10,7 @@ public class BEAN {
 //            "type": "city"
 
     public String detailId;
+    public String menuId;
     public int count;
 
     public String getDetaiId() {

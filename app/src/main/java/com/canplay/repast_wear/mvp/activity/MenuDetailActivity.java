@@ -14,6 +14,7 @@ import com.canplay.repast_wear.base.BaseActivity;
 import com.canplay.repast_wear.base.BaseApplication;
 import com.canplay.repast_wear.base.RxBus;
 import com.canplay.repast_wear.base.SubscriptionBean;
+import com.canplay.repast_wear.bean.BEAN;
 import com.canplay.repast_wear.bean.COOK;
 import com.canplay.repast_wear.mvp.adapter.CountAdapter;
 import com.canplay.repast_wear.mvp.component.DaggerBaseComponent;
@@ -82,7 +83,23 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
         cook = (COOK) getIntent().getSerializableExtra("cook");
         sort =  getIntent().getStringExtra("sort");
         dialog = new BaseSelectDialog(this, line);
+        dialog.setBindClickListener(new BaseSelectDialog.BindClickListener() {
+            @Override
+            public void tasteNum(int type) {
+                if(type==1){
+                    Intent intent = new Intent(MenuDetailActivity.this, MenuDetailEditorActivity.class);
+                    intent.putExtra("id",menuId);
+                    if(TextUtil.isNotEmpty(sort)){
+                        intent.putExtra("sort",sort);
+                    }
+                    startActivity(intent);
+                    finish();
+                }else {
+                    finish();
+                }
 
+            }
+        });
         mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
             @Override
             public void call(SubscriptionBean.RxBusSendBean bean) {
@@ -115,9 +132,12 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
         llStyle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuDetailActivity.this, AddMenuActivity.class);
-                intent.putExtra("type", 1);
-                startActivityForResult(intent, TYPES);
+                if(cook==null){
+                    Intent intent = new Intent(MenuDetailActivity.this, AddMenuActivity.class);
+                    intent.putExtra("type", 1);
+                    startActivityForResult(intent, TYPES);
+                }
+
             }
         });
         adapter.setClickListener(new CountAdapter.ItemCliks() {
@@ -291,20 +311,23 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
     @Override
     public <T> void toEntity(T entity, int type) {
        if(cook!=null){
-//           dialog.setTitles("提示","序号"+sort+"菜单已重新编辑，是否立即预览?");
-//           dialog.show();
+           menuId=cook.menuId;
+           dialog.setTitles("提示","序号"+sort+"菜单已重新编辑，是否立即预览?");
+           dialog.show();
            showToasts("编辑成功");
            Intent intent = new Intent();
            setResult(RESULT_OK,intent);
 
        }else {
-//           dialog.setTitles("提示","序号"+sort+"菜单已经制成，是否立即预览?");
-//           dialog.show();
+           BEAN entity1 = (BEAN) entity;
+           menuId=entity1.menuId;
+           dialog.setTitles("提示","序号"+sort+"菜单已经制成，是否立即预览?");
+           dialog.show();
            showToasts("添加成功");
        }
         RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASHS,""));
         RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.FINISH,""));
-       finish();
+
 
     }
 

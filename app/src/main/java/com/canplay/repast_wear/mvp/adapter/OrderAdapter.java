@@ -95,8 +95,13 @@ public class OrderAdapter extends BaseAdapter {
                     holder.llTotal.setVisibility(View.VISIBLE);
 
                 }else {
-                    holder.llRemark.setVisibility(View.GONE);
-                    holder.llTotal.setVisibility(View.GONE);
+                    if(list.get(0).status!=list.get(1).status){
+                        holder.llRemark.setVisibility(View.VISIBLE);
+                        holder.llTotal.setVisibility(View.VISIBLE);
+                    }else {
+                        holder.llRemark.setVisibility(View.GONE);
+                        holder.llTotal.setVisibility(View.GONE);
+                    }
 
                 }
             } else {
@@ -120,9 +125,7 @@ public class OrderAdapter extends BaseAdapter {
                     holder.ll_order.setVisibility(View.VISIBLE);
                     holder.lines.setVisibility(View.VISIBLE);
                     holder.liness.setVisibility(View.VISIBLE);
-                    holder.llRemark.setVisibility(View.VISIBLE);
 
-                    holder.llTotal.setVisibility(View.VISIBLE);
                 }
             }
         }else {

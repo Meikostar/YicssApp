@@ -33,6 +33,11 @@ public class SpUtil{
         }
         return instance;
     }
+    public boolean clearData(){
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear();
+        return editor.commit();
+    }
     public String getUserId(){
         return settings.getString(USER_ID, "");
     }

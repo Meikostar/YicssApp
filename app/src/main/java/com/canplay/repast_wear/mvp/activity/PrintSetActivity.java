@@ -48,7 +48,8 @@ public class PrintSetActivity extends BaseActivity {
     Switch mSwitch;
     @BindView(R.id.list_view)
     ListView listView;
-
+    @BindView(R.id.tv_text)
+    TextView tv_text;
 
     public static final int REQUEST_ENABLE_BT = 1;
     @BindView(R.id.navigationBar)
@@ -172,8 +173,10 @@ public class PrintSetActivity extends BaseActivity {
                 if (isChecked) {
                     openBluetooth();
                     setViewStatus(true);
+                    tv_text.setText("蓝牙功能已启用");
                 } else {
                     closeBluetooth();
+                    tv_text.setText("蓝牙功能已关闭");
                 }
             }
         });
@@ -191,6 +194,17 @@ public class PrintSetActivity extends BaseActivity {
 //            }
 //        });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            tv_text.setText("蓝牙功能已启用");
+            mSwitch.setChecked(true);
+        }else {
+            tv_text.setText("蓝牙功能已关闭");
+        }
     }
 
     /**

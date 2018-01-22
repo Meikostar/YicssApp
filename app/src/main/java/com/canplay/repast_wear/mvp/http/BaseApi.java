@@ -1,6 +1,7 @@
 package com.canplay.repast_wear.mvp.http;
 
 import com.canplay.repast_wear.bean.BASEBEAN;
+import com.canplay.repast_wear.bean.BEAN;
 import com.canplay.repast_wear.bean.COOK;
 import com.canplay.repast_wear.bean.MENU;
 import com.canplay.repast_wear.bean.ORDER;
@@ -140,7 +141,7 @@ public interface BaseApi {
      * @return
      */
     @POST("merchant/createOrEditMenu")
-    Observable<String> createOrEditMenu(@QueryMap Map<String, String> options);
+    Observable<BEAN> createOrEditMenu(@QueryMap Map<String, String> options);
 
 
     /**

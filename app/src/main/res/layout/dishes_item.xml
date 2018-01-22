@@ -10,7 +10,7 @@
         android:id="@+id/tv_name"
         android:textSize="15sp"
         android:textColor="@color/slow_black"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="21dp"
         android:layout_width="match_parent"
         android:layout_height="41dp"
         android:text="全部"

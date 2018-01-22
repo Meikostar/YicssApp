@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.canplay.repast_wear.base.manager.ApiManager;
 import com.canplay.repast_wear.bean.BASEBEAN;
+import com.canplay.repast_wear.bean.BEAN;
 import com.canplay.repast_wear.bean.COOK;
 import com.canplay.repast_wear.bean.MENU;
 import com.canplay.repast_wear.bean.ORDER;
@@ -93,7 +94,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
         params.put("cookbookIds", cookbookIds+"");
         params.put("sort", sort+"");
 
-        subscription = ApiManager.setSubscribe(contactApi.createOrEditMenu(ApiManager.getParameters(params, true)), new MySubscriber<String>(){
+        subscription = ApiManager.setSubscribe(contactApi.createOrEditMenu(ApiManager.getParameters(params, true)), new MySubscriber<BEAN>(){
             @Override
             public void onError(Throwable e){
                 super.onError(e);
@@ -101,7 +102,7 @@ public class CookClassifyPresenter implements CookClassifyContract.Presenter {
             }
 
             @Override
-            public void onNext(String entity){
+            public void onNext(BEAN entity){
                 mView.toEntity(entity,1);
 
             }

@@ -56,7 +56,7 @@ public class BaseSelectDialog {
 
 
     public interface BindClickListener {
-        void tasteNum();
+        void tasteNum(int type);
     }
 
     public void setTitles(String name,String content) {
@@ -78,13 +78,14 @@ public class BaseSelectDialog {
             @Override
             public void onClick(View v) {
                 dismiss();
+                mBindClickListener.tasteNum(2);
             }
         });
         mButtonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
-                    mBindClickListener.tasteNum();
+                    mBindClickListener.tasteNum(1);
             }
         });
     }

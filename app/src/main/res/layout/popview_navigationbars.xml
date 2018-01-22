@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <ImageView
         android:layout_width="115dp"
-        android:layout_height="215dp"
+        android:layout_height="210dp"
         android:orientation="vertical"
         android:background="@drawable/saixuan_bg"
         android:layout_alignParentRight="true"
@@ -13,11 +13,11 @@
         />
     <LinearLayout
         android:layout_width="115dp"
-        android:layout_height="213dp"
+        android:layout_height="205dp"
         android:orientation="vertical"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="47dp"
-        android:layout_marginRight="6dp">
+        android:layout_marginTop="41.5dp"
+        android:layout_marginRight="11dp">
         <ListView
             style="@style/lv_content"
             android:id="@+id/list_view"
