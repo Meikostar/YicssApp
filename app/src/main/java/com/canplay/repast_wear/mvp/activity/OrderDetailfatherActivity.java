@@ -21,7 +21,9 @@ import com.canplay.repast_wear.view.NavigationBar;
 import com.canplay.repast_wear.view.RegularListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -161,6 +163,8 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     }
 
     private List<ORDER> datas = new ArrayList<>();
+    private List<ORDER> data = new ArrayList<>();
+    private Map<String ,ORDER> map=new HashMap<>();
     private ORDER order;
 
     @Override
@@ -182,12 +186,21 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         tvPayState.setText("￥ " + order.totalPrice);
         for (ORDER der : order.orderRelations) {
             for (ORDER dr : der.detailInfoResps) {
+
+
                 dr.createTime = der.createTime;
                 dr.detailNo = der.detailNo;
                 dr.state = der.state;
                 dr.detailPrice = der.detailPrice;
                 dr.remark = der.remark;
                 dr.status = i;
+                ORDER order = map.get(dr.cookbookId);
+                if(order==null){
+                    map.put(dr.cookbookId,dr);
+                }else {
+                    dr.count=dr.count+order.count;
+                    map.put(dr.cookbookId,dr);
+                }
                 datas.add(dr);
             }
             i++;
