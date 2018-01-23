@@ -24,11 +24,13 @@
             android:textSize="17sp"
             android:textColor="@color/black"/>
         <TextView
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_marginBottom="38dp"
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="27dp"
             android:gravity="center"
             android:text="你确定要删除此订单"
             android:textSize="15sp"

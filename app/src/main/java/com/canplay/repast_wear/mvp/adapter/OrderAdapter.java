@@ -90,7 +90,7 @@ public class OrderAdapter extends BaseAdapter {
                 holder.lines.setVisibility(View.VISIBLE);
                 holder.liness.setVisibility(View.VISIBLE);
 
-                if (list.size()==0) {
+                if (list.size()==1) {
                     holder.llRemark.setVisibility(View.VISIBLE);
                     holder.llTotal.setVisibility(View.VISIBLE);
 

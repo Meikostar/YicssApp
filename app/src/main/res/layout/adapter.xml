@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
 
                 android:gravity="center"
-                android:text="口味："
+                android:text="做法："
                 android:textColor="@color/black"
                 android:textSize="16sp" />
             <TextView
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
 
                 android:gravity="center"
-                android:text="酱料："
+                android:text="配菜："
                 android:textColor="@color/black"
                 android:textSize="16sp" />
             <TextView

@@ -51,6 +51,8 @@
         android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:id="@+id/super_recycle_view"
+        android:overScrollMode="never"
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"

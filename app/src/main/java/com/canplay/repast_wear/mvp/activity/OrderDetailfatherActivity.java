@@ -1,6 +1,7 @@
 package com.canplay.repast_wear.mvp.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -89,6 +90,10 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     ImageView ivSure;
     @BindView(R.id.ll_sure)
     LinearLayout llSure;
+    @BindView(R.id.tv_tea)
+    TextView tvTea;
+    @BindView(R.id.tv_number)
+    TextView tvNumber;
     private OrderAdapter adapter;
     private String orderNo;
 
@@ -132,16 +137,16 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     @Override
     public void navigationRight() {
         Intent intent6 = new Intent(this, PrintSetActivity.class);
-        intent6.putExtra("order",order);
-        intent6.putExtra("type",2);
+        intent6.putExtra("order", order);
+        intent6.putExtra("type", 2);
         startActivity(intent6);
     }
 
     @Override
     public void navigationimg() {
         Intent intent6 = new Intent(this, PrintSetActivity.class);
-        intent6.putExtra("order",order);
-        intent6.putExtra("type",2);
+        intent6.putExtra("order", order);
+        intent6.putExtra("type", 2);
         startActivity(intent6);
     }
 
@@ -171,7 +176,9 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         if (TextUtil.isNotEmpty(order.tableNo)) {
             tvTableCode.setText("桌号：" + order.tableNo);
         }
-        tvServer.setText("￥ " +order.serviceCharge);
+        tvTea.setText(order.surcharge+"元/位");
+        tvNumber.setText(order.num+"");
+        tvServer.setText("￥ " + order.serviceCharge);
         tvPayState.setText("￥ " + order.totalPrice);
         for (ORDER der : order.orderRelations) {
             for (ORDER dr : der.detailInfoResps) {

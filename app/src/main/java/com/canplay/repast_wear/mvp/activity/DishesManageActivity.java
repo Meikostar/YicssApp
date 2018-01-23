@@ -34,6 +34,7 @@ public class DishesManageActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
+
         mSuperRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSuperRecyclerView.addItemDecoration(new DivItemDecoration(2, true));
 

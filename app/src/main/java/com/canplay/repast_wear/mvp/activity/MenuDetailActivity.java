@@ -314,7 +314,7 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
            menuId=cook.menuId;
            dialog.setTitles("提示","序号"+sort+"菜单已重新编辑，是否立即预览?");
            dialog.show();
-           showToasts("编辑成功");
+
            Intent intent = new Intent();
            setResult(RESULT_OK,intent);
 
@@ -323,7 +323,7 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
            menuId=entity1.menuId;
            dialog.setTitles("提示","序号"+sort+"菜单已经制成，是否立即预览?");
            dialog.show();
-           showToasts("添加成功");
+
        }
         RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASHS,""));
         RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.FINISH,""));

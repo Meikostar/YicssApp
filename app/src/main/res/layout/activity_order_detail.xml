@@ -210,29 +210,103 @@
                 android:layout_height="0.5dp"
                 android:background="@color/content_bg"/>
             <LinearLayout
-                android:visibility="gone"
+               android:visibility="gone"
                 android:id="@+id/ll_server"
                 android:gravity="center_vertical"
                 android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="51dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:textSize="15sp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="服务费："/>
-                <TextView
-                    android:id="@+id/tv_server"
-                    android:layout_marginRight="11dp"
-                    android:textSize="18sp"
-                    android:textColor="@color/orange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/content_bg"/>
+                <LinearLayout
+
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="51dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:textSize="15sp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="茶位费："/>
+                    <TextView
+                        android:id="@+id/tv_tea"
+                        android:layout_marginRight="11dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/slow_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="14dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/content_bg"/>
+                <LinearLayout
+
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="51dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:textSize="15sp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="人数："/>
+                    <TextView
+                        android:id="@+id/tv_number"
+                        android:layout_marginRight="11dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/slow_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="14dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/content_bg"/>
+                <LinearLayout
+
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="51dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:textSize="15sp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="合计："/>
+                    <TextView
+                        android:id="@+id/tv_server"
+                        android:layout_marginRight="11dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/orange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

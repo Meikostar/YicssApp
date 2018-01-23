@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.canplay.repast_wear.R;
 import com.canplay.repast_wear.base.BaseActivity;
 import com.canplay.repast_wear.base.BaseApplication;
+import com.canplay.repast_wear.base.RxBus;
+import com.canplay.repast_wear.base.SubscriptionBean;
 import com.canplay.repast_wear.bean.BEAN;
 import com.canplay.repast_wear.bean.ORDER;
 import com.canplay.repast_wear.mvp.adapter.OrderAdapter;
@@ -191,7 +193,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
              showToasts("接单成功");
             order.state=1;
             presenter.getAppOrderInfo(orderNo);
-
+            RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.NOFIFY,""));
 //            finish();
         }else if(type==-2){
             if(order.state==1){
@@ -207,6 +209,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
                 showToasts("订单撤销成功");
                 finish();
             }
+            RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.NOFIFY,""));
 //            adapter.setType(0);
         }else {
             order = (ORDER) entity;

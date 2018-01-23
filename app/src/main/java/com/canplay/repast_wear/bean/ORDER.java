@@ -70,6 +70,7 @@ public class ORDER implements Serializable{
     public int count;
     public int hasNext;
     public int status;
+    public int num;
 
     public long createTime;
     public String businessName;
@@ -84,6 +85,7 @@ public class ORDER implements Serializable{
     public String imgUrl;
     public String cnName;
     public double price;
+    public String surcharge;
     public String foodClassifyName;
     public String recipesClassifyName;
     public String desc;

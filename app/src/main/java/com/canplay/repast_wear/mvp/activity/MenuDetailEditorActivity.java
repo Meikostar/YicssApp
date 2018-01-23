@@ -52,10 +52,6 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
     ViewPager viewPager;
 
 
-
-
-
-
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
     private BaseSelectDialog dialog;
