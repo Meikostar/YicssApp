@@ -13,6 +13,7 @@ import com.canplay.repast_wear.R;
 import com.canplay.repast_wear.base.BaseApplication;
 import com.canplay.repast_wear.base.BaseFragment;
 import com.canplay.repast_wear.mvp.activity.AddMenueCategoryActivity;
+import com.canplay.repast_wear.mvp.activity.LoginActivity;
 import com.canplay.repast_wear.mvp.activity.PrintSetActivity;
 import com.canplay.repast_wear.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_wear.mvp.present.CookClassifyContract;
@@ -95,7 +96,9 @@ public class SetFragment extends BaseFragment implements View.OnClickListener ,C
             @Override
             public void clickListener() {
                 SpUtil.getInstance().clearData();
-                   getActivity().finish();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
         dialog.setBindClickListener(new BaseTeatDialog.BindClickListener() {
