@@ -77,7 +77,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
         DaggerBaseComponent.builder().appComponent(((BaseApplication) getActivity().getApplication()).getAppComponent()).build().inject(this);
         presenter.attachView(this);
         ButterKnife.bind(this, view);
-        presenter.getCookClassifyList();
+//        presenter.getCookClassifyList();
         initView();
         initListener();
         unbinder = ButterKnife.bind(this, view);
@@ -182,23 +182,24 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
                 startActivity(new Intent(getActivity(), AddDishesActivity.class));
                 break;
             case R.id.iv_choose://赛选
-                if(popView_navigationBar==null){
-                    presenter.getCookClassifyList();
-                    show=1;
-                }else {
-                    if(datas!=null&&datas.size()==0){
-                        presenter.getCookClassifyList();
-                        show=1;
-
-                    }else if(datas==null){
-                        presenter.getCookClassifyList();
-                        show=1;
-
-                    }else{
-                        popView_navigationBar.showPopView();
-                    }
-
-                }
+                presenter.getCookClassifyList();
+//                if(popView_navigationBar==null){
+//                    presenter.getCookClassifyList();
+//                    show=1;
+//                }else {
+//                    if(datas!=null&&datas.size()==0){
+//                        presenter.getCookClassifyList();
+//                        show=1;
+//
+//                    }else if(datas==null){
+//                        presenter.getCookClassifyList();
+//                        show=1;
+//
+//                    }else{
+//                        popView_navigationBar.showPopView();
+//                    }
+//
+//                }
                 break;
 
         }
@@ -221,6 +222,8 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
             }
 
         });
+        popView_navigationBar.showPopView();
+
     }
 
 
