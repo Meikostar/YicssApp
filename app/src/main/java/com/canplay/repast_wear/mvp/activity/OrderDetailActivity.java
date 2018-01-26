@@ -13,6 +13,7 @@ import com.canplay.repast_wear.base.RxBus;
 import com.canplay.repast_wear.base.SubscriptionBean;
 import com.canplay.repast_wear.bean.BEAN;
 import com.canplay.repast_wear.bean.ORDER;
+import com.canplay.repast_wear.bean.PrintBean;
 import com.canplay.repast_wear.mvp.adapter.OrderAdapter;
 import com.canplay.repast_wear.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_wear.mvp.present.CookClassifyContract;
@@ -97,8 +98,8 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
 
         adapter.setClickListener(new OrderAdapter.ClickListener() {
             @Override
-            public void clickListener(int type, String id) {
-
+            public void clickListener(int type, String total) {
+                tvMoney.setText("￥ " + total);
             }
         });
     }
@@ -106,7 +107,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
 
 
     private int state;
-   private List<BEAN> data=new ArrayList<>();
+    private List<BEAN> data=new ArrayList<>();
     @Override
     public void bindEvents() {
         ll_cancel.setOnClickListener(new View.OnClickListener() {
@@ -159,20 +160,36 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
 
     @Override
     public void navigationRight() {
-        Intent intent6 = new Intent(this, PrintSetActivity.class);
-                intent6.putExtra("order",order);
-        intent6.putExtra("type",1);
-        startActivity(intent6);
+        int i=0;
+        if(BaseApplication.maps.size()>0&&BaseApplication.mBluetoothAdapter.isEnabled()){
+
+            for (PrintBean printBean : BaseApplication.maps.values()) {
+
+                if(printBean.isConnect){
+                    i=1;
+                    BaseApplication.getInstance().print(printBean,order);
+                }
+            }
+        }else {
+            goPrint();
+        }
+       if(i==0){
+           goPrint();
+       }
+
+
     }
 
     @Override
     public void navigationimg() {
+        goPrint();
+    }
+    public void goPrint(){
         Intent intent6 = new Intent(this, PrintSetActivity.class);
         intent6.putExtra("order",order);
         intent6.putExtra("type",1);
         startActivity(intent6);
     }
-
     @Override
     public void initData() {
 

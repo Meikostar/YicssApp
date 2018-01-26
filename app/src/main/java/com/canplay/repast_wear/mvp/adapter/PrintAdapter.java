@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.canplay.repast_wear.R;
+import com.canplay.repast_wear.base.BaseApplication;
 import com.canplay.repast_wear.bean.ORDER;
 import com.canplay.repast_wear.bean.PrintBean;
 import com.canplay.repast_wear.util.Pos;
@@ -78,7 +79,9 @@ public class PrintAdapter extends BaseAdapter {
         uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     }
     private int type;
-
+    public void setOrder( ORDER printContent){
+        order = printContent;
+    }
     public int getCount() {
         return mBluetoothDevicesDatas.size();
     }
@@ -104,6 +107,9 @@ public class PrintAdapter extends BaseAdapter {
         final PrintBean dataBean = mBluetoothDevicesDatas.get(position);
         icon.setBackgroundResource(dataBean.getTypeIcon());
         name.setText(dataBean.name);
+        if(dataBean.isConnect){
+            BaseApplication.maps.put(dataBean.address,dataBean);
+        }
         address.setText(dataBean.isConnect ? "已配对" : "未连接");
         start.setText(dataBean.getDeviceType(start));
 
@@ -111,38 +117,40 @@ public class PrintAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              if(order!=null){
-                  try {
-                      //如果已经连接并且是打印机
-                      if (dataBean.isConnect && dataBean.getType() == PRINT_TYPE) {
-                          if (mBluetoothAdapter.isEnabled()) {
-                              new ConnectThread(mBluetoothAdapter.getRemoteDevice(dataBean.address)).start();
-                              progressDialog = ProgressDialog.show(mContext, "提示", "正在打印...", false);
-                          } else {
-                              Toast.makeText(mContext, "蓝牙没有打开", Toast.LENGTH_SHORT).show();
-                          }
-                          //没有连接
-                      } else {
-                          //是打印机
-                          if (dataBean.getType() == PRINT_TYPE) {
-                              setConnect(mBluetoothAdapter.getRemoteDevice(dataBean.address), position);
-                              //不是打印机
-                          } else {
-                              Toast.makeText(mContext, "该设备不是打印机", Toast.LENGTH_SHORT).show();
-                          }
-                      }
-                  } catch (Exception e) {
-                      e.printStackTrace();
-                  }
-              }else {
-                  Toast.makeText(mContext, "没有打印内容", Toast.LENGTH_SHORT).show();
-              }
+                print(dataBean,position,order);
             }
         });
 
         return convertView;
     }
-
+    public void print(PrintBean dataBean,int position,ORDER order){
+        if(order!=null){
+            try {
+                //如果已经连接并且是打印机
+                if (dataBean.isConnect && dataBean.getType() == PRINT_TYPE) {
+                    if (mBluetoothAdapter.isEnabled()) {
+                        new ConnectThread(mBluetoothAdapter.getRemoteDevice(dataBean.address)).start();
+                        progressDialog = ProgressDialog.show(mContext, "提示", "正在打印...", false);
+                    } else {
+                        Toast.makeText(mContext, "蓝牙没有打开", Toast.LENGTH_SHORT).show();
+                    }
+                    //没有连接
+                } else {
+                    //是打印机
+                    if (dataBean.getType() == PRINT_TYPE) {
+                        setConnect(mBluetoothAdapter.getRemoteDevice(dataBean.address), position);
+                        //不是打印机
+                    } else {
+                        Toast.makeText(mContext, "该设备不是打印机", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            Toast.makeText(mContext, "没有打印内容", Toast.LENGTH_SHORT).show();
+        }
+    }
     /**
      * 匹配设备
      *
@@ -191,6 +199,9 @@ public class PrintAdapter extends BaseAdapter {
             try {
                 mmSocket = device.createRfcommSocketToServiceRecord(uuid);
             } catch (IOException e) {
+                if(progressDialog!=null){
+                    progressDialog.dismiss();
+                }
                 e.printStackTrace();
             }
         }
@@ -222,7 +233,9 @@ public class PrintAdapter extends BaseAdapter {
                 msg.what = exceptionCod;
                 // 向Handler发送消息,更新UI
                 handler.sendMessage(msg);
-
+                if(progressDialog!=null){
+                    progressDialog.dismiss();
+                }
                 try {
                     mmSocket.close();
                 } catch (Exception closeException) {

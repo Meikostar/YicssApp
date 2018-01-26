@@ -333,10 +333,12 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
             dimessProgress();
             if(TextUtil.isNotEmpty(cookbookId)){
                 showTomast("编辑成功");
+                RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASH,""));
             }else {
                 showTomast("添加成功");
+                RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASH,""));
             }
-           RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASH,""));
+
             finish();
         }else {
             cook= (COOK) entity;

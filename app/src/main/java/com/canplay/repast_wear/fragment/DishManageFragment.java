@@ -142,7 +142,7 @@ public class DishManageFragment extends BaseFragment implements View.OnClickList
             @Override
             public void call(SubscriptionBean.RxBusSendBean bean) {
                 if (bean == null) return;
-                datas.clear();
+
                 if(bean.type==SubscriptionBean.MENU_REFASH){
                 reflash();
                 }

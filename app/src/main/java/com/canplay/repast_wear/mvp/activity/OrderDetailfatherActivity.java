@@ -12,6 +12,7 @@ import com.canplay.repast_wear.R;
 import com.canplay.repast_wear.base.BaseActivity;
 import com.canplay.repast_wear.base.BaseApplication;
 import com.canplay.repast_wear.bean.ORDER;
+import com.canplay.repast_wear.bean.PrintBean;
 import com.canplay.repast_wear.mvp.adapter.OrderAdapter;
 import com.canplay.repast_wear.mvp.component.DaggerBaseComponent;
 import com.canplay.repast_wear.mvp.present.CookClassifyContract;
@@ -135,23 +136,51 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
 
     }
 
-
+   private List<ORDER> list=new ArrayList<>();
     @Override
     public void navigationRight() {
-        Intent intent6 = new Intent(this, PrintSetActivity.class);
-        intent6.putExtra("order", order);
-        intent6.putExtra("type", 2);
-        startActivity(intent6);
+        int i=0;
+        if(BaseApplication.maps.size()>0&&BaseApplication.mBluetoothAdapter.isEnabled()){
+
+            for (PrintBean printBean : BaseApplication.maps.values()) {
+                if(printBean.isConnect){
+                    i=1;
+                    BaseApplication.getInstance().print(printBean,order);
+                }
+            }
+        }else {
+            goPrint();
+        }
+        if(i==0){
+            goPrint();
+        }
+
     }
 
     @Override
     public void navigationimg() {
-        Intent intent6 = new Intent(this, PrintSetActivity.class);
-        intent6.putExtra("order", order);
-        intent6.putExtra("type", 2);
-        startActivity(intent6);
+        goPrint();
     }
-
+   public void goPrint(){
+       Intent intent6 = new Intent(this, PrintSetActivity.class);
+       ORDER orde = new ORDER();
+       orde.detailNo=orde.orderNo;
+       orde.tableNo=order.tableNo;
+       orde.createTime=order.createTime;
+       orde.totalPrice=order.totalPrice;
+       orde.remark=order.remark;
+       orde.serviceCharge=order.serviceCharge;
+       orde.num=order.num;
+       orde.surcharge=order.surcharge;
+       list.clear();
+       for(ORDER order1:map.values()){
+           list.add(order1);
+       }
+       orde.orderRelations=list;
+       intent6.putExtra("order",orde);
+       intent6.putExtra("type", 1);
+       startActivity(intent6);
+   }
     @Override
     public void initData() {
 

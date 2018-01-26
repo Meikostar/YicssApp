@@ -139,7 +139,10 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
         dialog.setBindClickListener(new BaseSelectDialog.BindClickListener() {
             @Override
             public void tasteNum(int type) {
-                presenter.delMenuInfo(menuId);
+                if(type==1){
+                    presenter.delMenuInfo(menuId);
+                }
+
             }
         });
     }

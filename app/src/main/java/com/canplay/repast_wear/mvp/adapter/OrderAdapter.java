@@ -32,9 +32,10 @@ public class OrderAdapter extends BaseAdapter {
         this.mContext = mContext;
     }
 
-    public interface ItemCliks {
-        void getItem(int poistion, String name, int id);
+    public interface addListener {
+        void getItem( String total);
     }
+
     public List<ORDER> getDatas(){
         return list;
     }
@@ -54,6 +55,7 @@ public class OrderAdapter extends BaseAdapter {
         this.type = type;
         notifyDataSetChanged();
     }
+    private double totalMoney;
     @Override
     public int getCount() {
         return list != null ? list.size() : 0;
@@ -152,13 +154,15 @@ public class OrderAdapter extends BaseAdapter {
             holder.tvMoney.setText("￥"+list.get(position).detailPrice);
         }
         if (TextUtil.isNotEmpty(list.get(position).foodClassifyName)) {
-            holder.tvDetail.setText(list.get(position).foodClassifyName + list.get(position).recipesClassifyName == null ? "" : "," + list.get(position).recipesClassifyName);
+            holder.tvDetail.setText(list.get(position).foodClassifyName + (list.get(position).recipesClassifyName == null ? "" : "," + list.get(position).recipesClassifyName));
         } else {
-            holder.tvDetail.setText(list.get(position).recipesClassifyName == null ? "" : "," + list.get(position).recipesClassifyName);
+            holder.tvDetail.setText(list.get(position).recipesClassifyName == null ? "" :list.get(position).recipesClassifyName);
 
         }
         if (list.get(position).price!=0) {
             holder.tvPrice.setText("￥ " + list.get(position).price);
+        }else {
+            holder.tvPrice.setText("￥ " + "0.0");
         }
         if (list.get(position).state == 0) {
             if(type!=0){
@@ -190,20 +194,31 @@ public class OrderAdapter extends BaseAdapter {
             public void onClick(View view) {
 
                 list.get(position).count = list.get(position).count + 1;
+                int i=0;
+                totalMoney=0.0;
                 holder.tvCount.setText(list.get(position).count + "");
+                for(ORDER order:list){
+                    totalMoney=totalMoney+(order.price*order.count);
+                }
+
+                listener.clickListener(0,totalMoney+"");
 
             }
         });
         holder.tvLess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                totalMoney=0.0;
                 if (list.get(position).count == 0) {
                     list.get(position).count = 0;
                 } else {
                     list.get(position).count = list.get(position).count - 1;
                     holder.tvCount.setText(list.get(position).count + "");
                 }
-
+                for(ORDER order:list){
+                    totalMoney=totalMoney+(order.price*order.count);
+                }
+                listener.clickListener(0,totalMoney+"");
             }
         });
         return view;

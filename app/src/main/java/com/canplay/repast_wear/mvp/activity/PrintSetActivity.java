@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.canplay.repast_wear.R;
 import com.canplay.repast_wear.base.BaseActivity;
+import com.canplay.repast_wear.base.BaseApplication;
 import com.canplay.repast_wear.base.RxBus;
 import com.canplay.repast_wear.base.SubscriptionBean;
 import com.canplay.repast_wear.bean.ORDER;
@@ -69,12 +70,13 @@ public class PrintSetActivity extends BaseActivity {
         //广播注册
         order = (ORDER) getIntent().getSerializableExtra("order");
         type = getIntent().getIntExtra("type", 1);
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mBluetoothDevicesDatas = new ArrayList<>();
-        adapter = new PrintAdapter(this, mBluetoothDevicesDatas, order, type);
+//        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+//        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+//        registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
+        mBluetoothAdapter = BaseApplication.mBluetoothAdapter;
+        mBluetoothDevicesDatas = BaseApplication.mBluetoothDevicesDatas;
+        adapter = BaseApplication.adapter;
+        adapter.setOrder(order);
         listView.setAdapter(adapter);
         chechBluetooth();
         addViewListener();
@@ -156,6 +158,7 @@ public class PrintSetActivity extends BaseActivity {
      * 搜索蓝牙设备
      */
     public void searchDevices() {
+        BaseApplication.getInstance().clear();
         mBluetoothDevicesDatas.clear();
         adapter.notifyDataSetChanged();
         //开始搜索蓝牙设备
@@ -217,49 +220,49 @@ public class PrintSetActivity extends BaseActivity {
 
     }
 
-    /**
-     * 通过广播搜索蓝牙设备
-     */
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            // 把搜索的设置添加到集合中
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                tvContact.setVisibility(View.GONE);
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                //已经匹配的设备
-                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-                    addBluetoothDevice(device);
-
-                    //没有匹配的设备
-                } else {
-                    addBluetoothDevice(device);
-                }
-                adapter.notifyDataSetChanged();
-                //搜索完成
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                setViewStatus(false);
-            }
-        }
-
-        /**
-         * 添加数据
-         * @param device 蓝牙设置对象
-         */
-        private void addBluetoothDevice(BluetoothDevice device) {
-
-            for (int i = 0; i < mBluetoothDevicesDatas.size(); i++) {
-                if (device.getAddress().equals(mBluetoothDevicesDatas.get(i).getAddress())) {
-                    mBluetoothDevicesDatas.remove(i);
-                }
-            }
-            if (device.getBondState() == BluetoothDevice.BOND_BONDED && device.getBluetoothClass().getDeviceClass() == PRINT_TYPE) {
-                mBluetoothDevicesDatas.add(0, new PrintBean(device));
-            } else {
-                mBluetoothDevicesDatas.add(new PrintBean(device));
-            }
-        }
-    };
+//    /**
+//     * 通过广播搜索蓝牙设备
+//     */
+//    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+//        public void onReceive(Context context, Intent intent) {
+//            String action = intent.getAction();
+//            // 把搜索的设置添加到集合中
+//            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+//                tvContact.setVisibility(View.GONE);
+//                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+//                //已经匹配的设备
+//                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+//                    addBluetoothDevice(device);
+//
+//                    //没有匹配的设备
+//                } else {
+//                    addBluetoothDevice(device);
+//                }
+//                adapter.notifyDataSetChanged();
+//                //搜索完成
+//            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+//                setViewStatus(false);
+//            }
+//        }
+//
+//        /**
+//         * 添加数据
+//         * @param device 蓝牙设置对象
+//         */
+//        private void addBluetoothDevice(BluetoothDevice device) {
+//
+//            for (int i = 0; i < mBluetoothDevicesDatas.size(); i++) {
+//                if (device.getAddress().equals(mBluetoothDevicesDatas.get(i).getAddress())) {
+//                    mBluetoothDevicesDatas.remove(i);
+//                }
+//            }
+//            if (device.getBondState() == BluetoothDevice.BOND_BONDED && device.getBluetoothClass().getDeviceClass() == PRINT_TYPE) {
+//                mBluetoothDevicesDatas.add(0, new PrintBean(device));
+//            } else {
+//                mBluetoothDevicesDatas.add(new PrintBean(device));
+//            }
+//        }
+//    };
 
     /**
      * 关闭蓝牙
