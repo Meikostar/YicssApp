@@ -68,6 +68,7 @@ public class PrintSetActivity extends BaseActivity {
         navigationBar.setNavigationBarListener(this);
         //初始化
         //广播注册
+        BaseApplication.adapter.context=this;
         order = (ORDER) getIntent().getSerializableExtra("order");
         type = getIntent().getIntExtra("type", 1);
 //        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -124,7 +125,10 @@ public class PrintSetActivity extends BaseActivity {
                 setViewStatus(true);
                 //开启蓝牙
             } else {
-                searchDevices();
+                if(BaseApplication.maps.size()==0){
+                    searchDevices();
+                }
+
                 setViewStatus(true);
                 mSwitch.setChecked(true);
             }

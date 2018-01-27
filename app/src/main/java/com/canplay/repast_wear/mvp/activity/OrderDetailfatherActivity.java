@@ -139,6 +139,7 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
    private List<ORDER> list=new ArrayList<>();
     @Override
     public void navigationRight() {
+        BaseApplication.adapter.context=this;
         int i=0;
         if(BaseApplication.maps.size()>0&&BaseApplication.mBluetoothAdapter.isEnabled()){
 
@@ -149,6 +150,7 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
                 }
             }
         }else {
+            i=1;
             goPrint();
         }
         if(i==0){

@@ -160,7 +160,9 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
 
     @Override
     public void navigationRight() {
+//        goPrint();
         int i=0;
+        BaseApplication.adapter.context=this;
         if(BaseApplication.maps.size()>0&&BaseApplication.mBluetoothAdapter.isEnabled()){
 
             for (PrintBean printBean : BaseApplication.maps.values()) {
@@ -171,6 +173,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
                 }
             }
         }else {
+            i=1;
             goPrint();
         }
        if(i==0){

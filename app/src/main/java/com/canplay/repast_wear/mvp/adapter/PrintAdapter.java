@@ -49,8 +49,10 @@ public class PrintAdapter extends BaseAdapter {
     //搜索弹窗提示
     ProgressDialog progressDialog = null;
     private final int exceptionCod = 100;
+    private final int dismiss = 101;
     //打印的内容
     private ORDER order;
+    private int statu;
     //在打印异常时更新ui
     Handler handler = new Handler() {
         @Override
@@ -61,6 +63,17 @@ public class PrintAdapter extends BaseAdapter {
                 if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
+            }else {
+                if(statu==0){
+                    if (progressDialog != null) {
+                        progressDialog.dismiss();
+                        Toast.makeText(mContext, "打印发送失败，请稍后再试", Toast.LENGTH_SHORT).show();
+
+                    }
+                }else {
+                    statu=0;
+                }
+
             }
         }
     };
@@ -74,7 +87,7 @@ public class PrintAdapter extends BaseAdapter {
         this.mBluetoothDevicesDatas = mBluetoothDevicesDatas;
         mContext = context;
         this.type=type;
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter = BaseApplication.mBluetoothAdapter;
         order = printContent;
         uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     }
@@ -123,6 +136,8 @@ public class PrintAdapter extends BaseAdapter {
 
         return convertView;
     }
+    public Context context;
+
     public void print(PrintBean dataBean,int position,ORDER order){
         if(order!=null){
             try {
@@ -130,7 +145,10 @@ public class PrintAdapter extends BaseAdapter {
                 if (dataBean.isConnect && dataBean.getType() == PRINT_TYPE) {
                     if (mBluetoothAdapter.isEnabled()) {
                         new ConnectThread(mBluetoothAdapter.getRemoteDevice(dataBean.address)).start();
-                        progressDialog = ProgressDialog.show(mContext, "提示", "正在打印...", false);
+                        progressDialog = ProgressDialog.show(context, "提示", "正在打印...", false);
+                        Message msg=new Message();
+                        msg.what=dismiss;
+                        handler.sendMessageDelayed(msg,6000);
                     } else {
                         Toast.makeText(mContext, "蓝牙没有打开", Toast.LENGTH_SHORT).show();
                     }
@@ -215,7 +233,7 @@ public class PrintAdapter extends BaseAdapter {
                 //连接成功获取输出流
                 outputStream = mmSocket.getOutputStream();
 
-                listener.printListener(0);
+//                listener.printListener(0);
                 if(type==1){
                     pos(mmSocket);
                 }else {
@@ -232,7 +250,7 @@ public class PrintAdapter extends BaseAdapter {
                 Message msg = new Message();
                 msg.what = exceptionCod;
                 // 向Handler发送消息,更新UI
-                handler.sendMessage(msg);
+//                handler.sendMessage(msg);
                 if(progressDialog!=null){
                     progressDialog.dismiss();
                 }
@@ -343,9 +361,9 @@ public class PrintAdapter extends BaseAdapter {
                         }
                         pos.printText(""+(order1.price*order1.count));
 
-                        if(i+1==order.cookbookInfos.size()){
-                            pos.printTextNewLine("- - - - - - - - - - - - - - - -");
-                        }
+//                        if(i+1==order.cookbookInfos.size()){
+//                            pos.printTextNewLine("- - - - - - - - - - - - - - - -");
+//                        }
                        i++;
                     }
 
@@ -371,6 +389,7 @@ public class PrintAdapter extends BaseAdapter {
 //                  pos.closeIOAndSocket();
                     pos = null;
                     progressDialog.dismiss();
+                    statu=1;
                 } catch (UnknownHostException e) {
                     Log.d("tag", "错误信息1：" + e.toString());
                     handler.sendEmptyMessage(exceptionCod); // 向Handler发送消息,更新UI
