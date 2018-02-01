@@ -87,12 +87,14 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
             @Override
             public void tasteNum(int type) {
                 if(type==1){
+                    RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.EDITOR,""));
                     Intent intent = new Intent(MenuDetailActivity.this, MenuDetailEditorActivity.class);
                     intent.putExtra("id",menuId);
                     if(TextUtil.isNotEmpty(sort)){
                         intent.putExtra("sort",sort);
                     }
                     startActivity(intent);
+
                     finish();
                 }else {
                     finish();

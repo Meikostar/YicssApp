@@ -67,8 +67,8 @@ public class BaseApplication extends Application{
         new ExceptionHandler().init(this);
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
-//        String androidId = android.provider.Settings.Secure.getString(getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-        JPushUtils.shareInstance().setAlias("181660367471",11);
+        String androidId = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        JPushUtils.shareInstance().setAlias(androidId,11);
 //        JPushInterface.setLatestNotificationNumber(this, 1);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBluetoothDevicesDatas = new ArrayList<>();

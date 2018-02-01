@@ -30,6 +30,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Subscription;
+import rx.functions.Action1;
 
 public class MenuDetailEditorActivity extends BaseActivity implements View.OnClickListener, CookClassifyContract.View {
     @Inject
@@ -93,9 +95,25 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
             presenter.editCookbookState(id,st);
             }
         });
+        mSubscription = RxBus.getInstance().toObserverable(SubscriptionBean.RxBusSendBean.class).subscribe(new Action1<SubscriptionBean.RxBusSendBean>() {
+            @Override
+            public void call(SubscriptionBean.RxBusSendBean bean) {
+                if (bean == null) return;
+                if(bean.type==SubscriptionBean.EDITOR){
+                    finish();
+                }
 
+
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+        RxBus.getInstance().addSubscription(mSubscription);
     }
-
+     private Subscription mSubscription;
     public void initDats(List<COOK> cooks) {
         for (COOK cook : cooks) {
             mCardAdapter.addCardItem(cook);
@@ -205,6 +223,12 @@ public class MenuDetailEditorActivity extends BaseActivity implements View.OnCli
     @Override
     public void showTomast(String msg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSubscription.unsubscribe();
     }
 
     @Override

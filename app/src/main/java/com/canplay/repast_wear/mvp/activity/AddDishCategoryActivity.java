@@ -127,21 +127,15 @@ public class AddDishCategoryActivity extends BaseActivity implements CookClassif
             }
         }
         if (type == 1) {
-            if (list.size() > 0) {
+
                 RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.ADD_FEILEI, list));
                 finish();
-            } else {
-                finish();
-//                showToasts("请选择做法分类");
-            }
+
         } else {
-            if (list.size() > 0) {
+
                 RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.ADD_PEICAI, list));
                 finish();
-            } else {
-                finish();
-//                showToasts("请选择配菜分类");
-            }
+
         }
 
     }

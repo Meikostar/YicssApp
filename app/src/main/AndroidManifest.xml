@@ -116,7 +116,8 @@
         <activity android:name="com.canplay.repast_wear.mvp.activity.AddDishesActivity" />
         <activity android:name="com.canplay.repast_wear.mvp.activity.AddMenuActivity" />
         <activity android:name="com.canplay.repast_wear.mvp.activity.MenuDetailActivity" />
-        <activity android:name="com.canplay.repast_wear.mvp.activity.MenuDetailEditorActivity" />
+        <activity android:name="com.canplay.repast_wear.mvp.activity.MenuDetailEditorActivity"
+            android:launchMode="singleTop"/>
         <activity android:name="com.canplay.repast_wear.mvp.activity.OrderDetailfatherActivity" />
         <activity android:name="com.canplay.repast_wear.print.BluetoothActivity" />
         <activity android:name="com.canplay.repast_wear.mvp.activity.ChooseFoodActivity"></activity>

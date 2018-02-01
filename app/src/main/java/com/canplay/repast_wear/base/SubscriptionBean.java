@@ -17,6 +17,7 @@ public class SubscriptionBean {
     public static int ADD_MENU=115;
     public static int MENU_REFASH=117;
     public static int MENU_REFASHS=116;
+    public static int EDITOR=118;
 
 
     /**

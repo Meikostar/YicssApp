@@ -146,7 +146,21 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
             for (PrintBean printBean : BaseApplication.maps.values()) {
                 if(printBean.isConnect){
                     i=1;
-                    BaseApplication.getInstance().print(printBean,order);
+                    ORDER orde = new ORDER();
+                    orde.detailNo=order.orderNo;
+                    orde.tableNo=order.tableNo;
+                    orde.createTime=order.createTime;
+                    orde.totalPrice=order.totalPrice;
+                    orde.remark=order.remark;
+                    orde.serviceCharge=order.serviceCharge;
+                    orde.num=order.num;
+                    orde.surcharge=order.surcharge;
+                    list.clear();
+                    for(ORDER order1:map.values()){
+                        list.add(order1);
+                    }
+                    orde.cookbookInfos=list;
+                    BaseApplication.getInstance().print(printBean,orde);
                 }
             }
         }else {
@@ -166,7 +180,7 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
    public void goPrint(){
        Intent intent6 = new Intent(this, PrintSetActivity.class);
        ORDER orde = new ORDER();
-       orde.detailNo=orde.orderNo;
+       orde.detailNo=order.orderNo;
        orde.tableNo=order.tableNo;
        orde.createTime=order.createTime;
        orde.totalPrice=order.totalPrice;
@@ -178,7 +192,7 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
        for(ORDER order1:map.values()){
            list.add(order1);
        }
-       orde.orderRelations=list;
+       orde.cookbookInfos=list;
        intent6.putExtra("order",orde);
        intent6.putExtra("type", 1);
        startActivity(intent6);

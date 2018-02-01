@@ -26,7 +26,9 @@ import com.canplay.repast_wear.view.NavigationBar;
 import com.canplay.repast_wear.view.SoftKeyBoardListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -128,12 +130,25 @@ public class AddMenueCategoryActivity extends BaseActivity implements CookClassi
             public void teaMoney(String money) {
                 status = 1;
                 content = money;
+                String s = map.get(content);
                 if (type == 1) {
+                    if(TextUtil.isNotEmpty(s)){
+                        showToasts("菜品不允许重复");
+                        return;
+                    }
                     presenter.addBookClassfy(money);
                 } else if (type == 3) {
                     presenter.addRecipesClassify(money);
+                    if(TextUtil.isNotEmpty(s)){
+                        showToasts("做法不允许重复");
+                        return;
+                    }
                 } else if (type == 4) {
                     presenter.addFoodClassify(money);
+                    if(TextUtil.isNotEmpty(s)){
+                        showToasts("配菜不允许重复");
+                        return;
+                    }
                 }
 
             }
@@ -258,7 +273,7 @@ public class AddMenueCategoryActivity extends BaseActivity implements CookClassi
         view.setSize(with + 22, 60, 15);
         view.setLayoutParams(lp);
         view.setCustomText(content.name);
-
+        map.put(content.name,content.name);
         return view;
     }
 
@@ -354,7 +369,7 @@ public class AddMenueCategoryActivity extends BaseActivity implements CookClassi
         }
 
     }
-
+    public Map<String ,String> map= new HashMap<>();
     @Override
     public void showTomast(String msg) {
 

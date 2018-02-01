@@ -140,6 +140,8 @@ public class PrintAdapter extends BaseAdapter {
 
     public void print(PrintBean dataBean,int position,ORDER order){
         if(order!=null){
+
+            this.order=order;
             try {
                 //如果已经连接并且是打印机
                 if (dataBean.isConnect && dataBean.getType() == PRINT_TYPE) {
@@ -279,8 +281,8 @@ public class PrintAdapter extends BaseAdapter {
                     pos.bold(true);
                     pos.printTabSpace(2);
                     pos.printWordSpace(1);
-                    pos.printTextNewLine("    "+(order.businessName==null?"Meiko Or LXM":order.businessName));
-                    pos.printLine(2);
+                    pos.printTextNewLine(""+(order.businessName==null?"壹成善水":order.businessName));
+                    pos.printLine(1);
                     pos.printLocation(0);
 
                     pos.bold(false);
@@ -291,15 +293,21 @@ public class PrintAdapter extends BaseAdapter {
                     pos.printLine(1);
                     pos.printTextNewLine("————————————————");
                     pos.printText("菜名       单价     数量   小计");
-                    pos.printLocation(20, 1);
-                    pos.printTextNewLine("————————————————");
 
-                    pos.printTextNewLine("就餐人数"+"    "+5.00+"     "+2+"    "+10.00);
-                    int i=0;
+                    if(TextUtil.isNotEmpty(order.serviceCharge)){
+                        pos.printLocation(20, 1);
+                        pos.printTextNewLine("————————————————");
+
+                        pos.printTextNewLine("就餐人数"+"    "+order.surcharge+"      "+order.num+"    "+order.serviceCharge);
+
+                    }
+                  int i=0;
                     for (ORDER order1:order.cookbookInfos) {
 
-                        pos.printTextNewLine("- - - - - - - - - - - - - - - - ");
+                            pos.printTextNewLine("- - - - - - - - - - - - - - - - ");
 
+
+                        i++;
                         pos.printText(order1.cnName);
                         switch (order1.cnName.length()){
                             case  1:
