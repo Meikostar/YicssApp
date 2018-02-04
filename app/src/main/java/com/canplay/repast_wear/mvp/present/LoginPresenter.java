@@ -40,7 +40,10 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override
             public void onError(Throwable e){
                 super.onError(e);
-                mView.showTomast(e.toString());
+                if(e.toString().contains("java.io.IOException:")){
+                    mView.showTomast("账号或密码错误");
+                }
+
             }
 
             @Override
