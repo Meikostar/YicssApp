@@ -152,6 +152,9 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                         }
                         i++;
                     }
+                    if(content.size()==0){
+                        recipesIds="";
+                    }
                 }else if(bean.type==SubscriptionBean.ADD_PEICAI){
                     content = (List<BaseType>) bean.content;
                     datas.addAll(content);
@@ -164,6 +167,9 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
                             foodIds=foodIds+","+base.classifyId;
                         }
                         i++;
+                    }
+                    if(content.size()==0){
+                        foodIds="";
                     }
                 }else if(bean.type==SubscriptionBean.ADD_MENU){
                     BaseType  beans = (BaseType) bean.content;
@@ -324,7 +330,7 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
             QiniuUtils.getInstance().upFile(path, token, new QiniuUtils.CompleteListener() {
                 @Override
                 public void completeListener(String url) {
-                    showTomast("上传成功");
+                    showToasts("上传成功");
                     dimessProgress();
                     resourceKey=url;
                 }
@@ -332,10 +338,10 @@ public class AddDishesActivity extends BaseActivity implements View.OnClickListe
         }else if(type==3){
             dimessProgress();
             if(TextUtil.isNotEmpty(cookbookId)){
-                showTomast("编辑成功");
+                showToasts("编辑成功");
                 RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASH,""));
             }else {
-                showTomast("添加成功");
+                showToasts("添加成功");
                 RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.MENU_REFASH,""));
             }
 

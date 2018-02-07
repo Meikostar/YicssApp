@@ -139,8 +139,10 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
 //                    String string = data.toString();
                     String json = new Gson ().toJson(data);
                     presenter.updateDetailCount(json);
+                    state=1;
                     presenter.updateOrderState(order.detailNo,(order.state+1)+"");
                 }else {
+                    state=2;
                     presenter.updateOrderState(order.detailNo,(order.state+1)+"");
                 }
             }
@@ -216,14 +218,15 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
             RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.NOFIFY,""));
 //            finish();
         }else if(type==-2){
-            if(order.state==1){
+            if(state==1){
+                showToasts("接单成功");
+                tvPaySure.setText("确认付款");
+            }else if(state==2){
                 showToasts("已确认付款");
                 ll_all.setVisibility(View.GONE);
                 lines.setVisibility(View.GONE);
-            }else if(order.state==0){
-                tvPaySure.setText("确认付款");
-
             }
+
             if(status==1){
                 status=0;
                 showToasts("订单撤销成功");

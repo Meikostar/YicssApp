@@ -54,12 +54,8 @@ public class OrderMangerRecycleAdapter extends BaseRecycleViewAdapter {
           if(data.createTime!=0){
               holders.tvTime.setText(TimeUtil.formatTimes(data.createTime));
           }
-          if(position<9){
-              holders.tv_number.setText("00"+(position+1));
-          }else if(position>9&&position<99){
-              holders.tv_number.setText("0"+(position+1));
-          }else {
-              holders.tv_number.setText(""+(position+1));
+          if(TextUtil.isNotEmpty(data.tableNo)){
+              holders.tv_number.setText(data.tableNo);
           }
         if(data.state==0){
             holders.tvStatus.setText("待接单");

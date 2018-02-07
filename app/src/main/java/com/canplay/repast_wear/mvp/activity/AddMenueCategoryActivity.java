@@ -138,17 +138,19 @@ public class AddMenueCategoryActivity extends BaseActivity implements CookClassi
                     }
                     presenter.addBookClassfy(money);
                 } else if (type == 3) {
-                    presenter.addRecipesClassify(money);
+
                     if(TextUtil.isNotEmpty(s)){
                         showToasts("做法不允许重复");
                         return;
                     }
+                    presenter.addRecipesClassify(money);
                 } else if (type == 4) {
-                    presenter.addFoodClassify(money);
+
                     if(TextUtil.isNotEmpty(s)){
                         showToasts("配菜不允许重复");
                         return;
                     }
+                    presenter.addFoodClassify(money);
                 }
 
             }
@@ -170,6 +172,13 @@ public class AddMenueCategoryActivity extends BaseActivity implements CookClassi
             if (baseType.isChoos) {
                 list.add(baseType);
             }
+        }
+        if (type == 1) {
+            dialog.setTitles("添加菜品");
+        } else if (type == 3) {
+            dialog.setTitles("添加做法");
+        } else if (type == 4) {
+            dialog.setTitles("添加配菜");
         }
         dialog.show();
 

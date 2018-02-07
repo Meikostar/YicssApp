@@ -67,6 +67,13 @@ public class AddMenuActivity extends BaseActivity  {
         adapter.setItemCikcListener(new MenuRecycleAdapter.ItemClikcListener() {
             @Override
             public void itemClick(int poistioin) {
+
+                if(poistioin==6){
+                    poistioin=8;
+                }else if(poistioin==7){
+                    poistioin=11;
+
+                }
                 if(type==1){
                     Intent intent = new Intent();
                     intent.putExtra("type", poistioin+1);

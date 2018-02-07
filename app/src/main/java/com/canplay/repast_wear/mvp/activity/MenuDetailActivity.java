@@ -112,6 +112,16 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
                     classifyId=beans.cbClassifyId;
                     tvType.setText(beans.name);
                     tvType.setTextColor(getResources().getColor(R.color.slow_black));
+                    List<BaseType> datas = adapter.getDatas();
+                    if(datas!=null&&datas.size()>0){
+                        for(BaseType type:datas){
+                            type.name = "";
+                            type.cookbookId = "";
+                            type.classifyId = "";
+                        }
+                    }
+
+                    adapter.setData(datas);
                 }
 
             }
@@ -208,9 +218,12 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(TextUtil.isNotEmpty(s.toString())){
+                String content=s.toString();
 
-                    String sorts = BaseApplication.map.get(s.toString());
+                if(TextUtil.isNotEmpty(content)){
+                   int cout=  Integer.valueOf(content);
+                    content=cout+"";
+                    String sorts = BaseApplication.map.get(content);
                     if(TextUtil.isNotEmpty(sorts)){
                         if(TextUtil.isNotEmpty(sort)){
                             if(!sort.equals(sorts)){
@@ -280,11 +293,20 @@ public class MenuDetailActivity extends BaseActivity  implements CookClassifyCon
         if (resultCode == RESULT_OK) {
             if (requestCode == CHOOSE) {
                 COOK ck = (COOK) data.getSerializableExtra("cook");
-                BaseType baseType = datas.get(poistion);
+                List<BaseType> datas = adapter.getDatas();
+                if(datas!=null&&datas.size()>0){
+                    for(BaseType type:datas){
+                        if(TextUtil.isNotEmpty(type.cookbookId)&&type.cookbookId.equals(ck.cookbookId)){
+                            showToasts("菜品不允许重复");
+                            return;
+                        }
+                    }
+                }
+                BaseType baseType = this.datas.get(poistion);
                 baseType.name = ck.cnName;
                 baseType.cookbookId = ck.cookbookId;
                 baseType.classifyId = ck.classifyId;
-                adapter.setData(datas);
+                adapter.setData(this.datas);
             }else {
                 datas.clear();
                 cout = data.getIntExtra("type", 0);

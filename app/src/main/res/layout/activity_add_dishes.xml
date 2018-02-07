@@ -132,6 +132,7 @@
                         android:textSize="15sp" />
 
                     <EditText
+                        android:maxLength="15"
                         android:id="@+id/tv_chines"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
@@ -177,8 +178,11 @@
                         android:id="@+id/tv_english"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:inputType="text"
+                        android:digits="1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
                         android:layout_marginLeft="13dp"
                         android:background="@null"
+                        android:maxLength="30"
                         android:hint="请输入英文菜名"
                         android:text=""
                         android:textColor="@color/slow_black"

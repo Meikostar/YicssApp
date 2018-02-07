@@ -174,11 +174,12 @@
 
     <LinearLayout
         android:visibility="gone"
-        android:id="@+id/ll_remark"
         android:gravity="center_vertical"
+        android:id="@+id/ll_remark"
         android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="wrap_content"
+        android:minHeight="38dp"
         android:orientation="horizontal">
         <TextView
             android:textSize="14sp"
@@ -188,16 +189,18 @@
             android:layout_height="wrap_content"
             android:text="备注: "/>
         <TextView
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:id="@+id/tv_remark"
-            android:singleLine="true"
             android:background="@color/white"
             android:layout_weight="1"
             android:paddingLeft="13dp"
             android:gravity="center_vertical"
             android:textColor="@color/color6"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:text="所有菜都不需要辣椒"/>
+            android:layout_height="wrap_content"
+            android:minHeight="38dp"
+            android:text=""/>
 
     </LinearLayout>
     <View
