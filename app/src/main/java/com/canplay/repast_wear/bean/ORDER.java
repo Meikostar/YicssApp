@@ -68,6 +68,7 @@ public class ORDER implements Serializable{
     public String tableNo;
     public int state;
     public int count;
+    public int counts;
     public int hasNext;
     public int status;
     public int num;
@@ -83,6 +84,7 @@ public class ORDER implements Serializable{
     public String detailId;
     public String cookbookId;
     public String imgUrl;
+    public String content;
     public String cnName;
     public double price;
     public String surcharge;
@@ -93,6 +95,7 @@ public class ORDER implements Serializable{
     public List<ORDER> detailInfoResps;
     public List<ORDER> cookbookInfos;
     public List<ORDER> list;
+    public ORDER commentInfo;
 
 
 

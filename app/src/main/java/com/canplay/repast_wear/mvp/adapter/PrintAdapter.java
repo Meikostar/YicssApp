@@ -351,8 +351,8 @@ public class PrintAdapter extends BaseAdapter {
                                 pos.printWordSpace(3);
                                 break;
                         }
-                        pos.printText(""+order1.count);
-                        switch ((order1.count+"").length()){
+                        pos.printText(""+order1.counts);
+                        switch ((order1.counts+"").length()){
                             case  1:
                                 pos.printWordSpace(4);
                                 break;
@@ -367,7 +367,7 @@ public class PrintAdapter extends BaseAdapter {
                                 pos.printWordSpace(3);
                                 break;
                         }
-                        pos.printText(""+(order1.price*order1.count));
+                        pos.printText(""+(order1.price*order1.counts));
 
 //                        if(i+1==order.cookbookInfos.size()){
 //                            pos.printTextNewLine("- - - - - - - - - - - - - - - -");
@@ -489,8 +489,8 @@ public class PrintAdapter extends BaseAdapter {
                             pos.printWordSpace(3);
                             break;
                     }
-                    pos.printText(""+order2.count);
-                    switch ((order2.count+"").length()){
+                    pos.printText(""+order2.counts);
+                    switch ((order2.counts+"").length()){
                         case  1:
                             pos.printWordSpace(4);
                             break;
@@ -505,7 +505,7 @@ public class PrintAdapter extends BaseAdapter {
                             pos.printWordSpace(3);
                             break;
                     }
-                    pos.printText(""+(order2.price*order2.count));
+                    pos.printText(""+(order2.price*order2.counts));
 
                     i++;
                 }

@@ -206,6 +206,7 @@
                     android:text=""/>
 
             </LinearLayout>
+
             <View
                 android:visibility="gone"
                 android:id="@+id/liss"
@@ -213,7 +214,7 @@
                 android:layout_height="0.5dp"
                 android:background="@color/content_bg"/>
             <LinearLayout
-               android:visibility="gone"
+                android:visibility="gone"
                 android:id="@+id/ll_server"
                 android:gravity="center_vertical"
                 android:background="@color/white"
@@ -221,9 +222,42 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <View
-
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
+                    android:background="@color/content_bg"/>
+                <LinearLayout
+
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="51dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:textSize="15sp"
+                        android:layout_marginLeft="12dp"
+                        android:textColor="@color/black"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="评论："/>
+                    <TextView
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:id="@+id/tv_comment"
+                        android:layout_marginRight="11dp"
+                        android:textSize="18sp"
+                        android:maxLines="3"
+
+                        android:textColor="@color/slow_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+
+                </LinearLayout>
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
                     android:background="@color/content_bg"/>
                 <LinearLayout
 

@@ -97,6 +97,9 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
     TextView tvTea;
     @BindView(R.id.tv_number)
     TextView tvNumber;
+    @BindView(R.id.tv_comment)
+    TextView tv_comment;
+
     private OrderAdapter adapter;
     private String orderNo;
 
@@ -227,6 +230,13 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
         }
         tvTea.setText(order.surcharge+"元/位");
         tvNumber.setText(order.num+"");
+        if(order.commentInfo!=null){
+            if(!TextUtil.isEmpty(order.commentInfo.content)){
+                tv_comment.setText(order.commentInfo.content+"");
+            }
+
+        }
+
         tvServer.setText("￥ " + order.serviceCharge);
         tvPayState.setText("￥ " + order.totalPrice);
         for (ORDER der : order.orderRelations) {
@@ -239,11 +249,12 @@ public class OrderDetailfatherActivity extends BaseActivity implements CookClass
                 dr.detailPrice = der.detailPrice;
                 dr.remark = der.remark;
                 dr.status = i;
+                dr.counts = dr.count;
                 ORDER order = map.get(dr.cookbookId);
                 if(order==null){
                     map.put(dr.cookbookId,dr);
                 }else {
-                    dr.count=dr.count+order.count;
+                    dr.counts=dr.counts+order.counts;
                     map.put(dr.cookbookId,dr);
                 }
                 datas.add(dr);
