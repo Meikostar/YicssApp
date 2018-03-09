@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.net.UnknownHostException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -215,6 +216,7 @@ public class PrintAdapter extends BaseAdapter {
      * 连接为客户端
      */
     private class ConnectThread extends Thread {
+
         public ConnectThread(BluetoothDevice device) {
             try {
                 mmSocket = device.createRfcommSocketToServiceRecord(uuid);
@@ -266,6 +268,7 @@ public class PrintAdapter extends BaseAdapter {
         }
     }
     private Pos pos;
+    private   DecimalFormat df = new DecimalFormat("#.00");
     private void pos(final BluetoothSocket socket) {
         // 开启一个子线程
 
@@ -351,8 +354,8 @@ public class PrintAdapter extends BaseAdapter {
                                 pos.printWordSpace(3);
                                 break;
                         }
-                        pos.printText(""+order1.counts);
-                        switch ((order1.counts+"").length()){
+                        pos.printText(""+(order1.counts==0?order1.count:order1.counts));
+                        switch (((order1.counts==0?order1.count:order1.counts)+"").length()){
                             case  1:
                                 pos.printWordSpace(4);
                                 break;
@@ -367,7 +370,7 @@ public class PrintAdapter extends BaseAdapter {
                                 pos.printWordSpace(3);
                                 break;
                         }
-                        pos.printText(""+(order1.price*order1.counts));
+                        pos.printText(""+df.format(order1.price*(order1.counts==0?order1.count:order1.counts)));
 
 //                        if(i+1==order.cookbookInfos.size()){
 //                            pos.printTextNewLine("- - - - - - - - - - - - - - - -");
@@ -378,9 +381,9 @@ public class PrintAdapter extends BaseAdapter {
                     pos.printTextNewLine("———————————————");
                     pos.printLocation(0);
                     pos.printLine(1);
-                    pos.printTextNewLine("                 总计："+order.detailPrice);
+                    pos.printTextNewLine("                 总计："+order.totalPrice);
                     pos.printLine(1);
-                    pos.printTextNewLine(" 备注："+order.remark);
+                    pos.printTextNewLine(" 备注："+(TextUtil.isNotEmpty(order.remark)?order.remark:""));
                     pos.printLine(2);
                     //打印二维码  -- 如果提供了二维码的地址则用该方法
 //                  pos.qrCode(objBean.getQr_code());

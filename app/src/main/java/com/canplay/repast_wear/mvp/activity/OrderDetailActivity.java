@@ -237,6 +237,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
         }else {
             order = (ORDER) entity;
             datas.clear();
+
             adapter.setData(order.cookbookInfos,0);
             adapter.setState(order.state);
             if(order.state==1){
@@ -251,7 +252,7 @@ public class OrderDetailActivity extends BaseActivity implements CookClassifyCon
             }
             if (TextUtil.isNotEmpty(order.orderNo)) {
                 tvOrderNumber.setText("订单号: " + order.orderNo);
-                tvOrderno.setText(order.orderNo);
+                tvOrderno.setText(order.detailNo);
             }
             if (TextUtil.isNotEmpty(order.remark)) {
                 tv_remark.setText(order.remark);
