@@ -61,6 +61,7 @@ android {
             exclude group: 'xpp3', module: 'xpp3'
         }
         compile project(':gallery')
+        compile project(':zxinglibrary')
         //Logcat
         //圆形
         //加载图片
@@ -94,3 +95,4 @@ android {
 
     }
 }
+

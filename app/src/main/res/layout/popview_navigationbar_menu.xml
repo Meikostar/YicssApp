@@ -26,12 +26,12 @@
 
             android:gravity="center"
             android:id="@+id/tv_new"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textColor="@color/slow_black"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="5dp"
             android:layout_width="match_parent"
             android:layout_height="41dp"
-            android:text="新建菜单"
+            android:text="我的用药提醒"
             />
         <View
             android:layout_marginLeft="17dp"
@@ -45,10 +45,10 @@
             android:id="@+id/tv_preview"
             android:textSize="15sp"
             android:textColor="@color/slow_black"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="5dp"
             android:layout_width="match_parent"
             android:layout_height="41dp"
-            android:text="预览菜单"
+            android:text="我的用药记录"
             />
 
 

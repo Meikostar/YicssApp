@@ -26,7 +26,11 @@
     <string name="dian">门店</string>
     <string name="count">账号</string>
     <string name="message">消息</string>
-
+    <string name="yeu">月</string>
+    <string name="riis">日</string>
+    <string name="yues">00月</string>
+    <string name="years">0000年</string>
+    <string name="ris">00日</string>
     <string name="qingshurusjh">请输入手机号</string>
     <string name="jingshuryzm">请输入验证码</string>
     <string name="shoujigesibzq">手机号码格式不正确</string>
@@ -37,5 +41,12 @@
     <string name="xlistview_header_last_time">上次更新时间：</string>
     <string name="xlistview_footer_hint_normal">查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
+    <string name="chongxinhuoqu">重新获取</string>
+    <string name="schongxinhuoqu">s重新获取</string>
 
+    <string name="check_version">当前已经是最新版本</string>
+    <string name="check_versions">有最新版本，快去更新吧</string>
+    <string name="yihougx">以后更新</string>
+    <string name="qugenx">去更新</string>
+    <string name="wozhidol">我知道了</string>
 </resources>

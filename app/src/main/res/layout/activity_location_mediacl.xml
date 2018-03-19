@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/content_bg"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.01dp"
+        android:id="@+id/line"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height">
+
+        <ImageView
+            android:id="@+id/top_view_back"
+            android:layout_width="@dimen/header_right_iconHw"
+            android:layout_height="@dimen/header_right_iconHw"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/header_left_paddingLeft"
+            android:layout_marginRight="@dimen/header_left_paddingLeft"
+            android:src="@drawable/arrow_right_blue" />
+
+
+
+
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/mapView"
+
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:screenOrientation="portrait"
+            android:clickable="true" />
+
+
+    </FrameLayout>
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/lv_content"/>
+</LinearLayout>

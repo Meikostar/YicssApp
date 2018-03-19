@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
-        android:background="@drawable/rounded_f1"
+        android:background="@color/white"
         android:orientation="vertical">
         <TextView
             android:id="@+id/select_title"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:text="茶位费"
+            android:text="编辑姓名"
             android:textSize="17sp"
             android:textColor="@color/black"/>
         <LinearLayout
@@ -32,12 +32,21 @@
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
             android:orientation="vertical"
-            android:background="@drawable/hui_bgl_line">
+         >
             <LinearLayout
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <TextView
+                    android:layout_marginRight="8dp"
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="姓名"
+                    android:textSize="15sp"
+                    android:textColor="@color/color6"/>
                 <EditText
                     android:inputType="phone"
                     android:id="@+id/et_money"
@@ -46,15 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
-                <TextView
-                    android:layout_marginRight="8dp"
-                    android:id="@+id/tv_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="元/位"
-                    android:textSize="15sp"
-                    android:textColor="@color/color6"/>
+
             </LinearLayout>
 
         </LinearLayout>

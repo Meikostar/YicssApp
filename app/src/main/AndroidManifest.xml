@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.canplay.repast_wear">
+    package="com.canplay.medical">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -24,7 +24,7 @@
     <!-- 极光 -->
     <!-- Required -->
     <permission
-        android:name="com.canplay.repast_wear.permission.JPUSH_MESSAGE"
+        android:name="com.canplay.medical.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
     <!-- Required  一些系统要求的权限，如访问网络等-->
@@ -67,7 +67,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
-        android:name="com.canplay.repast_wear.base.BaseApplication"
+        android:name="com.canplay.medical.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/yjlogo"
         android:label="@string/app_name"
@@ -76,7 +76,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.canplay.repast_wear.mvp.activity.LoginActivity"
+            android:name="com.canplay.medical.mvp.activity.account.LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -88,7 +88,7 @@
         <!-- authorities中改为自己的包名+.fileProvider -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.canplay.repast_wear.fileProvider"
+            android:authorities="com.canplay.medical.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -97,33 +97,111 @@
         </provider>
 
         <activity
-            android:name="com.canplay.repast_wear.mvp.activity.MainActivity"
+            android:name="com.canplay.medical.mvp.activity.MainActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.canplay.repast_wear.mvp.activity.AddMenueCategoryActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".mvp.activity.mine.MineCodeActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.MineInfoActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.MineEuipmentActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".mvp.activity.mine.MineHealthCenterActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.AddFriendActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.FriendDetailActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.BloodPressRecordActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.CollectionActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.SettingActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.EditorPwsActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.BindPhoneActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.RemindHealthActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.mine.RemindSettingActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.home.UsePlanActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.home.MinePlanRemindActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.home.MineUseRecordActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.home.AddBloodDataActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.home.BloodMeasureRecordActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.activity.home.MeasurePlanActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
 
-        <activity android:name="com.canplay.repast_wear.mvp.activity.MenuManageActivity" />
-        <activity android:name="com.canplay.repast_wear.mvp.activity.DishesManageActivity" />
-        <activity android:name="com.canplay.repast_wear.mvp.activity.PrintSetActivity"
-            android:launchMode="singleTop"
-            />
-        <activity android:name="com.canplay.repast_wear.mvp.activity.OrderDetailActivity" />
         <activity
-            android:name="com.canplay.repast_wear.mvp.activity.AddDishCategoryActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.canplay.repast_wear.mvp.activity.AddDishesActivity" />
-        <activity android:name="com.canplay.repast_wear.mvp.activity.AddMenuActivity" />
-        <activity android:name="com.canplay.repast_wear.mvp.activity.MenuDetailActivity" />
-        <activity android:name="com.canplay.repast_wear.mvp.activity.MenuDetailEditorActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name="com.canplay.repast_wear.mvp.activity.OrderDetailfatherActivity" />
-        <activity android:name="com.canplay.repast_wear.print.BluetoothActivity" />
-        <activity android:name="com.canplay.repast_wear.mvp.activity.ChooseFoodActivity"></activity>
-        <activity
-            android:name="com.canplay.repast_wear.print.PrintDataActivity">
-        </activity>
+            android:name=".mvp.activity.LocationBdActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+
+
+
+
+
+
+
+
+
+
+        <!-- 百度releayKey -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="f4OuWjotCEsCBMAm6V5BxmWNi0gnXcz6" />
+
+        <!-- baiduserve -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
         <!-- 极光 -->
         <!-- Rich push 核心功能 since 2.0.6 -->
 
@@ -163,7 +241,7 @@
             </intent-filter>
         </service>
         <provider
-            android:authorities="com.canplay.repast_wear.DataProvider"
+            android:authorities="com.canplay.medical.DataProvider"
             android:name="cn.jpush.android.service.DataProvider"
             android:exported="false"
             />
@@ -182,16 +260,20 @@
         </service>
         <!-- since 3.1.0 Required SDK 核心功能-->
         <provider
-            android:authorities="com.canplay.repast_wear.DownloadProvider"
+            android:authorities="com.canplay.medical.DownloadProvider"
             android:name="cn.jpush.android.service.DownloadProvider"
             android:exported="true"
             />
         <!-- since 3.1.0 Required SDK 核心功能-->
         <provider
-            android:authorities="com.canplay.repast_wear.DownloadProvider"
+            android:authorities="com.canplay.medical.DownloadProvider"
             android:name="cn.jpush.android.service.DownloadProvider"
             android:exported="true"
             />
+        <activity
+            android:name=".mvp.activity.account.RegisteredActivity"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- Required SDK核心功能-->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
@@ -219,7 +301,7 @@
 
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <receiver
-            android:name=".receiver.MyReceiver"
+            android:name="com.canplay.medical.receiver.MyReceiver"
             android:exported="false"
             android:enabled="true">
             <intent-filter>

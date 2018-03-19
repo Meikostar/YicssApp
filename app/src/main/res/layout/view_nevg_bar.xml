@@ -26,7 +26,7 @@
                 android:id="@+id/iv_checkbox_image1"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="20dp"
-                android:src="@drawable/b11"
+
                 android:layout_height="20dp" />
             <TextView
                 android:textColor="@color/bottom"
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="订单"
+                android:text="首页"
                 android:gravity="center"
                 android:textSize="10sp"/>
 
@@ -52,7 +52,7 @@
                 android:id="@+id/iv_checkbox_image2"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="20dp"
-                android:src="@drawable/b22"
+
                 android:layout_height="20dp" />
             <TextView
                 android:textColor="@color/bottom"
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="菜品"
+                android:text="医生"
                 android:gravity="center"
                 android:textSize="10sp"/>
         </LinearLayout>
@@ -75,7 +75,7 @@
                 android:id="@+id/iv_checkbox_image3"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="20dp"
-                android:src="@drawable/b33"
+
                 android:layout_height="20dp" />
             <TextView
                 android:textColor="@color/bottom"
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="菜单"
+                android:text="健康数据"
                 android:gravity="center"
                 android:textSize="10sp"/>
         </LinearLayout>
@@ -100,7 +100,7 @@
                 android:id="@+id/iv_checkbox_image4"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="20dp"
-                android:src="@drawable/b44"
+
                 android:layout_height="20dp" />
             <TextView
                 android:textColor="@color/bottom"
@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="设置"
+                android:text="个人中心"
                 android:gravity="center"
                 android:textSize="10sp"/>
         </LinearLayout>

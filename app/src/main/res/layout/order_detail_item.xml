@@ -133,7 +133,7 @@
             android:orientation="horizontal">
             <ImageView
                 android:padding="7dp"
-                android:src="@drawable/less_bule"
+
                 android:id="@+id/tv_less"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -154,7 +154,7 @@
                 android:padding="7dp"
                 android:gravity="center"
                 android:id="@+id/tv_add"
-                android:src="@drawable/add_bule"
+
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:text="+"

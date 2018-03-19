@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
 
     >
-    <com.canplay.repast_wear.view.NoScrollViewPager
+    <com.canplay.medical.view.NoScrollViewPager
         android:layout_above="@+id/bnb_home"
         android:id="@+id/viewpager_main"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-    <com.canplay.repast_wear.view.BottonNevgBar
+    <com.canplay.medical.view.BottonNevgBar
         android:focusable="false"
 
         android:layout_alignParentBottom="true"
